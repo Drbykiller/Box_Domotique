@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="logoWidth">200dp</dimen>
+    <dimen name="logoHeight">200dp</dimen>
+
+    <dimen name="logoWidthLand">150dp</dimen>
+    <dimen name="logoHeightLand">150dp</dimen>
+
+</resources>

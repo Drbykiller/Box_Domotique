@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Box Domotique</string>
+    <string name="strLogo">Logo</string>
+    <string name="strUser">User</string>
+    <string name="strPassword">Password</string>
+    <string name="strConnection">Connection</string>
+
+    <string name="errorUser">You have not entered a user !</string>
+    <string name="errorPassword">You did not enter a password !</string>
+    <string name="errorServer">Error on the server side !</string>
 </resources>
