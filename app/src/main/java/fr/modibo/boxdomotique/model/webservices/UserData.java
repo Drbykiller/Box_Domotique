@@ -11,7 +11,8 @@ import fr.modibo.boxdomotique.model.User;
 
 public class UserData {
 
-    public static final String URL = "http://10.0.2.2/json/User.json";
+    //public static final String URL = "http://10.0.2.2/json/User.json";
+    public static final String URL = "http://192.168.1.2/json/User.json";
 
     public static ArrayList<Person> getPersonServer() throws Exception {
 

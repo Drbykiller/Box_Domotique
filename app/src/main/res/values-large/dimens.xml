@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="logoWidth">350dp</dimen>
+    <dimen name="logoHeight">350dp</dimen>
+    <dimen name="logo_Width_Land">250dp</dimen>
+    <dimen name="logo_Height_Land">250dp</dimen>
+
+    <dimen name="editText_Size_Width">450dp</dimen>
+</resources>

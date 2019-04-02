@@ -19,12 +19,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText etPassword;
     private Button btConnection;
     protected ArrayList<Person> id;
+    private MonThread thread;
 
     private void findViews() {
         etUser = findViewById(R.id.etUser);
         etPassword = findViewById(R.id.etPassword);
         btConnection = findViewById(R.id.btConnection);
         btConnection.setOnClickListener(this);
+        thread = new MonThread();
     }
 
     @Override
@@ -32,6 +34,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findViews();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        thread.cancel(true);
     }
 
     @Override
@@ -48,7 +56,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        MonThread thread = new MonThread();
         thread.execute();
 
         try {
@@ -65,8 +72,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(this, "Erreur", Toast.LENGTH_SHORT).show();
             }
         }
-        //Toast.makeText(this, "Connexion REUSSI !!!!", Toast.LENGTH_SHORT).show();
-
     }
 
 

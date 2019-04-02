@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/logoWidthLand"
-        android:layout_height="@dimen/logoHeightLand"
+        android:layout_width="@dimen/logo_Width_Land"
+        android:layout_height="@dimen/logo_Height_Land"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:contentDescription="@string/strLogo"
@@ -25,10 +25,10 @@
 
         <EditText
             android:id="@+id/etUser"
-            android:layout_width="300dp"
+            android:layout_width="@dimen/editText_Size_Width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/editText_layout_Margin"
             android:drawableStart="@drawable/ic_user"
             android:ems="10"
             android:hint="@string/strUser"
@@ -39,10 +39,10 @@
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="300dp"
+            android:layout_width="@dimen/editText_Size_Width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/editText_layout_Margin"
             android:drawableStart="@drawable/ic_password"
             android:ems="10"
             android:hint="@string/strPassword"
@@ -53,10 +53,10 @@
 
         <Button
             android:id="@+id/btConnection"
-            android:layout_width="220dp"
+            android:layout_width="@dimen/editText_Size_Width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/editText_layout_Margin"
             android:text="@string/strConnection" />
     </LinearLayout>
 
