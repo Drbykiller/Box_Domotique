@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_home" />
+
+        <item
+            android:id="@+id/nav_part"
+            android:icon="@drawable/ic_part"
+            android:title="@string/nav_part" />
+
+        <item
+            android:id="@+id/nav_sensor"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_sensor" />
+
+        <item
+            android:id="@+id/nav_scenario"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_scenario" />
+    </group>
+
+
+    <item android:title="test">
+        <menu>
+
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_setting"
+                    android:icon="@drawable/ic_settings"
+                    android:title="@string/nav_setting" />
+            </group>
+        </menu>
+
+    </item>
+
+</menu>

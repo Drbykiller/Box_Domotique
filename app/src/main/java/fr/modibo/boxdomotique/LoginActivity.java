@@ -1,5 +1,6 @@
 package fr.modibo.boxdomotique;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btConnection;
     protected ArrayList<Person> id;
     private MonThread thread;
+
+    private byte check = 0;
 
     private void findViews() {
         etUser = findViewById(R.id.etUser);
@@ -67,11 +70,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         for (Person lol : id) {
             if (lol.getName().equals(user) && lol.getPassword().equals(password)) {
                 Toast.makeText(this, "Connexion REUSSI !!!!", Toast.LENGTH_SHORT).show();
+                check = 1;
                 break;
             } else {
                 Toast.makeText(this, "Erreur", Toast.LENGTH_SHORT).show();
+                check = 0;
             }
         }
+        if (check == 1) {
+            Intent intent = new Intent(this, MainActivity.class);
+
+            startActivity(intent);
+        }
+
     }
 
 

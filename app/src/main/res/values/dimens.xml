@@ -6,6 +6,7 @@
     <dimen name="logo_Height_Land">150dp</dimen>
 
     <dimen name="editText_Size_Width">300dp</dimen>
-
     <dimen name="editText_layout_Margin">10dp</dimen>
+
+    <dimen name="nav_header_height">176dp</dimen>
 </resources>
