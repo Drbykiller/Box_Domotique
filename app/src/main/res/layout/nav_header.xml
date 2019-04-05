@@ -8,18 +8,19 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:contentDescription="logo"
         android:src="@drawable/emoji" />
 
     <TextView
+        android:id="@+id/tvUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text="MODIBO"
+        android:text="Null"
         android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 </LinearLayout>

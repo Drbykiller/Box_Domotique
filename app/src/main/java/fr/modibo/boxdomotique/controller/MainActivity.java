@@ -1,5 +1,6 @@
-package fr.modibo.boxdomotique;
+package fr.modibo.boxdomotique.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,19 +11,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import fr.modibo.boxdomotique.R;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String MAIN_KEY = "MAIN_PARAMS";
     private Toolbar tb;
     private DrawerLayout dl;
     private NavigationView nav_view;
+    private TextView tvUser;
+
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tvUser = findViewById(R.id.tvUser);
+
+        /*Intent intent = getIntent();
+        user = intent.getStringExtra(MAIN_KEY);*/
 
         // TOOLBAR
         tb = findViewById(R.id.tb);
@@ -37,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //NAVIGATION VIEW
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
+
+        /*if (user != null) {
+            tvUser.setText(user);
+        } else
+            tvUser.setText("NULL"); // NULL POINTER EXCEPTION*/
+
     }
 
     // TOOLBAR
@@ -65,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
 
-        if (dl.isDrawerOpen(GravityCompat.START)) {
+        if (dl.isDrawerOpen(GravityCompat.START))
             dl.closeDrawer(GravityCompat.START);
-        } else {
+        else
             super.onBackPressed();
-        }
+
     }
 }

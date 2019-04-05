@@ -11,8 +11,8 @@ import fr.modibo.boxdomotique.model.User;
 
 public class UserData {
 
-    //public static final String URL = "http://10.0.2.2/json/User.json";
-    public static final String URL = "http://192.168.1.2/json/User.json";
+    public static final String URL = "http://10.0.2.2/json/User.json";
+    //public static final String URL = "http://192.168.1.2/json/User.json";
 
     public static ArrayList<Person> getPersonServer() throws Exception {
 
@@ -24,11 +24,10 @@ public class UserData {
 
         ArrayList<Person> person = new ArrayList<>();
 
-        if (user == null) {
+        if (user == null)
             throw new Exception("Erreur !!!");
-        } else if (user.getPerson() != null) {
+        else if (user.getPerson() != null)
             person.addAll(user.getPerson());
-        }
 
         Log.w("TAG", reponse);
 

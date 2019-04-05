@@ -8,6 +8,9 @@
     <string name="errorUser">You have not entered a user !</string>
     <string name="errorPassword">You did not enter a password !</string>
     <string name="errorServer">Error on the server side !</string>
+    <string name="errorUserPassword">Username and/or password is incorrect !</string>
+
+    <string name="successful">Connection successful !</string>
 
     <string name="nav_dw_open">Open navigation drawer</string>
     <string name="nav_dw_close">Close navigation drawer</string>
