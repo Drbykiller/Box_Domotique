@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/editText_layout_Margin"
+            android:background="@drawable/btn_green"
             android:text="@string/strConnection" />
     </LinearLayout>
 
