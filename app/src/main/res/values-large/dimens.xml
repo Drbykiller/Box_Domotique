@@ -2,8 +2,8 @@
 <resources>
     <dimen name="logoWidth">350dp</dimen>
     <dimen name="logoHeight">350dp</dimen>
-    <dimen name="logo_Width_Land">250dp</dimen>
-    <dimen name="logo_Height_Land">250dp</dimen>
+    <dimen name="logo_width_land">250dp</dimen>
+    <dimen name="logo_height_land">250dp</dimen>
 
-    <dimen name="editText_Size_Width">450dp</dimen>
+    <dimen name="editText_size_width">450dp</dimen>
 </resources>

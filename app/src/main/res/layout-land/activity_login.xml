@@ -9,26 +9,24 @@
     tools:context=".controller.LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="@dimen/logo_Width_Land"
-        android:layout_height="@dimen/logo_Height_Land"
+        android:layout_width="@dimen/logo_width_land"
+        android:layout_height="@dimen/logo_height_land"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/imgMarginTop"
         android:contentDescription="@string/strLogo"
         app:srcCompat="@drawable/logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="10dp">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/etUser"
-            android:layout_width="@dimen/editText_Size_Width"
+            android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_Margin"
+            android:layout_marginTop="@dimen/editText_layout_margin"
             android:drawableStart="@drawable/ic_user"
             android:ems="10"
             android:hint="@string/strUser"
@@ -39,10 +37,10 @@
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="@dimen/editText_Size_Width"
+            android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_Margin"
+            android:layout_marginTop="@dimen/editText_layout_margin"
             android:drawableStart="@drawable/ic_password"
             android:ems="10"
             android:hint="@string/strPassword"
@@ -53,10 +51,11 @@
 
         <Button
             android:id="@+id/btConnection"
-            android:layout_width="@dimen/editText_Size_Width"
+            android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_Margin"
+            android:layout_marginTop="@dimen/editText_layout_margin"
+            android:background="@drawable/btn_green"
             android:text="@string/strConnection" />
     </LinearLayout>
 

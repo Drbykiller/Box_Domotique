@@ -9,11 +9,10 @@
     tools:context=".controller.LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="@dimen/logoWidth"
         android:layout_height="@dimen/logoHeight"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/imgMarginTop"
         android:contentDescription="@string/strLogo"
         app:srcCompat="@drawable/logo" />
 
@@ -25,10 +24,10 @@
 
         <EditText
             android:id="@+id/etUser"
-            android:layout_width="@dimen/editText_Size_Width"
+            android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_Margin"
+            android:layout_marginTop="@dimen/editText_layout_margin"
             android:drawableStart="@drawable/ic_user"
             android:ems="10"
             android:hint="@string/strUser"
@@ -39,10 +38,10 @@
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="@dimen/editText_Size_Width"
+            android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_Margin"
+            android:layout_marginTop="@dimen/editText_layout_margin"
             android:drawableStart="@drawable/ic_password"
             android:ems="10"
             android:hint="@string/strPassword"
@@ -53,10 +52,11 @@
 
         <Button
             android:id="@+id/btConnection"
-            android:layout_width="@dimen/editText_Size_Width"
+            android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_Margin"
+            android:layout_marginTop="@dimen/editText_layout_margin"
+            android:background="@drawable/btn_green"
             android:text="@string/strConnection" />
     </LinearLayout>
 

@@ -9,31 +9,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.model.Person;
-import fr.modibo.boxdomotique.model.webservices.UserData;
+import fr.modibo.boxdomotique.view.LoadingDialog;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etUser;
     private EditText etPassword;
     private Button btConnection;
-    protected ArrayList<Person> listUser;
-    private LoginThread loginThread;
-    private byte check = 0;
-    private byte idUser;
+
+    //final String URL = "http://10.0.2.2/user/login_user.php";
+    //final String URL = "http://192.168.0.25:3000/auth";
+    final String URL = "http://192.168.1.62/user/login_user.php";
 
     private void findViews() {
         etUser = findViewById(R.id.etUser);
         etPassword = findViewById(R.id.etPassword);
         btConnection = findViewById(R.id.btConnection);
         btConnection.setOnClickListener(this);
-        loginThread = new LoginThread();
     }
-
-    /* CYCLE DE VIE */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +40,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         findViews();
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        loginThread.cancel(true);
-    }
-
-    /* FIN CYCLE DE VIE */
 
     @Override
     public void onClick(View v) {
@@ -64,63 +55,74 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        loginThread.execute();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        for (Person lol : listUser) {
-            if (lol.getName().equals(user) && lol.getPassword().equals(password)) {
-                Toast.makeText(this, R.string.successful, Toast.LENGTH_SHORT).show();
-                check = 1;
-                break;
-            } else {
-                Toast.makeText(this, R.string.errorUserPassword, Toast.LENGTH_SHORT).show();
-                check = 0;
-            }
-        }
-
-        if (check == 1) {
-            Intent intent = new Intent(this, MainActivity.class);
-
-            /*for (byte i = 0; i < listUser.size(); i++) {
-                if (user.equals(listUser.get(i).getName())) {
-                    idUser = i;
-                }
-            }*/
-            intent.putExtra(MainActivity.MAIN_KEY, user);
-            startActivity(intent);
-        }
-
+        new LoginThread().execute(user, password);
     }
 
 
-    class LoginThread extends AsyncTask<Void, Void, Void> {
+    class LoginThread extends AsyncTask<String, Void, Void> {
 
         private Exception e;
+        private LoadingDialog dialog;
 
         @Override
         protected void onPreExecute() {
-            listUser = new ArrayList<>();
+            dialog = new LoadingDialog();
+            dialog.show(getSupportFragmentManager(), "Loading");
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String... strings) {
+            String user = strings[0];
+            String password = strings[1];
+
+            OkHttpClient okHttpClient = new OkHttpClient();
+            RequestBody formBody = new FormBody.Builder()
+                    .add("user", user)
+                    .add("password", password)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(URL)
+                    .post(formBody)
+                    .build();
+
+            Response response = null;
 
             try {
-                listUser = UserData.getPersonServer();
+                response = okHttpClient.newCall(request).execute();
+
+                if (response.isSuccessful()) {
+                    String result = response.body().string();
+
+                    if (result.equalsIgnoreCase("ok")) {
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra(MainActivity.MAIN_KEY, user);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(LoginActivity.this, R.string.errorUserPassword, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
             } catch (Exception p) {
                 e = p;
             }
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            dialog.dismiss();
+
             if (e != null)
                 Toast.makeText(LoginActivity.this, R.string.errorServer, Toast.LENGTH_SHORT).show();
 
