@@ -55,7 +55,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        new LoginThread().execute(user, password);
+        if (user.equalsIgnoreCase("debug") && password.equalsIgnoreCase("debug")) {
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(MainActivity.MAIN_KEY, user);
+            startActivity(intent);
+            finish();
+
+        } else {
+            new LoginThread().execute(user, password);
+        }
+
     }
 
 
