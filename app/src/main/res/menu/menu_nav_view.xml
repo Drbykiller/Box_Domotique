@@ -7,34 +7,33 @@
             android:icon="@drawable/ic_home"
             android:title="@string/nav_home" />
 
+        <!--
         <item
             android:id="@+id/nav_part"
             android:icon="@drawable/ic_part"
             android:title="@string/nav_part" />
+            -->
 
         <item
             android:id="@+id/nav_sensor"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_sensor"
             android:title="@string/nav_sensor" />
 
         <item
             android:id="@+id/nav_scenario"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_scenario"
             android:title="@string/nav_scenario" />
+
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_setting" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="@string/nav_about" />
+
     </group>
-
-
-    <item android:title="test">
-        <menu>
-
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_setting"
-                    android:icon="@drawable/ic_settings"
-                    android:title="@string/nav_setting" />
-            </group>
-        </menu>
-
-    </item>
 
 </menu>
