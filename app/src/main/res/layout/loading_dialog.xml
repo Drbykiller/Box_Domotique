@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:background="@color/colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginStart="10dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/logo" />
 
-
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
-
-
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ProgressBar
+        <androidx.core.widget.ContentLoadingProgressBar
             style="?android:attr/progressBarStyle"
             android:layout_width="75dp"
             android:layout_height="75dp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -49,8 +45,6 @@
             android:text="@string/loadingDialog"
             android:textSize="20sp" />
 
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
-
-
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

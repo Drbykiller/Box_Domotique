@@ -2,24 +2,23 @@ package fr.modibo.boxdomotique.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import fr.modibo.boxdomotique.MainFragment;
+import fr.modibo.boxdomotique.controller.Fragment.MainFragment;
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.ScenarioFragment;
-import fr.modibo.boxdomotique.SensorFragment;
-
+import fr.modibo.boxdomotique.controller.Fragment.ScenarioFragment;
+import fr.modibo.boxdomotique.controller.Fragment.SensorFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar tb;
     private DrawerLayout dl;
     private NavigationView nav_view;
-    private TextView tvUser;
+    private TextView nav_view_tvUser;
     private View view;
 
     @Override
@@ -52,15 +51,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_view.setNavigationItemSelectedListener(this);
 
         view = nav_view.getHeaderView(0);
-        tvUser = view.findViewById(R.id.tvUser);
-        tvUser.setText(intent.getStringExtra(MAIN_KEY));
+        nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
+        nav_view_tvUser.setText(intent.getStringExtra(MAIN_KEY));
 
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.layout_frame, new MainFragment())
-                    .commit();
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment()).commit();
             nav_view.setCheckedItem(R.id.nav_home);
         }
 
@@ -121,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
                 //tb.setTitle(R.string.nav_about);
                 break;
-
         }
 
         dl.closeDrawer(GravityCompat.START);
@@ -137,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
 
     }
-
 
     // Bundle
 //    @Override
@@ -162,6 +156,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        }
 //
 //        super.onSaveInstanceState(outState);
-//    }
-
 }

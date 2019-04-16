@@ -3,7 +3,7 @@ package fr.modibo.boxdomotique.controller;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,18 +27,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //final String URL = "http://192.168.0.25:3000/auth";
     final String URL = "http://192.168.1.62/user/login_user.php";
 
-    private void findViews() {
-        etUser = findViewById(R.id.etUser);
-        etPassword = findViewById(R.id.etPassword);
-        btConnection = findViewById(R.id.btConnection);
-        btConnection.setOnClickListener(this);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        findViews();
+
+        etUser = findViewById(R.id.etUser);
+        etPassword = findViewById(R.id.etPassword);
+        btConnection = findViewById(R.id.btConnection);
+        btConnection.setOnClickListener(this);
     }
 
     @Override
@@ -62,12 +59,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
 
-        } else {
+        } else
             new LoginThread().execute(user, password);
-        }
 
     }
-
 
     class LoginThread extends AsyncTask<String, Void, Void> {
 
@@ -111,20 +106,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         startActivity(intent);
                         finish();
 
-                    } else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(LoginActivity.this, R.string.errorUserPassword, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+                    } else
+                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, R.string.errorUserPassword, Toast.LENGTH_SHORT).show());
+
                 }
 
             } catch (Exception p) {
                 e = p;
             }
-
             return null;
         }
 

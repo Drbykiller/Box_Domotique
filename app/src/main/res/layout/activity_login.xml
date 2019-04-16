@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".controller.LoginActivity">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/logoWidth"
         android:layout_height="@dimen/logoHeight"
         android:layout_gravity="center"
@@ -16,13 +16,13 @@
         android:contentDescription="@string/strLogo"
         app:srcCompat="@drawable/logo" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingTop="30dp">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etUser"
             android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
@@ -31,12 +31,11 @@
             android:drawableStart="@drawable/ic_user"
             android:ems="10"
             android:hint="@string/strUser"
-            android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff" />
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etPassword"
             android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
@@ -45,19 +44,18 @@
             android:drawableStart="@drawable/ic_password"
             android:ems="10"
             android:hint="@string/strPassword"
-            android:importantForAutofill="no"
             android:inputType="textPassword"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff" />
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btConnection"
             android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/editText_layout_margin"
-            android:background="@drawable/btn_green"
-            android:text="@string/strConnection" />
-    </LinearLayout>
+            android:text="@string/strConnection"
+            app:backgroundTint="@color/colorPrimaryDark" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
