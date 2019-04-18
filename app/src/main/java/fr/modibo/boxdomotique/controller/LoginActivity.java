@@ -3,13 +3,15 @@ package fr.modibo.boxdomotique.controller;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import fr.modibo.boxdomotique.R;
+import fr.modibo.boxdomotique.UrlServer;
 import fr.modibo.boxdomotique.view.LoadingDialog;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -23,9 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText etPassword;
     private Button btConnection;
 
-    //final String URL = "http://10.0.2.2/user/login_user.php";
-    //final String URL = "http://192.168.0.25:3000/auth";
-    final String URL = "http://192.168.1.62/user/login_user.php";
+    private final String URL = UrlServer.URL_SERVER + UrlServer.URL_CONNECTION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

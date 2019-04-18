@@ -6,12 +6,17 @@
     android:background="#9C27B0"
     tools:context=".controller.Fragment.MainFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="SENSOR FRAGMENT"
-        android:textColor="#FFFFFF"
-        android:textSize="50sp" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/material_card"></androidx.recyclerview.widget.RecyclerView>
+
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.appcompat.widget.ContentFrameLayout>
