@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,14 +33,18 @@ public class SensorFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sensor, container, false);
-
         rv = view.findViewById(R.id.rv);
 
         donnee = new ArrayList<>();
-        adapter = new DeviceAdapter(donnee);
-
+        adapter = new DeviceAdapter(getContext(), donnee);
         rv.setAdapter(adapter);
-        rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        boolean tablet = getResources().getBoolean(R.bool.tablet);
+
+        if (tablet) {
+            rv.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+        } else
+            rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         return view;
     }

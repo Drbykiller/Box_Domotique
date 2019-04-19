@@ -9,6 +9,7 @@ public class Device implements Serializable {
     private String type;
     private Integer state;
     private Integer value;
+    private String image;
 
     public Integer getId() {
         return id;
@@ -48,5 +49,13 @@ public class Device implements Serializable {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

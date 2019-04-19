@@ -14,7 +14,7 @@
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/material_card"></androidx.recyclerview.widget.RecyclerView>
+            tools:listitem="@layout/material_card_sensor"></androidx.recyclerview.widget.RecyclerView>
 
 
     </androidx.core.widget.NestedScrollView>
