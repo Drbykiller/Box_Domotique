@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="logoWidth">200dp</dimen>
-    <dimen name="logoHeight">200dp</dimen>
+    <dimen name="logoHeight">150dp</dimen>
     <dimen name="logo_width_land">150dp</dimen>
     <dimen name="logo_height_land">150dp</dimen>
-    <dimen name="imgMarginTop">10dp</dimen>
 
     <dimen name="editText_size_width">300dp</dimen>
-    <dimen name="editText_layout_margin">15dp</dimen>
+
+    <dimen name="layout_margin_TOP">15dp</dimen>
 
     <dimen name="nav_header_height">176dp</dimen>
 </resources>

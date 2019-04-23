@@ -1,17 +1,21 @@
 package fr.modibo.boxdomotique.controller;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.UrlServer;
+import fr.modibo.boxdomotique.model.UrlServer;
 import fr.modibo.boxdomotique.view.LoadingDialog;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -21,36 +25,89 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText etUser;
-    private EditText etPassword;
+    private TextInputEditText etServer, etUser, etPassword;
+    private TextInputLayout til_Server, til_User, til_Password;
+    private CheckBox checkSave;
     private Button btConnection;
 
-    private final String URL = UrlServer.URL_SERVER + UrlServer.URL_CONNECTION;
+    // Les key pour la Sauvegarde de données
+    private final String SHARED_PREF = "SAVE_DATA";
+    private final String KEY_IP_ADDRESS = "IP";
+    private final String KEY_USER = "USER";
+    private final String KEY_PASSWORD = "PASSWORD";
+    private final String KEY_CHECK = "CHECK";
+
+    private String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        etServer = findViewById(R.id.etServer);
         etUser = findViewById(R.id.etUser);
         etPassword = findViewById(R.id.etPassword);
+        til_Server = findViewById(R.id.til_Server);
+        til_User = findViewById(R.id.til_User);
+        til_Password = findViewById(R.id.til_Password);
+        checkSave = findViewById(R.id.checkSave);
+
         btConnection = findViewById(R.id.btConnection);
         btConnection.setOnClickListener(this);
+
+        loadUpdateData();
     }
 
     @Override
     public void onClick(View v) {
+        String server = etServer.getText().toString();
         String user = etUser.getText().toString();
         String password = etPassword.getText().toString();
 
-        if (user.isEmpty()) {
-            Toast.makeText(this, R.string.errorUser, Toast.LENGTH_SHORT).show();
+        if (server.isEmpty()) {
+            til_Server.setError(getString(R.string.errorEnterServer));
+
+            if (user.isEmpty())
+                til_User.setError(getString(R.string.errorUser));
+            else
+                til_User.setError(null);
+
+            if (password.isEmpty())
+                til_Password.setError(getString(R.string.errorPassword));
+            else
+                til_Password.setError(null);
+
             return;
-        }
-        if (password.isEmpty()) {
-            Toast.makeText(this, R.string.errorPassword, Toast.LENGTH_SHORT).show();
+        } else if (user.isEmpty()) {
+            til_User.setError(getString(R.string.errorUser));
+
+            if (server.isEmpty())
+                til_Server.setError(getString(R.string.errorEnterServer));
+            else
+                til_Server.setError(null);
+
+            if (password.isEmpty())
+                til_Password.setError(getString(R.string.errorPassword));
+            else
+                til_Password.setError(null);
+
             return;
+        } else if (password.isEmpty()) {
+            til_Password.setError(getString(R.string.errorPassword));
+            til_Server.setError(null);
+            til_User.setError(null);
+            return;
+        } else {
+            til_Server.setError(null);
+            til_User.setError(null);
+            til_Password.setError(null);
         }
+
+        if (checkSave.isChecked())
+            saveData();
+
+        UrlServer.setUrlServer(server);
+        URL = UrlServer.URL_SERVER + UrlServer.URL_CONNECTION;
 
         if (user.equalsIgnoreCase("debug") && password.equalsIgnoreCase("debug")) {
 
@@ -58,13 +115,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra(MainActivity.MAIN_KEY, user);
             startActivity(intent);
             finish();
-
         } else
             new LoginThread().execute(user, password);
-
     }
 
-    class LoginThread extends AsyncTask<String, Void, Void> {
+    @Override
+    protected void onStop() {
+        if (!checkSave.isChecked()) {
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString(KEY_IP_ADDRESS, "");
+            editor.putString(KEY_USER, "");
+            editor.putString(KEY_PASSWORD, "");
+            editor.putBoolean(KEY_CHECK, checkSave.isChecked());
+
+            editor.apply();
+        }
+        super.onStop();
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(KEY_IP_ADDRESS, etServer.getText().toString());
+        editor.putString(KEY_USER, etUser.getText().toString());
+        editor.putString(KEY_PASSWORD, etPassword.getText().toString());
+        editor.putBoolean(KEY_CHECK, checkSave.isChecked());
+
+        editor.apply();
+    }
+
+    private void loadUpdateData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+
+        etServer.setText(sharedPreferences.getString(KEY_IP_ADDRESS, ""));
+        etUser.setText(sharedPreferences.getString(KEY_USER, ""));
+        etPassword.setText(sharedPreferences.getString(KEY_PASSWORD, ""));
+        checkSave.setChecked(sharedPreferences.getBoolean(KEY_CHECK, false));
+    }
+
+
+    private class LoginThread extends AsyncTask<String, Void, Void> {
 
         private Exception e;
         private LoadingDialog dialog;
@@ -91,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     .post(formBody)
                     .build();
 
-            Response response = null;
+            Response response;
 
             try {
                 response = okHttpClient.newCall(request).execute();
@@ -108,9 +201,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     } else
                         runOnUiThread(() -> Toast.makeText(LoginActivity.this, R.string.errorUserPassword, Toast.LENGTH_SHORT).show());
-
                 }
-
             } catch (Exception p) {
                 e = p;
             }
@@ -128,5 +219,3 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 }
-
-

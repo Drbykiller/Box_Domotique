@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.UrlServer;
+import fr.modibo.boxdomotique.model.UrlServer;
 import fr.modibo.boxdomotique.model.Device;
 import fr.modibo.boxdomotique.model.DevicesBase;
 

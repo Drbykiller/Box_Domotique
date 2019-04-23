@@ -4,7 +4,11 @@
     <string name="strUser">User</string>
     <string name="strPassword">Password</string>
     <string name="strConnection">Connection</string>
+    <string name="strServer">Server</string>
+    <string name="strSaveLogin">Remember Me</string>
+    <string name="strNull">NULL</string>
 
+    <string name="errorEnterServer">You have not entered an IP address !</string>
     <string name="errorUser">You have not entered a user !</string>
     <string name="errorPassword">You did not enter a password !</string>
     <string name="errorServer">Error on the server side !</string>
@@ -23,5 +27,4 @@
 
     <string name="loadingDialog">Please wait !</string>
     <string name="emoji">emoji</string>
-
 </resources>

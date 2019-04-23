@@ -12,7 +12,7 @@
         android:layout_width="@dimen/logoWidth"
         android:layout_height="@dimen/logoHeight"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/imgMarginTop"
+        android:layout_marginTop="@dimen/layout_margin_TOP"
         android:contentDescription="@string/strLogo"
         app:srcCompat="@drawable/logo" />
 
@@ -22,38 +22,85 @@
         android:orientation="vertical"
         android:paddingTop="30dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etUser"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_Server"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_margin"
-            android:drawableStart="@drawable/ic_user"
-            android:ems="10"
-            android:hint="@string/strUser"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:textColorHint="@color/colorText"
+            app:errorEnabled="true">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etServer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_ip_address"
+                android:hint="@string/strServer"
+                android:inputType="phone"
+                android:textColor="@color/colorText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_User"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_margin"
-            android:drawableStart="@drawable/ic_password"
-            android:ems="10"
-            android:hint="@string/strPassword"
-            android:inputType="textPassword"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:textColorHint="@color/colorText"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_user"
+                android:hint="@string/strUser"
+                android:inputType="textPersonName"
+                android:textColor="@color/colorText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_Password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/editText_size_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColorHint="@color/colorText"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_password"
+                android:hint="@string/strPassword"
+                android:inputType="textPassword"
+                android:textColor="@color/colorText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="@dimen/layout_margin_TOP"
+            android:buttonTint="@color/colorText"
+            android:text="@string/strSaveLogin"
+            android:textColor="@color/colorText" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btConnection"
             android:layout_width="@dimen/editText_size_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/editText_layout_margin"
+            android:layout_marginTop="@dimen/layout_margin_TOP"
             android:text="@string/strConnection"
             app:backgroundTint="@color/colorPrimaryDark" />
     </androidx.appcompat.widget.LinearLayoutCompat>

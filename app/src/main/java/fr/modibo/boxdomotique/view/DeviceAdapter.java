@@ -44,7 +44,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
         holder.setMcs_tvTitle(device.getName());
         holder.setMcs_tvInfo(device.getType());
 
-        Glide.with(context).load(list.get(0).getImage()).apply(requestOptions).into(holder.getMcs_iv());
+        Glide.with(context).load(list.get(position).getImage()).apply(requestOptions).into(holder.getMcs_iv());
     }
 
     @Override

@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="Null"
-        android:textColor="@color/colorWhite"
+        android:text="@string/strNull"
+        android:textColor="@color/colorText"
         android:textSize="25sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

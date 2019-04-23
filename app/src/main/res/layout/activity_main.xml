@@ -37,6 +37,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_view_header"
-        app:menu="@menu/menu_nav_view"></com.google.android.material.navigation.NavigationView>
+        app:menu="@menu/menu_nav_view" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

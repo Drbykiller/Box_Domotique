@@ -10,8 +10,4 @@ public class DevicesBase {
         return devices;
     }
 
-    public void setDevices(ArrayList<Device> devices) {
-        this.devices = devices;
-    }
-
 }
