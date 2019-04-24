@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/ic_ip_address"
                 android:hint="@string/strServer"
-                android:inputType="phone"
+                android:inputType="text"
                 android:textColor="@color/colorText" />
 
         </com.google.android.material.textfield.TextInputLayout>

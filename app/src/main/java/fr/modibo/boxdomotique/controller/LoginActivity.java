@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         finish();
 
                     } else
-                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, R.string.errorUserPassword, Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Snackbar.make(etServer.getRootView(), R.string.errorUserPassword, Snackbar.LENGTH_SHORT).show());
                 }
             } catch (Exception p) {
                 e = p;
@@ -214,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             dialog.dismiss();
 
             if (e != null)
-                Toast.makeText(LoginActivity.this, R.string.errorServer, Toast.LENGTH_SHORT).show();
+                Snackbar.make(etServer.getRootView(), R.string.errorServer, Snackbar.LENGTH_SHORT).show();
 
         }
     }

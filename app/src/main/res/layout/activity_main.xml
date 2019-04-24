@@ -8,27 +8,10 @@
     android:orientation="vertical"
     tools:context=".controller.MainActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <include
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
-
-        <androidx.appcompat.widget.ContentFrameLayout
-            android:id="@+id/layout_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.appcompat.widget.ContentFrameLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
