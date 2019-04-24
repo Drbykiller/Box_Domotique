@@ -2,25 +2,28 @@ package fr.modibo.boxdomotique.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import fr.modibo.boxdomotique.controller.Fragment.MainFragment;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+
 import fr.modibo.boxdomotique.R;
+import fr.modibo.boxdomotique.controller.Fragment.MainFragment;
 import fr.modibo.boxdomotique.controller.Fragment.ScenarioFragment;
 import fr.modibo.boxdomotique.controller.Fragment.SensorFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.DeviceThreadError {
 
     public static final String MAIN_KEY = "MAIN_PARAMS";
     private Toolbar tb;
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment()).commit();
             nav_view.setCheckedItem(R.id.nav_home);
         }
-
 //        NOT WORKING
 //        else {
 //
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 tb.setTitle(R.string.app_name);
                 break;
             case R.id.nav_sensor:
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
                 tb.setTitle(R.string.nav_sensor);
                 break;
             case R.id.nav_scenario:
@@ -130,8 +132,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dl.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
-
     }
+
+    @Override
+    public void deviceThreadError(String error) {
+        Snackbar.make(dl.getRootView(), getString(R.string.errorServer) + "\nCode : " + error, Snackbar.LENGTH_LONG).show();
+    }
+
 
     // Bundle
 //    @Override

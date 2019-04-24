@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class Device implements Serializable {
 
     private Integer id;
-    private String name;
+    private String nom;
     private String type;
-    private Integer state;
-    private Integer value;
+    private Integer etat;
+    private Integer valeur;
     private String image;
 
     public Integer getId() {
@@ -19,12 +19,12 @@ public class Device implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNom() {
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getType() {
@@ -35,20 +35,20 @@ public class Device implements Serializable {
         this.type = type;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getEtat() {
+        return etat;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setEtat(Integer etat) {
+        this.etat = etat;
     }
 
-    public Integer getValue() {
-        return value;
+    public Integer getValeur() {
+        return valeur;
     }
 
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setValeur(Integer valeur) {
+        this.valeur = valeur;
     }
 
     public String getImage() {

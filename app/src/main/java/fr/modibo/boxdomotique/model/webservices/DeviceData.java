@@ -1,14 +1,12 @@
 package fr.modibo.boxdomotique.model.webservices;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.model.UrlServer;
 import fr.modibo.boxdomotique.model.Device;
 import fr.modibo.boxdomotique.model.DevicesBase;
+import fr.modibo.boxdomotique.model.UrlServer;
 
 public class DeviceData {
 
@@ -30,7 +28,7 @@ public class DeviceData {
         else if (devicesBase.getDevices() != null)
             device.addAll(devicesBase.getDevices());
 
-        Log.w("TAG", reponse);
+        //Log.w("TAG", reponse);
 
         return device;
     }

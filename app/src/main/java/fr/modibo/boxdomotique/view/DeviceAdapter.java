@@ -19,12 +19,20 @@ import fr.modibo.boxdomotique.model.Device;
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     private Context context;
-    private ArrayList<Device> list;
+    private ArrayList<Device> listDevice;
     private RequestOptions requestOptions;
 
-    public DeviceAdapter(Context context, ArrayList<Device> list) {
-        this.list = list;
+    //INTERFACE
+    private updateListerner updateListerner;
+
+    public interface updateListerner {
+        void update(ArrayList<Device> sendData);
+    }
+
+    public DeviceAdapter(Context context, ArrayList<Device> list, updateListerner updateListerner) {
+        this.listDevice = list;
         this.context = context;
+        this.updateListerner = updateListerner;
 
         requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
     }
@@ -39,16 +47,31 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull DeviceViewHolder holder, int position) {
 
-        final Device device = list.get(position);
+        final Device device = listDevice.get(position);
 
-        holder.setMcs_tvTitle(device.getName());
+        holder.setMcs_tvTitle(device.getNom());
         holder.setMcs_tvInfo(device.getType());
 
-        Glide.with(context).load(list.get(position).getImage()).apply(requestOptions).into(holder.getMcs_iv());
+        if (device.getEtat() == 1)
+            holder.setMcs_switch(true);
+        else
+            holder.setMcs_switch(false);
+
+        Glide.with(context).load(listDevice.get(position).getImage()).apply(requestOptions).into(holder.getMcs_iv());
+
+        holder.getMcs_switch().setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            int etat = (isChecked) ? 1 : 0;
+
+            listDevice.get(position).setEtat(etat);
+
+            updateListerner.update(listDevice);
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return listDevice.size();
     }
 }

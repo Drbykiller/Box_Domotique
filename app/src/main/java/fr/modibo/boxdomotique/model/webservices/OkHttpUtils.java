@@ -20,7 +20,7 @@ public class OkHttpUtils {
 
         //Analyse du code retour
         if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw new Exception("Réponse du serveur incorrecte : " + response.code());
+            throw new Exception(String.valueOf(response.code()));
         } else {
             //Résultat de la requête
             return response.body().string();

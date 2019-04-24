@@ -5,35 +5,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import fr.modibo.boxdomotique.R;
-
 
 /**
  * mcs = material_card_sensor
  */
 public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
-    private View mcs_root;
     private TextView mcs_tvTitle;
     private TextView mcs_tvInfo;
     private ImageView mcs_iv;
+    private SwitchCompat mcs_switch;
 
     public DeviceViewHolder(@NonNull View itemView) {
         super(itemView);
-        mcs_root = itemView.findViewById(R.id.mcs_root);
         mcs_tvTitle = itemView.findViewById(R.id.mcs_tvTitle);
         mcs_tvInfo = itemView.findViewById(R.id.mcs_tvInfo);
         mcs_iv = itemView.findViewById(R.id.mcs_iv);
-    }
-
-    public View getMcs_root() {
-        return mcs_root;
-    }
-
-    public void setMcs_root(View mcs_root) {
-        this.mcs_root = mcs_root;
+        mcs_switch = itemView.findViewById(R.id.mcs_switch);
     }
 
     public TextView getMcs_tvTitle() {
@@ -58,5 +50,13 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
     public void setMcs_iv(ImageView mcs_iv) {
         this.mcs_iv = mcs_iv;
+    }
+
+    public SwitchCompat getMcs_switch() {
+        return mcs_switch;
+    }
+
+    public void setMcs_switch(Boolean isSwitch) {
+        mcs_switch.setChecked(isSwitch);
     }
 }
