@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Box Domotique</string>
-    <string name="strLogo">Logo</string>
+    <string name="app_name" translatable="false">Box Domotique</string>
+    <string name="strLogo" translatable="false">Logo</string>
     <string name="strUser">User</string>
     <string name="strPassword">Password</string>
     <string name="strConnection">Connection</string>
     <string name="strServer">Server</string>
     <string name="strSaveLogin">Remember Me</string>
-    <string name="strNull">NULL</string>
+    <string name="strNull" translatable="false">NULL</string>
 
     <string name="errorEnterServer">You have not entered an IP address !</string>
     <string name="errorUser">You have not entered a user !</string>
@@ -16,8 +16,8 @@
 
     <string name="successful">Connection successful !</string>
 
-    <string name="nav_dw_open">Open navigation drawer</string>
-    <string name="nav_dw_close">Close navigation drawer</string>
+    <string name="nav_dw_open" translatable="false">Open navigation drawer</string>
+    <string name="nav_dw_close" translatable="false">Close navigation drawer</string>
     <string name="nav_home">Home</string>
     <!--<string name="nav_part">Parts management</string>-->
     <string name="nav_sensor">Sensor management</string>
@@ -28,5 +28,5 @@
     <string name="tb_refresh">Refresh</string>
 
     <string name="loadingDialog">Please wait !</string>
-    <string name="emoji">emoji</string>
+    <string name="emoji" translatable="false">emoji</string>
 </resources>

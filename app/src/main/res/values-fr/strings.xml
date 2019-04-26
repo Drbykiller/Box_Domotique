@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="errorEnterServer">Vous n\'avez pas saisi d\'adresse IP !</string>
+    <string name="errorPassword">Vous n\'avez pas entré de mot de passe !</string>
+    <string name="errorServer">Erreur côté serveur !</string>
+    <string name="errorUser">Vous n\'avez pas saisi de nom d\'utilisateur !</string>
+    <string name="errorUserPassword">Nom d\'utilisateur et/ou mot de passe incorrect !</string>
+    <string name="loadingDialog">Merci de patienter !</string>
+    <string name="nav_about">A Propos</string>
+    <string name="nav_home">Accueil</string>
+    <string name="nav_scenario">Gestion des scénarios</string>
+    <string name="nav_sensor">Gestion des capteurs</string>
+    <string name="nav_setting">Paramètres</string>
+    <string name="strConnection">Connexion</string>
+    <string name="strPassword">Mot de Passe</string>
+    <string name="strSaveLogin">Se souvenir de Moi</string>
+    <string name="strServer">Serveur</string>
+    <string name="strUser">Utilisateur</string>
+    <string name="successful">Connexion réussie !</string>
+    <string name="tb_refresh">Rafraîchir</string>
+</resources>
