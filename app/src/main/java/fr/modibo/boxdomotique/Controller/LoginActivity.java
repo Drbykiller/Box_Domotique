@@ -1,43 +1,41 @@
-package fr.modibo.boxdomotique.controller;
+package fr.modibo.boxdomotique.Controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import fr.modibo.boxdomotique.Model.Thread.LoginThread;
+import fr.modibo.boxdomotique.Model.UrlServer;
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.model.UrlServer;
-import fr.modibo.boxdomotique.view.LoadingDialog;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * Classe <b>LoginActivity</b> qui gère l'affichage de l'ecran de connexion
+ * et la connexion au serveur.
+ */
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginThread.loginSuccessful {
 
     private TextInputEditText etServer, etUser, etPassword;
     private TextInputLayout til_Server, til_User, til_Password;
     private CheckBox checkSave;
-    private Button btConnection;
+    private FragmentManager fragmentManager;
 
-    // Les key pour la Sauvegarde de données
+    // Les keys pour la Sauvegarde des identifiants.
     private final String SHARED_PREF = "SAVE_DATA";
     private final String KEY_IP_ADDRESS = "IP";
     private final String KEY_USER = "USER";
     private final String KEY_PASSWORD = "PASSWORD";
     private final String KEY_CHECK = "CHECK";
 
-    private String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +50,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         til_Password = findViewById(R.id.til_Password);
         checkSave = findViewById(R.id.checkSave);
 
-        btConnection = findViewById(R.id.btConnection);
+        Button btConnection = findViewById(R.id.btConnection);
         btConnection.setOnClickListener(this);
 
-        loadUpdateData();
+        fragmentManager = getSupportFragmentManager();
+
+        loadUpdateID();
     }
 
     @Override
@@ -64,50 +64,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String user = etUser.getText().toString();
         String password = etPassword.getText().toString();
 
-        if (server.isEmpty()) {
-            til_Server.setError(getString(R.string.errorEnterServer));
+        String result = check_if_the_fields_are_correct(server, user, password);
 
-            if (user.isEmpty())
-                til_User.setError(getString(R.string.errorUser));
-            else
-                til_User.setError(null);
-
-            if (password.isEmpty())
-                til_Password.setError(getString(R.string.errorPassword));
-            else
-                til_Password.setError(null);
-
+        if (result.equalsIgnoreCase("error"))
             return;
-        } else if (user.isEmpty()) {
-            til_User.setError(getString(R.string.errorUser));
-
-            if (server.isEmpty())
-                til_Server.setError(getString(R.string.errorEnterServer));
-            else
-                til_Server.setError(null);
-
-            if (password.isEmpty())
-                til_Password.setError(getString(R.string.errorPassword));
-            else
-                til_Password.setError(null);
-
-            return;
-        } else if (password.isEmpty()) {
-            til_Password.setError(getString(R.string.errorPassword));
-            til_Server.setError(null);
-            til_User.setError(null);
-            return;
-        } else {
-            til_Server.setError(null);
-            til_User.setError(null);
-            til_Password.setError(null);
-        }
 
         if (checkSave.isChecked())
-            saveData();
+            saveID();
 
+        // Défini l'adresse IP du serveur
         UrlServer.setUrlServer(server);
-        URL = UrlServer.URL_SERVER + UrlServer.URL_CONNECTION;
 
         if (user.equalsIgnoreCase("debug") && password.equalsIgnoreCase("debug")) {
 
@@ -116,9 +82,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         } else
-            new LoginThread().execute(user, password);
+            new LoginThread(fragmentManager, this).execute(user, password);
     }
 
+    /**
+     * Supprime les identifiants de l'utilisateur
+     * si il a décocher la case 'Se souvenir de moi'.
+     */
     @Override
     protected void onStop() {
         if (!checkSave.isChecked()) {
@@ -135,7 +105,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStop();
     }
 
-    private void saveData() {
+    private String check_if_the_fields_are_correct(String server, String user, String password) {
+        if (server.isEmpty()) {
+            til_Server.setError(getString(R.string.errorEnterServer));
+
+            if (user.isEmpty())
+                til_User.setError(getString(R.string.errorUser));
+            else
+                til_User.setError(null);
+
+            if (password.isEmpty())
+                til_Password.setError(getString(R.string.errorPassword));
+            else
+                til_Password.setError(null);
+
+            return "error";
+        } else if (user.isEmpty()) {
+            til_User.setError(getString(R.string.errorUser));
+
+            if (server.isEmpty())
+                til_Server.setError(getString(R.string.errorEnterServer));
+            else
+                til_Server.setError(null);
+
+            if (password.isEmpty())
+                til_Password.setError(getString(R.string.errorPassword));
+            else
+                til_Password.setError(null);
+
+            return "error";
+        } else if (password.isEmpty()) {
+            til_Password.setError(getString(R.string.errorPassword));
+            til_Server.setError(null);
+            til_User.setError(null);
+            return "error";
+        } else {
+            til_Server.setError(null);
+            til_User.setError(null);
+            til_Password.setError(null);
+        }
+        return "ok";
+    }
+
+    private void saveID() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -147,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.apply();
     }
 
-    private void loadUpdateData() {
+    private void loadUpdateID() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
 
         etServer.setText(sharedPreferences.getString(KEY_IP_ADDRESS, ""));
@@ -157,65 +169,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private class LoginThread extends AsyncTask<String, Void, Void> {
+     /* ************************
+        INTERFACE + IMPLEMENTATION
+     *************************/
 
-        private Exception e;
-        private LoadingDialog dialog;
+    /**
+     * Méthode implémenté de la classe <b>LoginThread</b>
+     * qui permet de lancer l'activité principal.
+     *
+     * @param user L'Utilisateur passe en paramètre ce qui permet de le récuperer.
+     * @see fr.modibo.boxdomotique.Model.Thread.LoginThread
+     */
+    @Override
+    public void login(String user) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.MAIN_KEY, user);
+        startActivity(intent);
+        finish();
+    }
 
-        @Override
-        protected void onPreExecute() {
-            dialog = new LoadingDialog();
-            dialog.show(getSupportFragmentManager(), "Loading");
-        }
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            String user = strings[0];
-            String password = strings[1];
-
-            OkHttpClient okHttpClient = new OkHttpClient();
-            RequestBody formBody = new FormBody.Builder()
-                    .add("user", user)
-                    .add("password", password)
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url(URL)
-                    .post(formBody)
-                    .build();
-
-            Response response;
-
-            try {
-                response = okHttpClient.newCall(request).execute();
-
-                if (response.isSuccessful()) {
-                    String result = response.body().string();
-
-                    if (result.equalsIgnoreCase("ok")) {
-
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra(MainActivity.MAIN_KEY, user);
-                        startActivity(intent);
-                        finish();
-
-                    } else
-                        runOnUiThread(() -> Snackbar.make(etServer.getRootView(), R.string.errorUserPassword, Snackbar.LENGTH_SHORT).show());
-                }
-            } catch (Exception p) {
-                e = p;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            dialog.dismiss();
-
-            if (e != null)
-                Snackbar.make(etServer.getRootView(), R.string.errorServer, Snackbar.LENGTH_SHORT).show();
-
-        }
+    /**
+     * Méthode implémenté de la classe <b>LoginThread</b>
+     * qui retourne soit une erreur au niveau des identifiants
+     * ou une erreur au niveau du serveur.
+     *
+     * @param whatIsError L'Erreur passe en paramètre ce qui permet de le récuperer.
+     * @see fr.modibo.boxdomotique.Model.Thread.LoginThread
+     */
+    @Override
+    public void errorLogin(String whatIsError) {
+        if (whatIsError.equalsIgnoreCase("userPassword"))
+            Snackbar.make(etServer.getRootView(), R.string.errorUserPassword, Snackbar.LENGTH_SHORT).show();
+        else
+            Snackbar.make(etServer.getRootView(), R.string.errorServer, Snackbar.LENGTH_SHORT).show();
     }
 }

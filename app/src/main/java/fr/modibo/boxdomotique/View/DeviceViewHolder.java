@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.view;
+package fr.modibo.boxdomotique.View;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import fr.modibo.boxdomotique.R;
 
 /**
+ * La Classe <b>DeviceViewHolder</b> permet d'initialiser les composants graphiques.
  * mcs = material_card_sensor
  */
 public class DeviceViewHolder extends RecyclerView.ViewHolder {

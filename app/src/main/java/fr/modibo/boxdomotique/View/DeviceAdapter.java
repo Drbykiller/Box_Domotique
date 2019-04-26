@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.view;
+package fr.modibo.boxdomotique.View;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,29 +13,34 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
+import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.model.Device;
 
+/**
+ * La classe <b>DeviceAdapter</b> permet de recycler les View.
+ */
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     private Context context;
     private ArrayList<Device> listDevice;
     private RequestOptions requestOptions;
+    private updateDevice updateDevice;
 
-    //INTERFACE
-    private updateListerner updateListerner;
-
-    public interface updateListerner {
-        void update(ArrayList<Device> sendData);
-    }
-
-    public DeviceAdapter(Context context, ArrayList<Device> list, updateListerner updateListerner) {
+    /**
+     * Constructeur de la classe DeviceAdapter qui prend en paramètre 3 arguments.
+     *
+     * @param context      Context de l'application
+     * @param list         Récupère la liste des capteurs/actionneurs.
+     * @param updateDevice La classe qui implémente l'interface {@link updateDevice} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     */
+    public DeviceAdapter(Context context, ArrayList<Device> list, updateDevice updateDevice) {
         this.listDevice = list;
         this.context = context;
-        this.updateListerner = updateListerner;
+        this.updateDevice = updateDevice;
 
         requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
     }
+
 
     @NonNull
     @Override
@@ -65,7 +70,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
             listDevice.get(position).setEtat(etat);
 
-            updateListerner.update(listDevice);
+            updateDevice.update(listDevice);
         });
 
     }
@@ -73,5 +78,15 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
     @Override
     public int getItemCount() {
         return listDevice.size();
+    }
+
+    public interface updateDevice {
+        /**
+         * Méthode qui va etre implémenté dans la classe {@link fr.modibo.boxdomotique.Controller.Fragment.SensorFragment}
+         * et qui permet de mettre a jour la liste des capteurs/actionneurs.
+         *
+         * @param sendNewDevice La liste des capteurs/actionneurs passe en paramètre se qui permet de le récupèrer.
+         */
+        void update(ArrayList<Device> sendNewDevice);
     }
 }

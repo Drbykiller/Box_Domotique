@@ -1,5 +1,8 @@
-package fr.modibo.boxdomotique.model;
+package fr.modibo.boxdomotique.Model;
 
+/**
+ * Classe <b>UrlServer</b> qui stocke les differentes URL du serveur.
+ */
 public class UrlServer {
 
     public static String URL_SERVER;

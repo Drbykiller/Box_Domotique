@@ -1,12 +1,10 @@
-package fr.modibo.boxdomotique.controller;
+package fr.modibo.boxdomotique.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -18,19 +16,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import fr.modibo.boxdomotique.Controller.Fragment.MainFragment;
+import fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment;
+import fr.modibo.boxdomotique.Controller.Fragment.SensorFragment;
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.controller.Fragment.MainFragment;
-import fr.modibo.boxdomotique.controller.Fragment.ScenarioFragment;
-import fr.modibo.boxdomotique.controller.Fragment.SensorFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.DeviceThreadError {
+/**
+ * Classe <b>MainActivity</b> qui gère l'affichage des differents fragments.
+ */
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.errorFromDeviceThread {
 
     public static final String MAIN_KEY = "MAIN_PARAMS";
     private Toolbar tb;
     private DrawerLayout dl;
     private NavigationView nav_view;
-    private TextView nav_view_tvUser;
-    private View view;
+    private static final String[] KEY = {"home", "sensor", "scenario", "setting", "about"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,49 +53,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
 
-        view = nav_view.getHeaderView(0);
-        nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
+        View view = nav_view.getHeaderView(0);
+        TextView nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
         nav_view_tvUser.setText(intent.getStringExtra(MAIN_KEY));
-
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment()).commit();
             nav_view.setCheckedItem(R.id.nav_home);
+        } else {
+
+            for (String aKey : KEY) {
+                String result = savedInstanceState.getString(aKey);
+                if (result != null && !result.isEmpty())
+                    getSupportActionBar().setTitle(result);
+            }
+
         }
-//        NOT WORKING
-//        else {
-//
-//            String key[] = {"home", "sensor", "scenario", "setting", "about"};
-//
-//            for (String aKey : key) {
-//                String result = savedInstanceState.getString(aKey);
-//
-//                if (result != null && !result.isEmpty()) {
-//                    tb.setTitle(result);
-//                }
-//            }
-//
-//        }
     }
 
-    // TOOLBAR
+    /**
+     * Permet de sauvegarder le nom de l'onglet que l'utilisateur a cliqué
+     * dans le Drawer et qui sera restoré dans la méthode onCreate
+     *
+     * @param outState Passe en paramètre le Bundle.
+     * @see fr.modibo.boxdomotique.Controller.MainActivity#onCreate(Bundle)
+     */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.setting:
-                Toast.makeText(this, "En cours !!!!!!!", Toast.LENGTH_SHORT).show();
+    protected void onSaveInstanceState(Bundle outState) {
+        switch (nav_view.getCheckedItem().getItemId()) {
+            case R.id.nav_home:
+                outState.putString(KEY[0], getString(R.string.app_name));
+                break;
+            case R.id.nav_sensor:
+                outState.putString(KEY[1], getString(R.string.nav_sensor));
+                break;
+            case R.id.nav_scenario:
+                outState.putString(KEY[2], getString(R.string.nav_scenario));
+                break;
+            case R.id.nav_setting:
+                outState.putString(KEY[3], getString(R.string.nav_setting));
+                break;
+            case R.id.nav_about:
+                outState.putString(KEY[4], getString(R.string.nav_about));
                 break;
         }
-        return super.onOptionsItemSelected(item);
+        super.onSaveInstanceState(outState);
     }
 
-    //NAVIGATION VIEW
+    /* ************************
+        NAVIGATION VIEW
+    *************************/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
@@ -127,40 +134,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-
         if (dl.isDrawerOpen(GravityCompat.START))
             dl.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
     }
 
+
+     /* ************************
+        INTERFACE + IMPLEMENTATION
+     *************************/
+
+    /**
+     * Méthode implémenté de la classe <b>SensorFragment</b> qui permet d'obtenir,
+     * si il y a une erreur, une erreur lors de la recuperation de la
+     * liste des capteurs/actionneurs et de l'afficher a l'utilisateur.
+     *
+     * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
+     * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#errorFromDeviceThread
+     */
     @Override
-    public void deviceThreadError(String error) {
-        Snackbar.make(dl.getRootView(), getString(R.string.errorServer) + "\nCode : " + error, Snackbar.LENGTH_LONG).show();
+    public void error(String error) {
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorServer) + "\nCode : " + error, Snackbar.LENGTH_LONG).setDuration(5000);
+        View snackbarView = snackbar.getView();
+        TextView tv = snackbarView.findViewById(R.id.snackbar_text);
+        tv.setMaxLines(5);
+        snackbar.show();
     }
 
-
-    // Bundle
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//
-//        switch (nav_view.getCheckedItem().getItemId()) {
-//            case R.id.nav_home:
-//                outState.putString("home", getString(R.string.nav_home));
-//                break;
-//            case R.id.nav_sensor:
-//                outState.putString("sensor", getString(R.string.nav_sensor));
-//                break;
-//            case R.id.nav_scenario:
-//                outState.putString("scenario", getString(R.string.nav_scenario));
-//                break;
-//            case R.id.nav_setting:
-//                outState.putString("setting", getString(R.string.nav_setting));
-//                break;
-//            case R.id.nav_about:
-//                outState.putString("about", getString(R.string.nav_about));
-//                break;
-//        }
-//
-//        super.onSaveInstanceState(outState);
 }

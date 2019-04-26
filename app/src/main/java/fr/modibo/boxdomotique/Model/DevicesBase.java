@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.model;
+package fr.modibo.boxdomotique.Model;
 
 import java.util.ArrayList;
 

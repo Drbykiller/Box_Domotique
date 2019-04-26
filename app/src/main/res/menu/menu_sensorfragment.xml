@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/setting"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/nav_setting"
+        android:id="@+id/tb_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/tb_refresh"
         app:showAsAction="ifRoom" />
 
 </menu>

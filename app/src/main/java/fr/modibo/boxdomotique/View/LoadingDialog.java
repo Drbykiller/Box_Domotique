@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.view;
+package fr.modibo.boxdomotique.View;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".controller.MainActivity" />
+        <activity android:name=".Controller.MainActivity" />
         <activity
-            android:name=".controller.LoginActivity"
+            android:name=".Controller.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

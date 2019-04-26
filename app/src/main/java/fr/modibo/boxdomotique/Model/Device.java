@@ -1,7 +1,10 @@
-package fr.modibo.boxdomotique.model;
+package fr.modibo.boxdomotique.Model;
 
 import java.io.Serializable;
 
+/**
+ * Classe <b>Device</b> qui répertorie les caractéristiques des capteurs/actionneurs.
+ */
 public class Device implements Serializable {
 
     private Integer id;
@@ -15,7 +18,7 @@ public class Device implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    private void setId(Integer id) {
         this.id = id;
     }
 
@@ -23,7 +26,7 @@ public class Device implements Serializable {
         return nom;
     }
 
-    public void setNom(String nom) {
+    private void setNom(String nom) {
         this.nom = nom;
     }
 
@@ -31,7 +34,7 @@ public class Device implements Serializable {
         return type;
     }
 
-    public void setType(String type) {
+    private void setType(String type) {
         this.type = type;
     }
 
@@ -55,7 +58,7 @@ public class Device implements Serializable {
         return image;
     }
 
-    public void setImage(String image) {
+    private void setImage(String image) {
         this.image = image;
     }
 }

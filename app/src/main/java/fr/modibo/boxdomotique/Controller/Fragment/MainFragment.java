@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.controller.Fragment;
+package fr.modibo.boxdomotique.Controller.Fragment;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;

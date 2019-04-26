@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.model.Thread;
+package fr.modibo.boxdomotique.Model.Thread;
 
 import android.os.AsyncTask;
 
@@ -7,13 +7,16 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.model.Device;
-import fr.modibo.boxdomotique.model.UrlServer;
+import fr.modibo.boxdomotique.Model.Device;
+import fr.modibo.boxdomotique.Model.UrlServer;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+/**
+ * Classe <b>JsonThread</b> qui permet d'envoyer les modifications effectuées par l'utilisateur au serveur.
+ */
 public class JsonThread extends AsyncTask<ArrayList<Device>, Void, Void> {
 
     private Gson gson;
@@ -49,6 +52,5 @@ public class JsonThread extends AsyncTask<ArrayList<Device>, Void, Void> {
 
         return null;
     }
-
 
 }
