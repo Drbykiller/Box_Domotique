@@ -1,18 +1,39 @@
 package fr.modibo.boxdomotique.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
- * Classe <b>Device</b> qui répertorie les caractéristiques des capteurs/actionneurs.
+ * Classe <b>Devices</b> qui répertorie les caractéristiques des capteurs/actionneurs.
  */
-public class Device implements Serializable {
+public class Devices implements Serializable {
 
+    @SerializedName("id")
+    @Expose
     private Integer id;
+
+    @SerializedName("nom")
+    @Expose
     private String nom;
+
+    @SerializedName("type")
+    @Expose
     private String type;
+
+    @SerializedName("etat")
+    @Expose
     private Integer etat;
+
+    @SerializedName("valeur")
+    @Expose
     private Integer valeur;
+
+    @SerializedName("image")
+    @Expose
     private String image;
+
 
     public Integer getId() {
         return id;

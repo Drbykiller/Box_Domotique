@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Device;
+import fr.modibo.boxdomotique.Model.Devices;
 import fr.modibo.boxdomotique.Model.GetDeviceServer;
 import fr.modibo.boxdomotique.View.LoadingDialog;
 
@@ -16,7 +16,7 @@ import fr.modibo.boxdomotique.View.LoadingDialog;
  */
 public class DeviceThread extends AsyncTask<Void, Void, Void> {
 
-    private ArrayList<Device> result;
+    private ArrayList<Devices> result;
     private Exception e;
     private LoadingDialog dialog;
     private FragmentManager fragmentManager;
@@ -38,7 +38,7 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         dialog = new LoadingDialog();
-        dialog.show(fragmentManager, "Loading Device");
+        dialog.show(fragmentManager, "Loading Devices");
     }
 
     @Override
@@ -78,7 +78,7 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
          * @param resultDevice Liste des capteurs/actionneurs passé en paramètre.
          * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#resultDeviceThread(ArrayList)
          */
-        void resultDeviceThread(ArrayList<Device> resultDevice);
+        void resultDeviceThread(ArrayList<Devices> resultDevice);
 
         /**
          * La 2ème méthode envoie, si il y a une erreur, une erreur.

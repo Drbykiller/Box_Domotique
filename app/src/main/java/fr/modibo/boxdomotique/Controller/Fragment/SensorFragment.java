@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Device;
+import fr.modibo.boxdomotique.Model.Devices;
 import fr.modibo.boxdomotique.Model.Thread.DeviceThread;
 import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.R;
@@ -31,7 +31,7 @@ import fr.modibo.boxdomotique.View.DeviceAdapter;
  */
 public class SensorFragment extends Fragment implements DeviceAdapter.updateDevice, DeviceThread.executeDeviceThread {
 
-    private ArrayList<Device> data;
+    private ArrayList<Devices> data;
     private DeviceAdapter adapter;
     private errorFromDeviceThread errorFromDeviceThread;
     private FragmentManager fragmentManager;
@@ -131,8 +131,8 @@ public class SensorFragment extends Fragment implements DeviceAdapter.updateDevi
      * @see fr.modibo.boxdomotique.Model.Thread.JsonThread
      */
     @Override
-    public void update(ArrayList<Device> sendNewDevice) {
-        new JsonThread().execute(sendNewDevice);
+    public void update(ArrayList<Devices> sendNewDevice) {
+        new JsonThread(sendNewDevice).execute();
     }
 
     /**
@@ -145,7 +145,7 @@ public class SensorFragment extends Fragment implements DeviceAdapter.updateDevi
      * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread#executeDeviceThread
      */
     @Override
-    public void resultDeviceThread(ArrayList<Device> resultDevice) {
+    public void resultDeviceThread(ArrayList<Devices> resultDevice) {
         data.clear();
         data.addAll(resultDevice);
         adapter.notifyDataSetChanged();

@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Device;
+import fr.modibo.boxdomotique.Model.Devices;
 import fr.modibo.boxdomotique.Model.UrlServer;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -17,10 +17,16 @@ import okhttp3.RequestBody;
 /**
  * Classe <b>JsonThread</b> qui permet d'envoyer les modifications effectuées par l'utilisateur au serveur.
  */
-public class JsonThread extends AsyncTask<ArrayList<Device>, Void, Void> {
+public class JsonThread extends AsyncTask<Void, Void, Void> {
 
     private Gson gson;
     private final String URL = UrlServer.URL_SERVER + UrlServer.SEND_URL_JSON;
+    private ArrayList<Devices> list;
+
+    public JsonThread(ArrayList<Devices> list) {
+        this.list = new ArrayList<>();
+        this.list = list;
+    }
 
     @Override
     protected void onPreExecute() {
@@ -30,9 +36,9 @@ public class JsonThread extends AsyncTask<ArrayList<Device>, Void, Void> {
 
     @SafeVarargs
     @Override
-    protected final Void doInBackground(ArrayList<Device>... arrayLists) {
+    protected final Void doInBackground(Void... voids) {
 
-        String json = gson.toJson(arrayLists);
+        String json = gson.toJson(list);
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
 
         OkHttpClient okHttpClient = new OkHttpClient();

@@ -1,7 +1,9 @@
 package fr.modibo.boxdomotique.Model;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class GetDeviceServer {
      * @return Retourne la liste des capteurs/actionneurs.
      * @throws Exception Si il n'arrive pas contacter le serveur ou si la liste des capteurs/actionneurs est vide.
      */
-    public static ArrayList<Device> getDeviceServer() throws Exception {
+    public static ArrayList<Devices> getDeviceServer() throws Exception {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -49,14 +51,19 @@ public class GetDeviceServer {
 
         //JSON
         Gson gson = new Gson();
-        DevicesBase devicesBase = gson.fromJson(result, DevicesBase.class);
 
-        ArrayList<Device> device = new ArrayList<>();
 
-        if (devicesBase == null)
+        Type DeviceType = new TypeToken<ArrayList<Devices>>() {
+        }.getType();
+
+        ArrayList<Devices> resultListDevice = gson.fromJson(result, DeviceType);
+
+        ArrayList<Devices> device = new ArrayList<>();
+
+        if (resultListDevice == null)
             throw new Exception("Erreur !!!");
-        else if (devicesBase.getDevices() != null)
-            device.addAll(devicesBase.getDevices());
+        else
+            device.addAll(resultListDevice);
 
         return device;
     }

@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Device;
+import fr.modibo.boxdomotique.Model.Devices;
 import fr.modibo.boxdomotique.R;
 
 /**
@@ -22,7 +22,7 @@ import fr.modibo.boxdomotique.R;
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     private Context context;
-    private ArrayList<Device> listDevice;
+    private ArrayList<Devices> listDevice;
     private RequestOptions requestOptions;
     private updateDevice updateDevice;
 
@@ -33,7 +33,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
      * @param list         Récupère la liste des capteurs/actionneurs.
      * @param updateDevice La classe qui implémente l'interface {@link updateDevice} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      */
-    public DeviceAdapter(Context context, ArrayList<Device> list, updateDevice updateDevice) {
+    public DeviceAdapter(Context context, ArrayList<Devices> list, updateDevice updateDevice) {
         this.listDevice = list;
         this.context = context;
         this.updateDevice = updateDevice;
@@ -52,7 +52,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull DeviceViewHolder holder, int position) {
 
-        final Device device = listDevice.get(position);
+        final Devices device = listDevice.get(position);
 
         holder.setMcs_tvTitle(device.getNom());
         holder.setMcs_tvInfo(device.getType());
@@ -87,6 +87,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
          *
          * @param sendNewDevice La liste des capteurs/actionneurs passe en paramètre se qui permet de le récupèrer.
          */
-        void update(ArrayList<Device> sendNewDevice);
+        void update(ArrayList<Devices> sendNewDevice);
     }
 }
