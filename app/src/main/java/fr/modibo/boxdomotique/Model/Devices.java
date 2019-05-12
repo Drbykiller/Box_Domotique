@@ -71,7 +71,7 @@ public class Devices implements Serializable {
         return valeur;
     }
 
-    public void setValeur(Integer valeur) {
+    private void setValeur(Integer valeur) {
         this.valeur = valeur;
     }
 

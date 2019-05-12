@@ -45,25 +45,19 @@ public class GetDeviceServer {
             result = response.body().string();
         }
 
-        /* ********************
-         PARTIE 2
-         ******************** */
-
-        //JSON
         Gson gson = new Gson();
-
 
         Type DeviceType = new TypeToken<ArrayList<Devices>>() {
         }.getType();
 
         ArrayList<Devices> resultListDevice = gson.fromJson(result, DeviceType);
 
-        ArrayList<Devices> device = new ArrayList<>();
+        ArrayList<Devices> device;
 
         if (resultListDevice == null)
             throw new Exception("Erreur !!!");
         else
-            device.addAll(resultListDevice);
+            device = new ArrayList<>(resultListDevice);
 
         return device;
     }

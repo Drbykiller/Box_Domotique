@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.Model.Devices;
 import fr.modibo.boxdomotique.Model.Thread.DeviceThread;
-import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.R;
 import fr.modibo.boxdomotique.View.DeviceAdapter;
 
@@ -29,7 +28,7 @@ import fr.modibo.boxdomotique.View.DeviceAdapter;
  * Classe <b>SensorFragment</b> qui fait le lien entre la recuperation des differents capteurs/actionneurs
  * et l'affichage de ces derniers avec un RecycleView.
  */
-public class SensorFragment extends Fragment implements DeviceAdapter.updateDevice, DeviceThread.executeDeviceThread {
+public class SensorFragment extends Fragment implements DeviceThread.executeDeviceThread {
 
     private ArrayList<Devices> data;
     private DeviceAdapter adapter;
@@ -56,7 +55,7 @@ public class SensorFragment extends Fragment implements DeviceAdapter.updateDevi
         RecyclerView rv = view.findViewById(R.id.rv);
 
         data = new ArrayList<>();
-        adapter = new DeviceAdapter(getContext(), data, this);
+        adapter = new DeviceAdapter(getContext(), data);
         rv.setAdapter(adapter);
 
         boolean tablet = getResources().getBoolean(R.bool.tablet);
@@ -105,6 +104,7 @@ public class SensorFragment extends Fragment implements DeviceAdapter.updateDevi
         return super.onOptionsItemSelected(item);
     }
 
+
     /* ************************
         INTERFACE + IMPLEMENTATION
      *************************/
@@ -119,20 +119,6 @@ public class SensorFragment extends Fragment implements DeviceAdapter.updateDevi
          * @see SensorFragment#errorDeviceThread(String)
          */
         void error(String error);
-    }
-
-    /**
-     * Methode implementé de la classe <b>DeviceAdapter</b>
-     * qui permet de prendre en compte les modifications effectuées par l'utilisateur et
-     * qui envoie ces derniers au format JSON au serveur via la classe <b>JsonThread</b>.
-     *
-     * @param sendNewDevice Liste des capteurs/actionneurs modifiés par l'utilisateur.
-     * @see fr.modibo.boxdomotique.View.DeviceAdapter
-     * @see fr.modibo.boxdomotique.Model.Thread.JsonThread
-     */
-    @Override
-    public void update(ArrayList<Devices> sendNewDevice) {
-        new JsonThread(sendNewDevice).execute();
     }
 
     /**

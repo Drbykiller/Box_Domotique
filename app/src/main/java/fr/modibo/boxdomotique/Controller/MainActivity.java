@@ -26,18 +26,17 @@ import fr.modibo.boxdomotique.R;
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.errorFromDeviceThread {
 
-    public static final String MAIN_KEY = "MAIN_PARAMS";
     private Toolbar tb;
     private DrawerLayout dl;
     private NavigationView nav_view;
+    public static final String MAIN_KEY = "MAIN_PARAMS";
     private static final String[] KEY = {"home", "sensor", "scenario", "setting", "about"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Intent intent = getIntent();
 
         // TOOLBAR
         tb = findViewById(R.id.tb);
@@ -55,19 +54,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View view = nav_view.getHeaderView(0);
         TextView nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
+        Intent intent = getIntent();
         nav_view_tvUser.setText(intent.getStringExtra(MAIN_KEY));
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment()).commit();
             nav_view.setCheckedItem(R.id.nav_home);
         } else {
-
             for (String aKey : KEY) {
                 String result = savedInstanceState.getString(aKey);
                 if (result != null && !result.isEmpty())
                     getSupportActionBar().setTitle(result);
             }
-
         }
     }
 
@@ -99,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         super.onSaveInstanceState(outState);
     }
+
 
     /* ************************
         NAVIGATION VIEW

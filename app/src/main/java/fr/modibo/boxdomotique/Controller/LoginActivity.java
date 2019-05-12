@@ -26,14 +26,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private TextInputEditText etServer, etUser, etPassword;
     private TextInputLayout til_Server, til_User, til_Password;
-    private CheckBox checkSave;
+    private CheckBox checkBox;
     private FragmentManager fragmentManager;
 
     // Les keys pour la Sauvegarde des identifiants.
-    private final String SHARED_PREF = "SAVE_DATA";
-    private final String KEY_IP_ADDRESS = "IP";
-    private final String KEY_USER = "USER";
-    private final String KEY_PASSWORD = "PASSWORD";
+    private final String SHARED_PREF = "SAVE_DATA", KEY_IP_ADDRESS = "IP";
+    private final String KEY_USER = "USER", KEY_PASSWORD = "PASSWORD";
     private final String KEY_CHECK = "CHECK";
 
 
@@ -48,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         til_Server = findViewById(R.id.til_Server);
         til_User = findViewById(R.id.til_User);
         til_Password = findViewById(R.id.til_Password);
-        checkSave = findViewById(R.id.checkSave);
+        checkBox = findViewById(R.id.checkBox);
 
         Button btConnection = findViewById(R.id.btConnection);
         btConnection.setOnClickListener(this);
@@ -69,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (result.equalsIgnoreCase("error"))
             return;
 
-        if (checkSave.isChecked())
+        if (checkBox.isChecked())
             saveID();
 
         // Défini l'adresse IP du serveur
@@ -91,15 +89,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      */
     @Override
     protected void onStop() {
-        if (!checkSave.isChecked()) {
+        if (!checkBox.isChecked()) {
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             editor.putString(KEY_IP_ADDRESS, "");
             editor.putString(KEY_USER, "");
             editor.putString(KEY_PASSWORD, "");
-            editor.putBoolean(KEY_CHECK, checkSave.isChecked());
-
+            editor.putBoolean(KEY_CHECK, checkBox.isChecked());
             editor.apply();
         }
         super.onStop();
@@ -123,10 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if (user.isEmpty()) {
             til_User.setError(getString(R.string.errorUser));
 
-            if (server.isEmpty())
-                til_Server.setError(getString(R.string.errorEnterServer));
-            else
-                til_Server.setError(null);
+            til_Server.setError(null);
 
             if (password.isEmpty())
                 til_Password.setError(getString(R.string.errorPassword));
@@ -154,8 +148,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.putString(KEY_IP_ADDRESS, etServer.getText().toString());
         editor.putString(KEY_USER, etUser.getText().toString());
         editor.putString(KEY_PASSWORD, etPassword.getText().toString());
-        editor.putBoolean(KEY_CHECK, checkSave.isChecked());
-
+        editor.putBoolean(KEY_CHECK, checkBox.isChecked());
         editor.apply();
     }
 
@@ -165,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etServer.setText(sharedPreferences.getString(KEY_IP_ADDRESS, ""));
         etUser.setText(sharedPreferences.getString(KEY_USER, ""));
         etPassword.setText(sharedPreferences.getString(KEY_PASSWORD, ""));
-        checkSave.setChecked(sharedPreferences.getBoolean(KEY_CHECK, false));
+        checkBox.setChecked(sharedPreferences.getBoolean(KEY_CHECK, false));
     }
 
 

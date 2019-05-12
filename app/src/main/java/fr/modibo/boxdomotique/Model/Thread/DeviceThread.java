@@ -22,6 +22,7 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
     private FragmentManager fragmentManager;
     private executeDeviceThread executeDeviceThread;
 
+
     /**
      * Constructeur de la classe <b>DeviceThread</b> qui prend en paramètre 2 arguments.
      *
@@ -43,7 +44,6 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-
         try {
             result = GetDeviceServer.getDeviceServer();
         } catch (Exception ex) {
@@ -63,6 +63,7 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
         } else
             executeDeviceThread.resultDeviceThread(result);
     }
+
 
     /* ************************
         INTERFACE + IMPLEMENTATION

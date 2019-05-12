@@ -19,7 +19,6 @@
     <string name="nav_dw_open" translatable="false">Open navigation drawer</string>
     <string name="nav_dw_close" translatable="false">Close navigation drawer</string>
     <string name="nav_home">Home</string>
-    <!--<string name="nav_part">Parts management</string>-->
     <string name="nav_sensor">Sensor management</string>
     <string name="nav_scenario">Scenario management</string>
     <string name="nav_setting">Setting</string>

@@ -19,10 +19,15 @@ import okhttp3.RequestBody;
  */
 public class JsonThread extends AsyncTask<Void, Void, Void> {
 
+    private ArrayList<Devices> list;
     private Gson gson;
     private final String URL = UrlServer.URL_SERVER + UrlServer.SEND_URL_JSON;
-    private ArrayList<Devices> list;
 
+    /**
+     * Constructeur de la classe <b>JsonThread</b> surchargé.
+     *
+     * @param list Liste des capteurs/actionneurs avec les modifications effectuées par l'utilisateur.
+     */
     public JsonThread(ArrayList<Devices> list) {
         this.list = new ArrayList<>();
         this.list = list;
@@ -34,10 +39,8 @@ public class JsonThread extends AsyncTask<Void, Void, Void> {
         gson = new Gson();
     }
 
-    @SafeVarargs
     @Override
     protected final Void doInBackground(Void... voids) {
-
         String json = gson.toJson(list);
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
 
@@ -55,7 +58,6 @@ public class JsonThread extends AsyncTask<Void, Void, Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 

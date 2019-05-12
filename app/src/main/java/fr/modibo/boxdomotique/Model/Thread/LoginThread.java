@@ -21,8 +21,8 @@ public class LoginThread extends AsyncTask<String, Void, Void> {
     private LoadingDialog dialog;
     private FragmentManager fragmentManager;
     private loginSuccessful loginSuccessful;
-
     private final String URL = UrlServer.URL_SERVER + UrlServer.URL_CONNECTION;
+
 
     /**
      * Constructeur de la classe LoginThread qui prend en paramètre 2 arguments.

@@ -7,13 +7,6 @@
             android:icon="@drawable/ic_home"
             android:title="@string/nav_home" />
 
-        <!--
-        <item
-            android:id="@+id/nav_part"
-            android:icon="@drawable/ic_part"
-            android:title="@string/nav_part" />
-            -->
-
         <item
             android:id="@+id/nav_sensor"
             android:icon="@drawable/ic_sensor"

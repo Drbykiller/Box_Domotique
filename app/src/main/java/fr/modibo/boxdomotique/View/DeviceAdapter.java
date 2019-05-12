@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.Model.Devices;
+import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.R;
 
 /**
@@ -24,23 +25,19 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
     private Context context;
     private ArrayList<Devices> listDevice;
     private RequestOptions requestOptions;
-    private updateDevice updateDevice;
+
 
     /**
-     * Constructeur de la classe DeviceAdapter qui prend en paramètre 3 arguments.
+     * Constructeur de la classe DeviceAdapter qui prend en paramètre 2 arguments.
      *
-     * @param context      Context de l'application
-     * @param list         Récupère la liste des capteurs/actionneurs.
-     * @param updateDevice La classe qui implémente l'interface {@link updateDevice} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param context Context de l'application
+     * @param list    Récupère la liste des capteurs/actionneurs.
      */
-    public DeviceAdapter(Context context, ArrayList<Devices> list, updateDevice updateDevice) {
+    public DeviceAdapter(Context context, ArrayList<Devices> list) {
         this.listDevice = list;
         this.context = context;
-        this.updateDevice = updateDevice;
-
-        requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading).error(R.drawable.loading);
+        requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading_image).error(R.drawable.error_loading_image);
     }
-
 
     @NonNull
     @Override
@@ -51,7 +48,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DeviceViewHolder holder, int position) {
-
         final Devices device = listDevice.get(position);
 
         holder.setMcs_tvTitle(device.getNom());
@@ -65,28 +61,16 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
         Glide.with(context).load(listDevice.get(position).getImage()).apply(requestOptions).into(holder.getMcs_iv());
 
         holder.getMcs_switch().setOnCheckedChangeListener((buttonView, isChecked) -> {
-
             int etat = (isChecked) ? 1 : 0;
 
             listDevice.get(position).setEtat(etat);
 
-            updateDevice.update(listDevice);
+            new JsonThread(listDevice).execute();
         });
-
     }
 
     @Override
     public int getItemCount() {
         return listDevice.size();
-    }
-
-    public interface updateDevice {
-        /**
-         * Méthode qui va etre implémenté dans la classe {@link fr.modibo.boxdomotique.Controller.Fragment.SensorFragment}
-         * et qui permet de mettre a jour la liste des capteurs/actionneurs.
-         *
-         * @param sendNewDevice La liste des capteurs/actionneurs passe en paramètre se qui permet de le récupèrer.
-         */
-        void update(ArrayList<Devices> sendNewDevice);
     }
 }
