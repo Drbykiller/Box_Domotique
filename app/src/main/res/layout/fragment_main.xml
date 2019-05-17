@@ -3,15 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D32F2F"
+    android:background="@color/colorBackground"
     tools:context=".Controller.Fragment.MainFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="ACCUEIL FRAGMENT"
-        android:textColor="#FFFFFF"
-        android:textSize="50sp" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/material_card_home" />
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.appcompat.widget.ContentFrameLayout>

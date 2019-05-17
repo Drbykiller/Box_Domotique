@@ -13,6 +13,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,11 +26,13 @@ import fr.modibo.boxdomotique.R;
 /**
  * Classe <b>MainActivity</b> qui gère l'affichage des differents fragments.
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.errorFromDeviceThread {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.errorFromDeviceThread, MainFragment.newFragmentFromHomeAdapter {
 
     private Toolbar tb;
     private DrawerLayout dl;
     private NavigationView nav_view;
+    private CollapsingToolbarLayout collapsing;
+    private AppBarLayout appbar;
     public static final String MAIN_KEY = "MAIN_PARAMS";
     private static final String[] KEY = {"home", "sensor", "scenario", "setting", "about"};
 
@@ -52,6 +56,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
 
+        //Collapsing
+        collapsing = findViewById(R.id.collapsing);
+        collapsing.setTitle(getResources().getString(R.string.app_name));
+
+        appbar = findViewById(R.id.appbar);
+        appbar.setExpanded(false);
+
         View view = nav_view.getHeaderView(0);
         TextView nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
         Intent intent = getIntent();
@@ -64,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             for (String aKey : KEY) {
                 String result = savedInstanceState.getString(aKey);
                 if (result != null && !result.isEmpty())
-                    getSupportActionBar().setTitle(result);
+                    collapsing.setTitle(result);
             }
         }
     }
@@ -106,16 +117,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment()).commit();
-                tb.setTitle(R.string.app_name);
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment(this)).commit();
+                collapsing.setTitle(getResources().getString(R.string.app_name));
                 break;
             case R.id.nav_sensor:
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
-                tb.setTitle(R.string.nav_sensor);
+                collapsing.setTitle(getResources().getString(R.string.nav_sensor));
+                appbar.setExpanded(true, true);
                 break;
             case R.id.nav_scenario:
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
-                tb.setTitle(R.string.nav_scenario);
+                collapsing.setTitle(getResources().getString(R.string.nav_scenario));
+                appbar.setExpanded(true);
                 break;
             case R.id.nav_setting:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
@@ -161,4 +174,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         snackbar.show();
     }
 
+    @Override
+    public void loadFragmentFromHomeAdapter(String title) {
+        switch (title) {
+            case "Gestion des Capteurs":
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
+                nav_view.setCheckedItem(R.id.nav_sensor);
+                collapsing.setTitle(getResources().getString(R.string.nav_sensor));
+                break;
+            case "Gestion des Scénarios":
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
+                nav_view.setCheckedItem(R.id.nav_scenario);
+                collapsing.setTitle(getResources().getString(R.string.nav_scenario));
+                break;
+        }
+    }
 }
