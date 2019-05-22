@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import fr.modibo.boxdomotique.Model.Devices;
 import fr.modibo.boxdomotique.Model.Thread.DeviceThread;
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.View.DeviceAdapter;
+import fr.modibo.boxdomotique.View.Adapter.DeviceAdapter;
 
 /**
  * Classe <b>SensorFragment</b> qui fait le lien entre la recuperation des differents capteurs/actionneurs
@@ -33,7 +32,6 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
     private ArrayList<Devices> data;
     private DeviceAdapter adapter;
     private errorFromDeviceThread errorFromDeviceThread;
-    private FragmentManager fragmentManager;
 
 
     public SensorFragment() {
@@ -82,8 +80,7 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentManager = getFragmentManager();
-        new DeviceThread(this, fragmentManager).execute();
+        new DeviceThread(this, getFragmentManager()).execute();
     }
 
 
@@ -99,7 +96,7 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.tb_refresh)
-            new DeviceThread(this, fragmentManager).execute();
+            new DeviceThread(this, getFragmentManager()).execute();
 
         return super.onOptionsItemSelected(item);
     }

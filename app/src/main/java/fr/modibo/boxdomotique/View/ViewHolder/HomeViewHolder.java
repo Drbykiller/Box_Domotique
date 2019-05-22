@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.View;
+package fr.modibo.boxdomotique.View.ViewHolder;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +14,7 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
     private View mch_root;
     private TextView mch_title;
     private TextView mch_info;
-    protected ImageView mch_image;
+    private ImageView mch_image;
 
     public HomeViewHolder(@NonNull View itemView) {
         super(itemView);

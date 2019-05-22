@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.View;
+package fr.modibo.boxdomotique.View.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import fr.modibo.boxdomotique.Model.Devices;
 import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.R;
+import fr.modibo.boxdomotique.View.ViewHolder.DeviceViewHolder;
 
 /**
  * La classe <b>DeviceAdapter</b> permet de recycler les View.
@@ -54,16 +55,21 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
         holder.setMcs_tvInfo(device.getType());
 
         if (device.getEtat() == 1)
-            holder.setMcs_switch(true);
+            holder.getMcs_rbON().toggle();
         else
-            holder.setMcs_switch(false);
+            holder.getMcs_rbOFF().toggle();
 
         Glide.with(context).load(listDevice.get(position).getImage()).apply(requestOptions).into(holder.getMcs_iv());
 
-        holder.getMcs_switch().setOnCheckedChangeListener((buttonView, isChecked) -> {
-            int etat = (isChecked) ? 1 : 0;
-
-            listDevice.get(position).setEtat(etat);
+        holder.getMcs_rg().setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.mcs_rbON:
+                    listDevice.get(position).setEtat(1);
+                    break;
+                case R.id.mcs_rbOFF:
+                    listDevice.get(position).setEtat(0);
+                    break;
+            }
 
             new JsonThread(listDevice).execute();
         });

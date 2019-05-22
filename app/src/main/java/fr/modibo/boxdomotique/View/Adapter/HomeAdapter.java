@@ -1,4 +1,4 @@
-package fr.modibo.boxdomotique.View;
+package fr.modibo.boxdomotique.View.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.Model.Home;
 import fr.modibo.boxdomotique.R;
+import fr.modibo.boxdomotique.View.ViewHolder.HomeViewHolder;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {
 
@@ -35,7 +36,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {
 
         holder.setMch_title(home.getTitle());
         holder.setMch_info(home.getInfo());
-        holder.mch_image.setImageResource(home.getImage());
+        holder.getMch_image().setImageResource(home.getImage());
 
         holder.getMch_root().setOnClickListener(new View.OnClickListener() {
             @Override

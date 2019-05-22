@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.Model.Home;
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.View.HomeAdapter;
+import fr.modibo.boxdomotique.View.Adapter.HomeAdapter;
 
 public class MainFragment extends Fragment implements HomeAdapter.newFragment {
 

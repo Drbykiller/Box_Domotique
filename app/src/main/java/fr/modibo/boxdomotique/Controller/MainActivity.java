@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView nav_view;
     private CollapsingToolbarLayout collapsing;
     private AppBarLayout appbar;
+    private FloatingActionButton fab;
+    private ImageView collapsing_img;
     public static final String MAIN_KEY = "MAIN_PARAMS";
     private static final String[] KEY = {"home", "sensor", "scenario", "setting", "about"};
 
@@ -60,8 +64,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         collapsing = findViewById(R.id.collapsing);
         collapsing.setTitle(getResources().getString(R.string.app_name));
 
+        // App Bar Layout
         appbar = findViewById(R.id.appbar);
-        appbar.setExpanded(false);
+        appbar.setExpanded(false, false);
+
+        collapsing_img = findViewById(R.id.collapsing_img);
+        collapsing_img.setImageResource(0);
+
+        // Floating Button
+        fab = findViewById(R.id.fab);
+        fab.hide();
 
         View view = nav_view.getHeaderView(0);
         TextView nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
@@ -119,16 +131,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment(this)).commit();
                 collapsing.setTitle(getResources().getString(R.string.app_name));
+                collapsing_img.setImageResource(0);
+                appbar.setExpanded(false, false);
+                fab.hide();
                 break;
             case R.id.nav_sensor:
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
                 collapsing.setTitle(getResources().getString(R.string.nav_sensor));
-                appbar.setExpanded(true, true);
+                collapsing_img.setImageResource(0);
+                appbar.setExpanded(false, false);
+                fab.hide();
                 break;
             case R.id.nav_scenario:
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
                 collapsing.setTitle(getResources().getString(R.string.nav_scenario));
-                appbar.setExpanded(true);
+                collapsing_img.setImageResource(R.drawable.collapsing_scenario);
+                appbar.setExpanded(true, true);
+                fab.show();
                 break;
             case R.id.nav_setting:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
@@ -180,12 +199,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case "Gestion des Capteurs":
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
                 nav_view.setCheckedItem(R.id.nav_sensor);
+                collapsing_img.setImageResource(0);
+                appbar.setExpanded(false, false);
                 collapsing.setTitle(getResources().getString(R.string.nav_sensor));
+                fab.hide();
                 break;
             case "Gestion des Scénarios":
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
                 nav_view.setCheckedItem(R.id.nav_scenario);
+                collapsing_img.setImageResource(R.drawable.collapsing_scenario);
+                appbar.setExpanded(true, true);
                 collapsing.setTitle(getResources().getString(R.string.nav_scenario));
+                fab.show();
                 break;
         }
     }

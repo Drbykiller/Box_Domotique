@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,7 +26,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputEditText etServer, etUser, etPassword;
     private TextInputLayout til_Server, til_User, til_Password;
     private CheckBox checkBox;
-    private FragmentManager fragmentManager;
 
     // Les keys pour la Sauvegarde des identifiants.
     private final String SHARED_PREF = "SAVE_DATA", KEY_IP_ADDRESS = "IP";
@@ -50,8 +48,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Button btConnection = findViewById(R.id.btConnection);
         btConnection.setOnClickListener(this);
-
-        fragmentManager = getSupportFragmentManager();
 
         loadUpdateID();
     }
@@ -80,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         } else
-            new LoginThread(fragmentManager, this).execute(user, password);
+            new LoginThread(getSupportFragmentManager(), this).execute(user, password);
     }
 
     /**

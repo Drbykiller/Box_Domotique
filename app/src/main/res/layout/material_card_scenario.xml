@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     android:layout_marginStart="@dimen/mtrl_card_spacing"
     android:layout_marginTop="@dimen/mtrl_card_spacing"
     android:layout_marginEnd="@dimen/mtrl_card_spacing"
@@ -19,12 +19,6 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/mcs_iv"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/loading_image" />
-
         <!-- CONTENU -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -38,7 +32,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/mcs_tvTitle"
+                    android:id="@+id/mcScenario_tvScenario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/strNull"
@@ -53,7 +47,7 @@
                 <!-- ESPACE -->
 
                 <RadioGroup
-                    android:id="@+id/mcs_rg"
+                    android:id="@+id/mcScenario_rg"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
@@ -61,7 +55,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/mcs_rbOFF"
+                        android:id="@+id/mcScenario_rbOFF"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="1dp"
@@ -75,7 +69,7 @@
                         android:textColor="@color/colorText" />
 
                     <RadioButton
-                        android:id="@+id/mcs_rbON"
+                        android:id="@+id/mcScenario_rbON"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="1dp"
@@ -92,11 +86,31 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/mcs_tvInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/strNull" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mcScenario_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/strNull" />
+
+                <!-- ESPACE -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <!-- ESPACE -->
+
+                <Spinner
+                    android:id="@+id/mcScenario_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <!-- CONTENU -->

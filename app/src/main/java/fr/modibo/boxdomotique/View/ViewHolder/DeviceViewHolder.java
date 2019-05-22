@@ -1,11 +1,12 @@
-package fr.modibo.boxdomotique.View;
+package fr.modibo.boxdomotique.View.ViewHolder;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import fr.modibo.boxdomotique.R;
@@ -19,14 +20,18 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
     private TextView mcs_tvTitle;
     private TextView mcs_tvInfo;
     private ImageView mcs_iv;
-    private SwitchCompat mcs_switch;
+    private RadioGroup mcs_rg;
+    private RadioButton mcs_rbOFF;
+    private RadioButton mcs_rbON;
 
     public DeviceViewHolder(@NonNull View itemView) {
         super(itemView);
         mcs_tvTitle = itemView.findViewById(R.id.mcs_tvTitle);
         mcs_tvInfo = itemView.findViewById(R.id.mcs_tvInfo);
         mcs_iv = itemView.findViewById(R.id.mcs_iv);
-        mcs_switch = itemView.findViewById(R.id.mcs_switch);
+        mcs_rg = itemView.findViewById(R.id.mcs_rg);
+        mcs_rbOFF = itemView.findViewById(R.id.mcs_rbOFF);
+        mcs_rbON = itemView.findViewById(R.id.mcs_rbON);
     }
 
     public TextView getMcs_tvTitle() {
@@ -53,11 +58,27 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
         this.mcs_iv = mcs_iv;
     }
 
-    public SwitchCompat getMcs_switch() {
-        return mcs_switch;
+    public RadioGroup getMcs_rg() {
+        return mcs_rg;
     }
 
-    public void setMcs_switch(Boolean isSwitch) {
-        mcs_switch.setChecked(isSwitch);
+    public void setMcs_rg(RadioGroup mcs_rg) {
+        this.mcs_rg = mcs_rg;
+    }
+
+    public RadioButton getMcs_rbOFF() {
+        return mcs_rbOFF;
+    }
+
+    public void setMcs_rbOFF(RadioButton mcs_rbOFF) {
+        this.mcs_rbOFF = mcs_rbOFF;
+    }
+
+    public RadioButton getMcs_rbON() {
+        return mcs_rbON;
+    }
+
+    public void setMcs_rbON(RadioButton mcs_rbON) {
+        this.mcs_rbON = mcs_rbON;
     }
 }
