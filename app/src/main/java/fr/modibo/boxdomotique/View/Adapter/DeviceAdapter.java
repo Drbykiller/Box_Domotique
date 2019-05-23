@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Devices;
+import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.R;
 import fr.modibo.boxdomotique.View.ViewHolder.DeviceViewHolder;
@@ -24,18 +24,18 @@ import fr.modibo.boxdomotique.View.ViewHolder.DeviceViewHolder;
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     private Context context;
-    private ArrayList<Devices> listDevice;
+    private ArrayList<Device> listDevice;
     private RequestOptions requestOptions;
 
 
     /**
      * Constructeur de la classe DeviceAdapter qui prend en paramètre 2 arguments.
      *
-     * @param context Context de l'application
-     * @param list    Récupère la liste des capteurs/actionneurs.
+     * @param context    Contexte de l'application
+     * @param listDevice Récupère la liste des capteurs/actionneurs.
      */
-    public DeviceAdapter(Context context, ArrayList<Devices> list) {
-        this.listDevice = list;
+    public DeviceAdapter(Context context, ArrayList<Device> listDevice) {
+        this.listDevice = listDevice;
         this.context = context;
         requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading_image).error(R.drawable.error_loading_image);
     }
@@ -49,7 +49,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DeviceViewHolder holder, int position) {
-        final Devices device = listDevice.get(position);
+        final Device device = listDevice.get(position);
 
         holder.setMcs_tvTitle(device.getNom());
         holder.setMcs_tvInfo(device.getType());

@@ -21,7 +21,7 @@ import fr.modibo.boxdomotique.R;
  * Classe <b>LoginActivity</b> qui gère l'affichage de l'ecran de connexion
  * et la connexion au serveur.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginThread.loginSuccessful {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginThread.loginThreadListerner {
 
     private TextInputEditText etServer, etUser, etPassword;
     private TextInputLayout til_Server, til_User, til_Password;
@@ -52,6 +52,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loadUpdateID();
     }
 
+    /**
+     * Supprime les identifiants de l'utilisateur
+     * si il a décocher la case 'Se souvenir de moi'.
+     */
+    @Override
+    protected void onStop() {
+        if (!checkBox.isChecked()) {
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString(KEY_IP_ADDRESS, "");
+            editor.putString(KEY_USER, "");
+            editor.putString(KEY_PASSWORD, "");
+            editor.putBoolean(KEY_CHECK, checkBox.isChecked());
+            editor.apply();
+        }
+        super.onStop();
+    }
+
     @Override
     public void onClick(View v) {
         String server = etServer.getText().toString();
@@ -77,25 +96,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         } else
             new LoginThread(getSupportFragmentManager(), this).execute(user, password);
-    }
-
-    /**
-     * Supprime les identifiants de l'utilisateur
-     * si il a décocher la case 'Se souvenir de moi'.
-     */
-    @Override
-    protected void onStop() {
-        if (!checkBox.isChecked()) {
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
-            editor.putString(KEY_IP_ADDRESS, "");
-            editor.putString(KEY_USER, "");
-            editor.putString(KEY_PASSWORD, "");
-            editor.putBoolean(KEY_CHECK, checkBox.isChecked());
-            editor.apply();
-        }
-        super.onStop();
     }
 
     private String check_if_the_fields_are_correct(String server, String user, String password) {
@@ -158,9 +158,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-     /* ************************
+    /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
-     *************************/
+    *////////////////////////// /
 
     /**
      * Méthode implémenté de la classe <b>LoginThread</b>
@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * @see fr.modibo.boxdomotique.Model.Thread.LoginThread
      */
     @Override
-    public void login(String user) {
+    public void successLogin(String user) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(MainActivity.MAIN_KEY, user);
         startActivity(intent);
@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**
      * Méthode implémenté de la classe <b>LoginThread</b>
      * qui retourne soit une erreur au niveau des identifiants
-     * ou une erreur au niveau du serveur.
+     * soit une erreur au niveau du serveur.
      *
      * @param whatIsError L'Erreur passe en paramètre ce qui permet de le récuperer.
      * @see fr.modibo.boxdomotique.Model.Thread.LoginThread

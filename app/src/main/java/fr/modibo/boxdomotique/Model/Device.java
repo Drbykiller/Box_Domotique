@@ -5,10 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Classe <b>Devices</b> qui répertorie les caractéristiques des capteurs/actionneurs.
- */
-public class Devices implements Serializable {
+public class Device implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -79,7 +76,7 @@ public class Devices implements Serializable {
         return image;
     }
 
-    private void setImage(String image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

@@ -20,7 +20,7 @@ public class LoginThread extends AsyncTask<String, Void, Void> {
     private Exception e;
     private LoadingDialog dialog;
     private FragmentManager fragmentManager;
-    private loginSuccessful loginSuccessful;
+    private loginThreadListerner listerner;
     private final String URL = UrlServer.URL_SERVER + UrlServer.URL_CONNECTION;
 
 
@@ -28,11 +28,11 @@ public class LoginThread extends AsyncTask<String, Void, Void> {
      * Constructeur de la classe LoginThread qui prend en paramètre 2 arguments.
      *
      * @param fragmentManager L'argument fragmentManager permet a l'objet 'dialog' de type : {@link fr.modibo.boxdomotique.View.LoadingDialog}, d'afficher correctement le pop-up de chargement.
-     * @param loginSuccessful La classe qui implémente l'interface {@link loginSuccessful} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param listerner       La classe qui implémente l'interface {@link loginThreadListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      */
-    public LoginThread(FragmentManager fragmentManager, loginSuccessful loginSuccessful) {
+    public LoginThread(FragmentManager fragmentManager, loginThreadListerner listerner) {
         this.fragmentManager = fragmentManager;
-        this.loginSuccessful = loginSuccessful;
+        this.listerner = listerner;
     }
 
     @Override
@@ -66,9 +66,9 @@ public class LoginThread extends AsyncTask<String, Void, Void> {
                 String result = response.body().string();
 
                 if (result.equalsIgnoreCase("ok"))
-                    loginSuccessful.login(user);
+                    listerner.successLogin(user);
                 else
-                    loginSuccessful.errorLogin("userPassword");
+                    listerner.errorLogin("userPassword");
             }
         } catch (Exception ex) {
             e = ex;
@@ -82,31 +82,29 @@ public class LoginThread extends AsyncTask<String, Void, Void> {
         dialog.dismiss();
 
         if (e != null)
-            loginSuccessful.errorLogin("server");
+            listerner.errorLogin("server");
 
     }
 
 
-     /* ************************
+    /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
-     *************************/
+    *////////////////////////// /
 
-    /**
-     * Les 2 méthodes vont etre implémenté dans la classe {@link fr.modibo.boxdomotique.Controller.LoginActivity}
-     */
-    public interface loginSuccessful {
+    public interface loginThreadListerner {
         /**
-         * La 1er méthode permet de lancer l'activité principal.
+         * La 1er méthode de l'interface permet de lancer l'activité principal.
          *
-         * @param user L'Utilisateur passe en parametre ce qui permet de le récuperer.
-         * @see fr.modibo.boxdomotique.Controller.LoginActivity
+         * @param user L'Utilisateur passe en paramètre ce qui permet de le récuperer.
+         * @see fr.modibo.boxdomotique.Controller.LoginActivity#successLogin(String)
          */
-        void login(String user);
+        void successLogin(String user);
 
         /**
-         * La 2eme méthode permet d'envoyer quel type d'erreur la classe <b>LoginThread</b> a pu rencontrer.
+         * La 2eme méthode de l'interface permet d'envoyer quel type d'erreur la classe <b>LoginThread</b> a pu rencontrer.
          *
          * @param whatIsError L'erreur passe en parametre ce qui permet de le récuperer.
+         * @see fr.modibo.boxdomotique.Controller.LoginActivity#errorLogin(String)
          */
         void errorLogin(String whatIsError);
     }

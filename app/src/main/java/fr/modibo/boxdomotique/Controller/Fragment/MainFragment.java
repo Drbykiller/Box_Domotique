@@ -1,6 +1,7 @@
 package fr.modibo.boxdomotique.Controller.Fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,16 +19,24 @@ import fr.modibo.boxdomotique.Model.Main;
 import fr.modibo.boxdomotique.R;
 import fr.modibo.boxdomotique.View.Adapter.MainAdapter;
 
-public class MainFragment extends Fragment implements MainAdapter.newFragment {
+/**
+ * Classe <b>MainFragment</b> qui gère l'affichage de l'écran d'accueil.
+ */
+public class MainFragment extends Fragment implements MainAdapter.fragmentListerner {
 
-    private newFragmentFromHomeAdapter fragmentFromHomeAdapter;
+    private fragmentFromMainAdapterListerner listerner;
+
 
     public MainFragment() {
-        // Required empty public constructor
     }
 
-    public MainFragment(newFragmentFromHomeAdapter fragmentFromHomeAdapter) {
-        this.fragmentFromHomeAdapter = fragmentFromHomeAdapter;
+    /**
+     * Constructeur de la classe <b>MainFragment</b> surchargé.
+     *
+     * @param listerner La classe qui implémente l'interface {@link fragmentFromMainAdapterListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     */
+    public MainFragment(fragmentFromMainAdapterListerner listerner) {
+        this.listerner = listerner;
     }
 
     @Override
@@ -34,7 +44,12 @@ public class MainFragment extends Fragment implements MainAdapter.newFragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         RecyclerView rv_main = view.findViewById(R.id.rv_main);
-        rv_main.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && getResources().getBoolean(R.bool.tablet))
+            rv_main.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+        else
+            rv_main.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         ArrayList<Main> data = new ArrayList<>();
         data.add(new Main("Gestion des Capteurs", "Gérer les différents appareil connecté.", R.drawable.sensor));
@@ -51,18 +66,39 @@ public class MainFragment extends Fragment implements MainAdapter.newFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            fragmentFromHomeAdapter = (newFragmentFromHomeAdapter) context;
+            listerner = (fragmentFromMainAdapterListerner) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement (newFragmentFromHomeAdapter) ");
+            throw new ClassCastException(context.toString() + " must implement (MainFragment.fragmentFromMainAdapterListerner) ");
         }
     }
 
+
+    /* ////////////////////////////
+        INTERFACE + IMPLEMENTATION
+     *////////////////////////// /
+
+    /**
+     * Méthode implémenté de la classe <b>MainAdapter</b>
+     * qui récupère le nom du Fragment qui va etre chargé.
+     *
+     * @param title Permet de savoir quel fragment va etre chargé.
+     * @see fr.modibo.boxdomotique.View.Adapter.MainAdapter
+     */
     @Override
     public void loadFragment(String title) {
-        fragmentFromHomeAdapter.loadFragmentFromHomeAdapter(title);
+        listerner.loadFragment(title);
     }
 
-    public interface newFragmentFromHomeAdapter {
-        void loadFragmentFromHomeAdapter(String title);
+    public interface fragmentFromMainAdapterListerner {
+        /**
+         * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
+         * et qui permet de récupérer le nom du Fragment
+         * depuis la méthode <b>loadFragment</b>
+         *
+         * @param title Permet de savoir quel fragment va etre chargé.
+         * @see fr.modibo.boxdomotique.Controller.MainActivity
+         * @see fr.modibo.boxdomotique.Controller.Fragment.MainFragment#loadFragment(String)
+         */
+        void loadFragment(String title);
     }
 }

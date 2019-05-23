@@ -17,7 +17,9 @@ public class UrlServer {
     //Serveur
 //    public static final String URL_CONNECTION = "auth";
 //    public static final String URL_JSON = "jsonDevices";
+//    public static final String URL_SCENARIO = "";
 //    public static final String SEND_JSON_URL_DEVICE = "jsonAPK";
+//    public static final String SEND_JSON_URL_SCENARIO = "";
 
     public static void setUrlServer(String urlServer) {
         URL_SERVER = "http://" + urlServer + "/";

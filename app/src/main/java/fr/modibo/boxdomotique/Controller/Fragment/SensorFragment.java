@@ -18,20 +18,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Devices;
+import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.Model.Thread.DeviceThread;
 import fr.modibo.boxdomotique.R;
 import fr.modibo.boxdomotique.View.Adapter.DeviceAdapter;
 
 /**
- * Classe <b>SensorFragment</b> qui fait le lien entre la recuperation des differents capteurs/actionneurs
+ * Classe <b>SensorFragment</b> qui fait le lien entre la récuperation des differents capteurs/actionneurs
  * et l'affichage de ces derniers avec un RecycleView.
  */
-public class SensorFragment extends Fragment implements DeviceThread.executeDeviceThread {
+public class SensorFragment extends Fragment implements DeviceThread.deviceThreadListerner {
 
-    private ArrayList<Devices> data;
+    private ArrayList<Device> data;
     private DeviceAdapter adapter;
-    private errorFromDeviceThread errorFromDeviceThread;
+    private errorFromDeviceThreadListerner listerner;
 
 
     public SensorFragment() {
@@ -40,11 +40,11 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
     /**
      * Constructeur de la classe <b>SensorFragment</b> surchargé.
      *
-     * @param errorFromDeviceThread La classe qui implémente l'interface {@link errorFromDeviceThread} passe en paramètre pour s'assurer que
-     *                              cette classe implémente bien les méthodes de l'interface.
+     * @param listerner La classe qui implémente l'interface {@link errorFromDeviceThreadListerner} passe en paramètre pour s'assurer que
+     *                  cette classe implémente bien les méthodes de l'interface.
      */
-    public SensorFragment(errorFromDeviceThread errorFromDeviceThread) {
-        this.errorFromDeviceThread = errorFromDeviceThread;
+    public SensorFragment(errorFromDeviceThreadListerner listerner) {
+        this.listerner = listerner;
     }
 
     @Override
@@ -57,7 +57,6 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
         rv_sensor.setAdapter(adapter);
 
         boolean tablet = getResources().getBoolean(R.bool.tablet);
-
         if (tablet) {
             rv_sensor.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         } else
@@ -71,9 +70,9 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            errorFromDeviceThread = (SensorFragment.errorFromDeviceThread) context;
+            listerner = (SensorFragment.errorFromDeviceThreadListerner) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement (SensorFragment.errorFromDeviceThread) ");
+            throw new ClassCastException(context.toString() + " must implement (SensorFragment.errorFromDeviceThreadListerner) ");
         }
     }
 
@@ -102,52 +101,52 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
     }
 
 
-    /* ************************
+    /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
-     *************************/
-    public interface errorFromDeviceThread {
-        /**
-         * Méthode qui va etre implementer dans la classe <b>MainActivity</b>
-         * et qui permet de recupérer, si il y a une erreur,
-         * l'erreur de la methode <b>errorDeviceThread</b>.
-         *
-         * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
-         * @see fr.modibo.boxdomotique.Controller.MainActivity
-         * @see SensorFragment#errorDeviceThread(String)
-         */
-        void error(String error);
-    }
+    *////////////////////////// /
 
     /**
      * Methode implementé de la classe <b>DeviceThread</b>
-     * qui recupere la liste des capteurs/actionneurs depuis le serveur
+     * qui récupere la liste des capteurs/actionneurs depuis le serveur
      * via la classe <b>DeviceThread</b> et qui met a jour le RecycleView.
      *
-     * @param resultDevice Récupère la liste des capteurs/actionneurs.
+     * @param devices Récupère la liste des capteurs/actionneurs.
      * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread
-     * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread#executeDeviceThread
      */
     @Override
-    public void resultDeviceThread(ArrayList<Devices> resultDevice) {
+    public void successListDevice(ArrayList<Device> devices) {
         data.clear();
-        data.addAll(resultDevice);
+        data.addAll(devices);
         adapter.notifyDataSetChanged();
     }
 
     /**
      * Methode implementé de la classe <b>DeviceThread</b>
-     * qui recupere, si il y a une erreur,
-     * l'erreur lors de la recuperation de la
+     * qui récupère, si il y a une erreur,
+     * l'erreur lors de la récuperation de la
      * liste des capteurs/actionneurs et qui
-     * l'envoi dans l'interface <b>errorFromDeviceThread</b>
+     * l'envoi dans l'interface <b>errorFromDeviceThreadListerner</b>
      *
      * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
-     * @see errorFromDeviceThread
-     * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread#executeDeviceThread
+     * @see errorFromDeviceThreadListerner
+     * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread
      */
     @Override
-    public void errorDeviceThread(String error) {
-        errorFromDeviceThread.error(error);
+    public void errorListDevice(String error) {
+        listerner.error(error);
+    }
+
+    public interface errorFromDeviceThreadListerner {
+        /**
+         * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
+         * et qui permet de récupérer, si il y a une erreur,
+         * l'erreur de la méthode <b>errorListDevice</b>.
+         *
+         * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
+         * @see fr.modibo.boxdomotique.Controller.MainActivity
+         * @see SensorFragment#errorListDevice(String)
+         */
+        void error(String error);
     }
 
 }

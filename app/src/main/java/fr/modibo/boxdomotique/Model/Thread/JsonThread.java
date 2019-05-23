@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Devices;
+import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.Model.Scenario;
 import fr.modibo.boxdomotique.Model.UrlServer;
 import okhttp3.MediaType;
@@ -20,7 +20,7 @@ import okhttp3.RequestBody;
  */
 public class JsonThread extends AsyncTask<Void, Void, Void> {
 
-    private ArrayList<Devices> list;
+    private ArrayList<Device> listDevice;
     private ArrayList<Scenario> listScenario;
     private Gson gson;
     private String URL;
@@ -28,14 +28,20 @@ public class JsonThread extends AsyncTask<Void, Void, Void> {
     /**
      * Constructeur de la classe <b>JsonThread</b> surchargé.
      *
-     * @param list Liste des capteurs/actionneurs avec les modifications effectuées par l'utilisateur.
+     * @param listDevice Liste des capteurs/actionneurs avec les modifications effectuées par l'utilisateur.
      */
-    public JsonThread(ArrayList<Devices> list) {
-        this.list = new ArrayList<>();
-        this.list = list;
+    public JsonThread(ArrayList<Device> listDevice) {
+        this.listDevice = new ArrayList<>();
+        this.listDevice = listDevice;
         this.URL = UrlServer.URL_SERVER + UrlServer.SEND_JSON_URL_DEVICE;
     }
 
+    /**
+     * Deuxieme constructeur de la classe <b>JsonThread</b> qui prend en paramètre 2 arguments.
+     *
+     * @param listScenario La liste des scénario
+     * @param url          URL du serveur qui récupere la liste des scénario
+     */
     public JsonThread(ArrayList<Scenario> listScenario, String url) {
         this.listScenario = listScenario;
         this.URL = UrlServer.URL_SERVER + url;
@@ -49,11 +55,10 @@ public class JsonThread extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected final Void doInBackground(Void... voids) {
-
         String json;
 
         if (URL.equalsIgnoreCase(UrlServer.URL_SERVER + UrlServer.SEND_JSON_URL_DEVICE)) {
-            json = gson.toJson(list);
+            json = gson.toJson(listDevice);
         } else {
             json = gson.toJson(listScenario);
         }

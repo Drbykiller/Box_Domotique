@@ -9,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import fr.modibo.boxdomotique.R;
 
+/**
+ * La Classe <b>MainViewHolder</b> permet d'initialiser les composants graphiques.
+ * mcm = material_card_main
+ */
 public class MainViewHolder extends RecyclerView.ViewHolder {
 
     private View mcm_root;

@@ -25,7 +25,7 @@ public class GetDeviceServer {
      * @return Retourne la liste des capteurs/actionneurs.
      * @throws Exception Si il n'arrive pas contacter le serveur ou si la liste des capteurs/actionneurs est vide.
      */
-    public static ArrayList<Devices> getDeviceServer() throws Exception {
+    public static ArrayList<Device> getDeviceServer() throws Exception {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -47,17 +47,22 @@ public class GetDeviceServer {
 
         Gson gson = new Gson();
 
-        Type DeviceType = new TypeToken<ArrayList<Devices>>() {
+        Type DeviceType = new TypeToken<ArrayList<Device>>() {
         }.getType();
 
-        ArrayList<Devices> resultListDevice = gson.fromJson(result, DeviceType);
+        ArrayList<Device> resultListDevice = gson.fromJson(result, DeviceType);
 
-        ArrayList<Devices> device;
+        ArrayList<Device> device;
 
         if (resultListDevice == null)
             throw new Exception("Erreur !!!");
         else
             device = new ArrayList<>(resultListDevice);
+
+        for (int i = 0; i < device.size(); i++) {
+            String link = device.get(i).getImage();
+            device.get(i).setImage(UrlServer.URL_SERVER + link);
+        }
 
         return device;
     }

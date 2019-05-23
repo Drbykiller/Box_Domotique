@@ -13,14 +13,24 @@ import fr.modibo.boxdomotique.Model.Main;
 import fr.modibo.boxdomotique.R;
 import fr.modibo.boxdomotique.View.ViewHolder.MainViewHolder;
 
+/**
+ * La classe <b>MainAdapter</b> permet de recycler les View.
+ */
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     private ArrayList<Main> data;
-    private newFragment fragment;
+    private fragmentListerner listerner;
 
-    public MainAdapter(ArrayList<Main> data, newFragment fragment) {
+    /**
+     * Constructeur de la classe <b>MainAdapter</b> qui prend en paramètre 2 arguments.
+     *
+     * @param data      Liste des onglets.
+     * @param listerner La classe qui implémente l'interface {@link fragmentListerner} passe en paramètre pour s'assurer que
+     *                  cette classe implémente bien les méthodes de l'interface.
+     */
+    public MainAdapter(ArrayList<Main> data, fragmentListerner listerner) {
         this.data = data;
-        this.fragment = fragment;
+        this.listerner = listerner;
     }
 
     @NonNull
@@ -41,7 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         holder.getMcm_root().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.loadFragment(main.getTitle());
+                listerner.loadFragment(main.getTitle());
             }
         });
 
@@ -52,7 +62,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         return data.size();
     }
 
-    public interface newFragment {
+    public interface fragmentListerner {
+        /**
+         * Méthode qui va etre implémenté dans la classe <b>MainFragment</b>
+         * qui permet d'obtenir le nom du Fragment.
+         *
+         * @param title Le nom du Fragment passe en paramètre.
+         */
         void loadFragment(String title);
     }
 }

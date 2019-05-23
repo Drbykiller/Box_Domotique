@@ -12,6 +12,10 @@ import com.google.android.material.button.MaterialButton;
 
 import fr.modibo.boxdomotique.R;
 
+/**
+ * La Classe <b>ScenarioViewHolder</b> permet d'initialiser les composants graphiques.
+ * mcScenario = material_card_scenario
+ */
 public class ScenarioViewHolder extends RecyclerView.ViewHolder {
 
     private View mcScenario_root;
@@ -24,7 +28,6 @@ public class ScenarioViewHolder extends RecyclerView.ViewHolder {
 
     public ScenarioViewHolder(@NonNull View itemView) {
         super(itemView);
-
         mcScenario_root = itemView.findViewById(R.id.mcScenario_root);
         mcScenario_tvTitle = itemView.findViewById(R.id.mcScenario_tvTitle);
         mcScenario_rg = itemView.findViewById(R.id.mcScenario_rg);

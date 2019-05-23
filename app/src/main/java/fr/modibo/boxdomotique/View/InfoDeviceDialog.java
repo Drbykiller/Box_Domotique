@@ -18,13 +18,22 @@ import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.R;
 
+/**
+ * Classe <b>InfoDeviceDialog</b> qui affiche la liste des appareils en fonction du scénario.
+ */
 public class InfoDeviceDialog extends DialogFragment {
 
-    private ArrayList<String> devices;
-    private okListerner okListerner;
+    private ArrayList<String> nameDevice;
+    private infoDeviceDialogListerner listerner;
 
-    public InfoDeviceDialog(ArrayList<String> devices) {
-        this.devices = devices;
+    /**
+     * Constructeur de la classe <b>InfoDeviceDialog</b> surchargé.
+     *
+     * @param nameDevice Les noms des capteurs/actionneurs passe en paramètre.
+     */
+    public InfoDeviceDialog(ArrayList<String> nameDevice, infoDeviceDialogListerner listerner) {
+        this.nameDevice = nameDevice;
+        this.listerner = listerner;
     }
 
     @NonNull
@@ -35,30 +44,37 @@ public class InfoDeviceDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.info_device, null, false);
 
-        ListView listView = v.findViewById(R.id.id_listView);
+        ListView id_listView = v.findViewById(R.id.id_listView);
+        MaterialButton id_button = v.findViewById(R.id.id_button);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, devices);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, nameDevice);
 
-        listView.setAdapter(adapter);
+        id_listView.setAdapter(adapter);
 
         builder.setView(v);
 
-        MaterialButton button = v.findViewById(R.id.id_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        id_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                okListerner.ok();
+                listerner.ok();
             }
         });
 
         return builder.create();
     }
 
-    public void attachListerner(okListerner listerner) {
-        this.okListerner = listerner;
-    }
 
-    public interface okListerner {
+    /* ////////////////////////////
+        INTERFACE + IMPLEMENTATION
+    *////////////////////////// /
+
+    public interface infoDeviceDialogListerner {
+        /**
+         * Méthode qui va etre implémenté dans la classe <b>ScenarioAdapter</b>
+         * qui permet de faire disparaitre le pop-up.
+         *
+         * @see fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter#ok()
+         */
         void ok();
     }
 }

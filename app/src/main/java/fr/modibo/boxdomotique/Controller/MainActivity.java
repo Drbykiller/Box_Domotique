@@ -29,9 +29,8 @@ import fr.modibo.boxdomotique.R;
 /**
  * Classe <b>MainActivity</b> qui gère l'affichage des differents fragments.
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.errorFromDeviceThread, MainFragment.newFragmentFromHomeAdapter {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.errorFromDeviceThreadListerner, MainFragment.fragmentFromMainAdapterListerner, ScenarioFragment.scenarioFragmentListerner {
 
-    private Toolbar tb;
     private DrawerLayout dl;
     private NavigationView nav_view;
     private CollapsingToolbarLayout collapsing;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         // TOOLBAR
-        tb = findViewById(R.id.tb);
+        Toolbar tb = findViewById(R.id.tb);
         setSupportActionBar(tb);
 
         //DRAWERLAYOUT
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         collapsing = findViewById(R.id.collapsing);
         collapsing.setTitle(getResources().getString(R.string.app_name));
 
-        // App Bar Layout
+        //App Bar Layout
         appbar = findViewById(R.id.appbar);
         appbar.setExpanded(false, false);
 
@@ -85,8 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment()).commit();
             nav_view.setCheckedItem(R.id.nav_home);
         } else {
+
             for (String aKey : KEY) {
                 String result = savedInstanceState.getString(aKey);
+
                 if (result != null && !result.isEmpty()) {
                     collapsing.setTitle(result);
                     Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_frame);
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         collapsing_img.setImageResource(R.drawable.collapsing_scenario);
                 }
             }
+
         }
     }
 
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 appbar.setExpanded(false, false);
                 break;
             case R.id.nav_scenario:
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment(this)).commit();
                 collapsing.setTitle(getResources().getString(R.string.nav_scenario));
                 collapsing_img.setImageResource(R.drawable.collapsing_scenario);
                 appbar.setExpanded(true, true);
@@ -177,17 +179,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-     /* ************************
+    /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
-     *************************/
+    *////////////////////////// /
 
     /**
      * Méthode implémenté de la classe <b>SensorFragment</b> qui permet d'obtenir,
-     * si il y a une erreur, une erreur lors de la recuperation de la
+     * si il y a une erreur, une erreur lors de la récuperation de la
      * liste des capteurs/actionneurs et de l'afficher a l'utilisateur.
      *
      * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
-     * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#errorFromDeviceThread
+     * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment
      */
     @Override
     public void error(String error) {
@@ -198,8 +200,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         snackbar.show();
     }
 
+    /**
+     * Méthode implémenté de la classe <b>MainFragment</b>
+     * qui récupere le nom du Fragment qui va ete chargé.
+     *
+     * @param title Permet de savoir quel fragment va etre chargé.
+     * @see fr.modibo.boxdomotique.Controller.Fragment.MainFragment#loadFragment(String)
+     */
     @Override
-    public void loadFragmentFromHomeAdapter(String title) {
+    public void loadFragment(String title) {
         switch (title) {
             case "Gestion des Capteurs":
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
@@ -216,5 +225,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 collapsing.setTitle(getResources().getString(R.string.nav_scenario));
                 break;
         }
+    }
+
+    /**
+     * Méthode implémenté de la classe <b>ScenarioFragment</b> qui permet d'obtenir,
+     * si il y a une erreur, une erreur lors de la récuperation de la
+     * liste des scénarios et de l'afficher a l'utilisateur.
+     *
+     * @param error L'erreur passe en paramètre ce qui permet de le récuperer.
+     * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
+     */
+    @Override
+    public void errorFromScenario(String error) {
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorServer) + "\nCode : " + error, Snackbar.LENGTH_LONG).setDuration(5000);
+        View snackbarView = snackbar.getView();
+        TextView tv = snackbarView.findViewById(R.id.snackbar_text);
+        tv.setMaxLines(5);
+        snackbar.show();
     }
 }

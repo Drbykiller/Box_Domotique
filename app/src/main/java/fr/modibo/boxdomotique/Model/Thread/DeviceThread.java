@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Devices;
+import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.Model.GetDeviceServer;
 import fr.modibo.boxdomotique.View.LoadingDialog;
 
@@ -16,22 +16,23 @@ import fr.modibo.boxdomotique.View.LoadingDialog;
  */
 public class DeviceThread extends AsyncTask<Void, Void, Void> {
 
-    private ArrayList<Devices> result;
+    private ArrayList<Device> result;
     private Exception e;
     private LoadingDialog dialog;
     private FragmentManager fragmentManager;
-    private executeDeviceThread executeDeviceThread;
+    private deviceThreadListerner listerner;
 
 
     /**
      * Constructeur de la classe <b>DeviceThread</b> qui prend en paramètre 2 arguments.
      *
-     * @param executeDeviceThread La classe qui implémente l'interface {@link executeDeviceThread} passe en paramètre
-     *                            pour s'assurer que cette classe implémente bien les méthodes de l'interface.
-     * @param fragmentManager     L'argument fragmentManager permet a l'objet 'dialog' de type : {@link fr.modibo.boxdomotique.View.LoadingDialog}, d'afficher correctement le pop-up de chargement.
+     * @param listerner       La classe qui implémente l'interface {@link deviceThreadListerner} passe en paramètre
+     *                        pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param fragmentManager L'argument fragmentManager permet a l'objet 'dialog' de type : {@link fr.modibo.boxdomotique.View.LoadingDialog}
+     *                        d'afficher correctement le pop-up de chargement.
      */
-    public DeviceThread(executeDeviceThread executeDeviceThread, FragmentManager fragmentManager) {
-        this.executeDeviceThread = executeDeviceThread;
+    public DeviceThread(deviceThreadListerner listerner, FragmentManager fragmentManager) {
+        this.listerner = listerner;
         this.fragmentManager = fragmentManager;
     }
 
@@ -39,7 +40,7 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         dialog = new LoadingDialog();
-        dialog.show(fragmentManager, "Loading Devices");
+        dialog.show(fragmentManager, "Loading Dialog");
     }
 
     @Override
@@ -59,34 +60,33 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
 
         if (e != null) {
             e.printStackTrace();
-            executeDeviceThread.errorDeviceThread(e.getMessage());
+            listerner.errorListDevice(e.getMessage());
         } else
-            executeDeviceThread.resultDeviceThread(result);
+            listerner.successListDevice(result);
     }
 
 
-    /* ************************
+    /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
-     *************************/
+    *////////////////////////// /
 
-    /**
-     * Les 2 méthodes vont etre implémenté dans la classe {@link fr.modibo.boxdomotique.Controller.Fragment.SensorFragment}.
-     */
-    public interface executeDeviceThread {
+    public interface deviceThreadListerner {
         /**
-         * La 1er méthode envoie la liste des capteurs/actionneurs.
+         * La 1er méthode de l'interface envoie la liste des capteurs/actionneurs.
          *
-         * @param resultDevice Liste des capteurs/actionneurs passé en paramètre.
-         * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#resultDeviceThread(ArrayList)
+         * @param devices Liste des capteurs/actionneurs passé en paramètre.
+         * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#successListDevice(ArrayList)
+         * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#successListDevice(ArrayList)
          */
-        void resultDeviceThread(ArrayList<Devices> resultDevice);
+        void successListDevice(ArrayList<Device> devices);
 
         /**
-         * La 2ème méthode envoie, si il y a une erreur, une erreur.
+         * La 2ème méthode de l'interface envoie, si il y a une erreur, une erreur.
          *
          * @param error L'Erreur passe en parametre ce qui permet de le récuperer.
-         * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#errorDeviceThread(String)
+         * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#errorListDevice(String)
+         * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#errorListDevice(String)
          */
-        void errorDeviceThread(String error);
+        void errorListDevice(String error);
     }
 }

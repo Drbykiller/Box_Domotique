@@ -9,7 +9,7 @@
         android:id="@+id/mcScenario_root"
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         android:layout_marginStart="@dimen/mtrl_card_spacing"
         android:layout_marginTop="@dimen/mtrl_card_spacing"
         android:layout_marginEnd="@dimen/mtrl_card_spacing"

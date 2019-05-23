@@ -39,5 +39,6 @@
     <string name="strOK" translatable="false">OK</string>
     <string name="strOFF" translatable="false">OFF</string>
     <string name="strON" translatable="false">ON</string>
+    <string name="strCancel">Cancel</string>
 
 </resources>
