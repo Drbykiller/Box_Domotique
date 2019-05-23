@@ -8,13 +8,19 @@
     <string name="strSaveLogin">Remember Me</string>
     <string name="strNull" translatable="false">NULL</string>
 
+
+    <string name="strSuccessful">Connection successful !</string>
+    <string name="strLoadingDialog">Please wait !</string>
+    <string name="strTime">"Execution time : "</string>
+    <string name="strChoice">Choose the devices you want to automate</string>
+
+
     <string name="errorEnterServer">You have not entered an IP address !</string>
     <string name="errorUser">You have not entered a user !</string>
     <string name="errorPassword">You did not enter a password !</string>
     <string name="errorServer">Error on the server side !</string>
     <string name="errorUserPassword">Username and/or password is incorrect !</string>
 
-    <string name="successful">Connection successful !</string>
 
     <string name="nav_dw_open" translatable="false">Open navigation drawer</string>
     <string name="nav_dw_close" translatable="false">Close navigation drawer</string>
@@ -24,8 +30,14 @@
     <string name="nav_setting">Setting</string>
     <string name="nav_about">About</string>
 
+
     <string name="tb_refresh">Refresh</string>
 
-    <string name="loadingDialog">Please wait !</string>
     <string name="emoji" translatable="false">emoji</string>
+
+    <string name="btList">Device lists</string>
+    <string name="strOK" translatable="false">OK</string>
+    <string name="strOFF" translatable="false">OFF</string>
+    <string name="strON" translatable="false">ON</string>
+
 </resources>

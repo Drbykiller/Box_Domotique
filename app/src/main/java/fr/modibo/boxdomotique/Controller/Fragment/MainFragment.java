@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import fr.modibo.boxdomotique.Model.Home;
+import fr.modibo.boxdomotique.Model.Main;
 import fr.modibo.boxdomotique.R;
-import fr.modibo.boxdomotique.View.Adapter.HomeAdapter;
+import fr.modibo.boxdomotique.View.Adapter.MainAdapter;
 
-public class MainFragment extends Fragment implements HomeAdapter.newFragment {
+public class MainFragment extends Fragment implements MainAdapter.newFragment {
 
     private newFragmentFromHomeAdapter fragmentFromHomeAdapter;
 
@@ -33,17 +33,17 @@ public class MainFragment extends Fragment implements HomeAdapter.newFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        RecyclerView rv_home = view.findViewById(R.id.rv_home);
-        rv_home.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        RecyclerView rv_main = view.findViewById(R.id.rv_main);
+        rv_main.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        ArrayList<Home> data = new ArrayList<>();
-        data.add(new Home("Gestion des Capteurs", "Gérer les différents appareil connecté.", R.drawable.sensor));
-        data.add(new Home("Gestion des Scénarios", "Crée des Scénarios automatiser en fonction de heure, du lever/coucher du soleil etc ...", R.drawable.scenario));
-        data.add(new Home("A Propos", "A Propos de nous !", R.drawable.about));
+        ArrayList<Main> data = new ArrayList<>();
+        data.add(new Main("Gestion des Capteurs", "Gérer les différents appareil connecté.", R.drawable.sensor));
+        data.add(new Main("Gestion des Scénarios", "Crée des Scénarios automatiser en fonction de heure, du lever/coucher du soleil etc ...", R.drawable.scenario));
+        data.add(new Main("A Propos", "A Propos de nous !", R.drawable.about));
 
-        HomeAdapter adapter = new HomeAdapter(data, this);
+        MainAdapter adapter = new MainAdapter(data, this);
 
-        rv_home.setAdapter(adapter);
+        rv_main.setAdapter(adapter);
         return view;
     }
 

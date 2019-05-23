@@ -1,12 +1,12 @@
 package fr.modibo.boxdomotique.Model;
 
-public class Home {
+public class Main {
 
     private String title;
     private String info;
     private int image;
 
-    public Home(String title, String info, int image) {
+    public Main(String title, String info, int image) {
         this.title = title;
         this.info = info;
         this.image = image;

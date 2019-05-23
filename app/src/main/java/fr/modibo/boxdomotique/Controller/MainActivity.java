@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView nav_view;
     private CollapsingToolbarLayout collapsing;
     private AppBarLayout appbar;
-    private FloatingActionButton fab;
     private ImageView collapsing_img;
+    public static FloatingActionButton fab;
     public static final String MAIN_KEY = "MAIN_PARAMS";
     private static final String[] KEY = {"home", "sensor", "scenario", "setting", "about"};
 
@@ -68,12 +69,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         appbar = findViewById(R.id.appbar);
         appbar.setExpanded(false, false);
 
+        //Image in Collapsing
         collapsing_img = findViewById(R.id.collapsing_img);
         collapsing_img.setImageResource(0);
 
-        // Floating Button
+        //FAB
         fab = findViewById(R.id.fab);
-        fab.hide();
 
         View view = nav_view.getHeaderView(0);
         TextView nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
@@ -86,8 +87,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             for (String aKey : KEY) {
                 String result = savedInstanceState.getString(aKey);
-                if (result != null && !result.isEmpty())
+                if (result != null && !result.isEmpty()) {
                     collapsing.setTitle(result);
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_frame);
+                    if (fragment instanceof ScenarioFragment)
+                        collapsing_img.setImageResource(R.drawable.collapsing_scenario);
+                }
             }
         }
     }
@@ -121,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onSaveInstanceState(outState);
     }
 
+    public static FloatingActionButton getFab() {
+        return fab;
+    }
 
     /* ************************
         NAVIGATION VIEW
@@ -133,21 +141,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 collapsing.setTitle(getResources().getString(R.string.app_name));
                 collapsing_img.setImageResource(0);
                 appbar.setExpanded(false, false);
-                fab.hide();
                 break;
             case R.id.nav_sensor:
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
                 collapsing.setTitle(getResources().getString(R.string.nav_sensor));
                 collapsing_img.setImageResource(0);
                 appbar.setExpanded(false, false);
-                fab.hide();
                 break;
             case R.id.nav_scenario:
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
                 collapsing.setTitle(getResources().getString(R.string.nav_scenario));
                 collapsing_img.setImageResource(R.drawable.collapsing_scenario);
                 appbar.setExpanded(true, true);
-                fab.show();
                 break;
             case R.id.nav_setting:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
@@ -202,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 collapsing_img.setImageResource(0);
                 appbar.setExpanded(false, false);
                 collapsing.setTitle(getResources().getString(R.string.nav_sensor));
-                fab.hide();
                 break;
             case "Gestion des Scénarios":
                 getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
@@ -210,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 collapsing_img.setImageResource(R.drawable.collapsing_scenario);
                 appbar.setExpanded(true, true);
                 collapsing.setTitle(getResources().getString(R.string.nav_scenario));
-                fab.show();
                 break;
         }
     }

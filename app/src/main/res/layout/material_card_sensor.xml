@@ -71,7 +71,7 @@
                         android:background="@drawable/background_radiobutton"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="OFF"
+                        android:text="@string/strOFF"
                         android:textColor="@color/colorText" />
 
                     <RadioButton
@@ -85,7 +85,7 @@
                         android:background="@drawable/background_radiobutton"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="ON"
+                        android:text="@string/strON"
                         android:textColor="@color/colorText" />
                 </RadioGroup>
 

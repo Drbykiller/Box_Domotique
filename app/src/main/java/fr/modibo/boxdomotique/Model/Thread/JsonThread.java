@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.Model.Devices;
+import fr.modibo.boxdomotique.Model.Scenario;
 import fr.modibo.boxdomotique.Model.UrlServer;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -20,8 +21,9 @@ import okhttp3.RequestBody;
 public class JsonThread extends AsyncTask<Void, Void, Void> {
 
     private ArrayList<Devices> list;
+    private ArrayList<Scenario> listScenario;
     private Gson gson;
-    private final String URL = UrlServer.URL_SERVER + UrlServer.SEND_URL_JSON;
+    private String URL;
 
     /**
      * Constructeur de la classe <b>JsonThread</b> surchargé.
@@ -31,6 +33,12 @@ public class JsonThread extends AsyncTask<Void, Void, Void> {
     public JsonThread(ArrayList<Devices> list) {
         this.list = new ArrayList<>();
         this.list = list;
+        this.URL = UrlServer.URL_SERVER + UrlServer.SEND_JSON_URL_DEVICE;
+    }
+
+    public JsonThread(ArrayList<Scenario> listScenario, String url) {
+        this.listScenario = listScenario;
+        this.URL = UrlServer.URL_SERVER + url;
     }
 
     @Override
@@ -41,7 +49,15 @@ public class JsonThread extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected final Void doInBackground(Void... voids) {
-        String json = gson.toJson(list);
+
+        String json;
+
+        if (URL.equalsIgnoreCase(UrlServer.URL_SERVER + UrlServer.SEND_JSON_URL_DEVICE)) {
+            json = gson.toJson(list);
+        } else {
+            json = gson.toJson(listScenario);
+        }
+
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
 
         OkHttpClient okHttpClient = new OkHttpClient();

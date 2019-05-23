@@ -11,10 +11,10 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_home"
+            android:id="@+id/rv_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/material_card_home" />
+            tools:listitem="@layout/material_card_main" />
 
     </androidx.core.widget.NestedScrollView>
 

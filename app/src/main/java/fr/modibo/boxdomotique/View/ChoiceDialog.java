@@ -3,6 +3,7 @@ package fr.modibo.boxdomotique.View;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.TimePicker;
@@ -18,11 +19,12 @@ public class ChoiceDialog extends DialogFragment implements TimePickerDialog.OnT
     private String[] list;
     private boolean[] listcheck;
     private choiceDialogListerner listerner;
+    private Context context;
 
-    public ChoiceDialog(String[] list, choiceDialogListerner listerner) {
+    public ChoiceDialog(String[] list, choiceDialogListerner listerner, Context context) {
         this.list = list;
         this.listerner = listerner;
-
+        this.context = context;
         this.listcheck = new boolean[list.length];
     }
 
@@ -32,7 +34,7 @@ public class ChoiceDialog extends DialogFragment implements TimePickerDialog.OnT
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.Theme_AppCompat_DayNight_Dialog);
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setTitle("Choose your sensor");
+        builder.setTitle(context.getResources().getString(R.string.strChoice));
 
 
         builder.setMultiChoiceItems(list, listcheck, new DialogInterface.OnMultiChoiceClickListener() {

@@ -50,18 +50,18 @@ public class SensorFragment extends Fragment implements DeviceThread.executeDevi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensor, container, false);
-        RecyclerView rv = view.findViewById(R.id.rv);
+        RecyclerView rv_sensor = view.findViewById(R.id.rv_sensor);
 
         data = new ArrayList<>();
         adapter = new DeviceAdapter(getContext(), data);
-        rv.setAdapter(adapter);
+        rv_sensor.setAdapter(adapter);
 
         boolean tablet = getResources().getBoolean(R.bool.tablet);
 
         if (tablet) {
-            rv.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+            rv_sensor.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         } else
-            rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            rv_sensor.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         setHasOptionsMenu(true);
         return view;

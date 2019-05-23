@@ -1,120 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Widget.MaterialComponents.CardView"
+<com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_marginStart="@dimen/mtrl_card_spacing"
-    android:layout_marginTop="@dimen/mtrl_card_spacing"
-    android:layout_marginEnd="@dimen/mtrl_card_spacing"
-    android:layout_marginBottom="@dimen/mtrl_card_spacing"
-    android:minHeight="200dp"
-    android:paddingStart="10dp"
-    android:paddingTop="10dp"
-    android:paddingEnd="10dp">
+    android:layout_height="wrap_content"
+    app:mrl_rippleColor="@color/rippplecolorlist">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?selectableItemBackground"
-        android:orientation="horizontal"
-        android:padding="10dp">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcScenario_root"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginStart="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginEnd="@dimen/mtrl_card_spacing"
+        android:layout_marginBottom="@dimen/mtrl_card_spacing"
+        android:minHeight="200dp"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp">
 
-        <!-- CONTENU -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:orientation="vertical">
+            android:background="?selectableItemBackground"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/mcScenario_tvScenario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/strNull"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <!-- ESPACE -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <!-- ESPACE -->
-
-                <RadioGroup
-                    android:id="@+id/mcScenario_rg"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/background_radiogroup"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/mcScenario_rbOFF"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_radiobutton"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="OFF"
-                        android:textColor="@color/colorText" />
-
-                    <RadioButton
-                        android:id="@+id/mcScenario_rbON"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_radiobutton"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="ON"
-                        android:textColor="@color/colorText" />
-                </RadioGroup>
-
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
+            <!-- CONTENU -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginStart="5dp"
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/mcScenario_hour"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/strNull" />
+                    android:layout_height="25dp"
+                    android:orientation="horizontal">
 
-                <!-- ESPACE -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <!-- ESPACE -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/mcScenario_tvTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/strNull"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/mcScenario_sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp" />
+                    <!-- ESPACE -->
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                    <!-- ESPACE -->
+
+                    <RadioGroup
+                        android:id="@+id/mcScenario_rg"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/background_radiogroup"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/mcScenario_rbOFF"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_radiobutton"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="@string/strOFF"
+                            android:textColor="@color/colorText" />
+
+                        <RadioButton
+                            android:id="@+id/mcScenario_rbON"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_radiobutton"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="@string/strON"
+                            android:textColor="@color/colorText" />
+                    </RadioGroup>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/mcScenario_tvHour"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/strNull" />
+
+                    <!-- ESPACE -->
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                    <!-- ESPACE -->
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mcScenario_bt"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:text="@string/strNull"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="12sp" />
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-
+            <!-- CONTENU -->
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-        <!-- CONTENU -->
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
 
-</com.google.android.material.card.MaterialCardView>
+</com.balysv.materialripple.MaterialRippleLayout>

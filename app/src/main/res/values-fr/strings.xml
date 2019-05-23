@@ -5,7 +5,7 @@
     <string name="errorServer">Erreur côté serveur !</string>
     <string name="errorUser">Vous n\'avez pas saisi de nom d\'utilisateur !</string>
     <string name="errorUserPassword">Nom d\'utilisateur et/ou mot de passe incorrect !</string>
-    <string name="loadingDialog">Merci de patienter !</string>
+    <string name="strLoadingDialog">Merci de patienter !</string>
     <string name="nav_about">A Propos</string>
     <string name="nav_home">Accueil</string>
     <string name="nav_scenario">Gestion des scénarios</string>
@@ -16,6 +16,9 @@
     <string name="strSaveLogin">Se souvenir de Moi</string>
     <string name="strServer">Serveur</string>
     <string name="strUser">Utilisateur</string>
-    <string name="successful">Connexion réussie !</string>
+    <string name="strSuccessful">Connexion réussie !</string>
     <string name="tb_refresh">Rafraîchir</string>
+    <string name="strTime">"Heure d’exécution : "</string>
+    <string name="btList">Listes des appareils</string>
+    <string name="strChoice">Choisissez les appareils que vous voulez automatiser</string>
 </resources>

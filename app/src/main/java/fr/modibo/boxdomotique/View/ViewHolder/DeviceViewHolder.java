@@ -17,37 +17,21 @@ import fr.modibo.boxdomotique.R;
  */
 public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView mcs_tvTitle;
-    private TextView mcs_tvInfo;
     private ImageView mcs_iv;
+    private TextView mcs_tvTitle;
     private RadioGroup mcs_rg;
     private RadioButton mcs_rbOFF;
     private RadioButton mcs_rbON;
+    private TextView mcs_tvInfo;
 
     public DeviceViewHolder(@NonNull View itemView) {
         super(itemView);
-        mcs_tvTitle = itemView.findViewById(R.id.mcs_tvTitle);
-        mcs_tvInfo = itemView.findViewById(R.id.mcs_tvInfo);
         mcs_iv = itemView.findViewById(R.id.mcs_iv);
+        mcs_tvTitle = itemView.findViewById(R.id.mcs_tvTitle);
         mcs_rg = itemView.findViewById(R.id.mcs_rg);
         mcs_rbOFF = itemView.findViewById(R.id.mcs_rbOFF);
         mcs_rbON = itemView.findViewById(R.id.mcs_rbON);
-    }
-
-    public TextView getMcs_tvTitle() {
-        return mcs_tvTitle;
-    }
-
-    public void setMcs_tvTitle(String mcs_tvTitle) {
-        this.mcs_tvTitle.setText(mcs_tvTitle);
-    }
-
-    public TextView getMcs_tvInfo() {
-        return mcs_tvInfo;
-    }
-
-    public void setMcs_tvInfo(String mcs_tvInfo) {
-        this.mcs_tvInfo.setText(mcs_tvInfo);
+        mcs_tvInfo = itemView.findViewById(R.id.mcs_tvInfo);
     }
 
     public ImageView getMcs_iv() {
@@ -56,6 +40,14 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
     public void setMcs_iv(ImageView mcs_iv) {
         this.mcs_iv = mcs_iv;
+    }
+
+    public TextView getMcs_tvTitle() {
+        return mcs_tvTitle;
+    }
+
+    public void setMcs_tvTitle(String mcs_tvTitle) {
+        this.mcs_tvTitle.setText(mcs_tvTitle);
     }
 
     public RadioGroup getMcs_rg() {
@@ -80,5 +72,13 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
     public void setMcs_rbON(RadioButton mcs_rbON) {
         this.mcs_rbON = mcs_rbON;
+    }
+
+    public TextView getMcs_tvInfo() {
+        return mcs_tvInfo;
+    }
+
+    public void setMcs_tvInfo(String mcs_tvInfo) {
+        this.mcs_tvInfo.setText(mcs_tvInfo);
     }
 }
