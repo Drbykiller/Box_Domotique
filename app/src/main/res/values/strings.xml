@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Box Domotique</string>
+
     <string name="strLogo" translatable="false">Logo</string>
     <string name="strUser">User</string>
     <string name="strPassword">Password</string>
@@ -7,12 +8,18 @@
     <string name="strServer">Server</string>
     <string name="strSaveLogin">Remember Me</string>
     <string name="strNull" translatable="false">NULL</string>
-
-
     <string name="strSuccessful">Connection successful !</string>
     <string name="strLoadingDialog">Please wait !</string>
     <string name="strTime">"Execution time : "</string>
     <string name="strChoice">Choose the devices you want to automate</string>
+    <string name="strOK" translatable="false">OK</string>
+    <string name="strOFF" translatable="false">OFF</string>
+    <string name="strON" translatable="false">ON</string>
+    <string name="strCancel">Cancel</string>
+    <string name="strState">What state do you want to define in your scenario ?</string>
+    <string name="strSensor">Manage the different connected devices.</string>
+    <string name="strScenario">Create Scenarios, automate according to time, sunrise/sunset etc....</string>
+    <string name="strAbout">About us !</string>
 
 
     <string name="errorEnterServer">You have not entered an IP address !</string>
@@ -20,6 +27,7 @@
     <string name="errorPassword">You did not enter a password !</string>
     <string name="errorServer">Error on the server side !</string>
     <string name="errorUserPassword">Username and/or password is incorrect !</string>
+    <string name="errorChoiceDevice">Error, at least one device must be selected from the list !</string>
 
 
     <string name="nav_dw_open" translatable="false">Open navigation drawer</string>
@@ -36,9 +44,4 @@
     <string name="emoji" translatable="false">emoji</string>
 
     <string name="btList">Device lists</string>
-    <string name="strOK" translatable="false">OK</string>
-    <string name="strOFF" translatable="false">OFF</string>
-    <string name="strON" translatable="false">ON</string>
-    <string name="strCancel">Cancel</string>
-
 </resources>

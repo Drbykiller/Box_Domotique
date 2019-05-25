@@ -52,9 +52,9 @@ public class MainFragment extends Fragment implements MainAdapter.fragmentLister
             rv_main.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         ArrayList<Main> data = new ArrayList<>();
-        data.add(new Main("Gestion des Capteurs", "Gérer les différents appareil connecté.", R.drawable.sensor));
-        data.add(new Main("Gestion des Scénarios", "Crée des Scénarios automatiser en fonction de heure, du lever/coucher du soleil etc ...", R.drawable.scenario));
-        data.add(new Main("A Propos", "A Propos de nous !", R.drawable.about));
+        data.add(new Main(getString(R.string.nav_sensor), getString(R.string.strSensor), R.drawable.sensor));
+        data.add(new Main(getString(R.string.nav_scenario), getString(R.string.strScenario), R.drawable.scenario));
+        data.add(new Main(getString(R.string.nav_about), getString(R.string.strAbout), R.drawable.about));
 
         MainAdapter adapter = new MainAdapter(data, this);
 

@@ -83,12 +83,12 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
     }
 
 
-    /* ************************
+    /* ////////////////////////////
         TOOLBAR
-     *************************/
+    *////////////////////////// /
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_sensorfragment, menu);
+        inflater.inflate(R.menu.menu_refresh, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

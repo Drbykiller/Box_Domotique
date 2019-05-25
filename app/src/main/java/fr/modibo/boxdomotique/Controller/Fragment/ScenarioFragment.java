@@ -1,8 +1,12 @@
 package fr.modibo.boxdomotique.Controller.Fragment;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +24,9 @@ import fr.modibo.boxdomotique.Controller.MainActivity;
 import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.Model.Scenario;
 import fr.modibo.boxdomotique.Model.Thread.DeviceThread;
+import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.Model.Thread.ScenarioThread;
+import fr.modibo.boxdomotique.Model.UrlServer;
 import fr.modibo.boxdomotique.R;
 import fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter;
 import fr.modibo.boxdomotique.View.ChoiceDialog;
@@ -37,6 +43,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     private ArrayList<Scenario> listScenario;
     private ScenarioAdapter adapter;
     private scenarioFragmentListerner listerner;
+    private byte removeDuplicateScenario = 0;
 
 
     public ScenarioFragment() {
@@ -74,6 +81,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
             dialog.show(getFragmentManager(), "Choice Dialog");
         });
 
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -96,8 +104,25 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         fab.hide();
+        super.onDestroy();
+    }
+
+    /* ////////////////////////////
+        TOOLBAR
+    *////////////////////////// /
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_refresh, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.tb_refresh)
+            new ScenarioThread(this, getFragmentManager()).execute();
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -136,7 +161,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      */
     @Override
     public void errorListDevice(String error) {
-        listerner.errorFromScenario(error);
+        listerner.errorFromDeviceOrScenario(error);
     }
 
     /**
@@ -145,25 +170,45 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      *
      * @param check  Récupère un tableau de type boolean auquel on va correspondre
      *               a la liste des capteurs/actionneurs.
+     * @param state  Récupere l'état du scénario, si il doit etre activé par default ou non.
      * @param hour   Récupere l'heure choisi par l'utilisateur.
      * @param minute Récupere les minutes choisi par l'utilisateur.
      * @see fr.modibo.boxdomotique.View.ChoiceDialog
      */
     @Override
-    public void choiceUser(boolean[] check, int hour, int minute) {
-        ArrayList<Integer> nameDevice = new ArrayList<>();
+    public void choiceUser(boolean[] check, int state, int hour, int minute) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            removeDuplicateScenario++;
 
-        for (int i = 0; i < list.length; i++) {
-            if (check[i])
-                nameDevice.add(listDevice.get(i).getId());
-        }
+        if (removeDuplicateScenario < 2) {
+            ArrayList<Integer> nameDevice = new ArrayList<>();
 
-        int size = listScenario.size() - 1;
-        int id = listScenario.get(size).getId() + 1;
+            for (int i = 0; i < list.length; i++) {
+                if (check[i])
+                    nameDevice.add(listDevice.get(i).getId());
+            }
 
-        listScenario.add(new Scenario(id, nameDevice, 0, hour, minute));
+            int size = listScenario.size() - 1;
+            int id = listScenario.get(size).getId() + 1;
 
-        adapter.notifyDataSetChanged();
+            listScenario.add(new Scenario(id, nameDevice, state, hour, minute));
+            adapter.notifyDataSetChanged();
+
+            new JsonThread(listScenario, UrlServer.SEND_JSON_URL_SCENARIO).execute();
+        } else
+            removeDuplicateScenario = 0;
+
+    }
+
+    /**
+     * Méthode implémenté de la classe <b>ChoiceDialog</b>
+     * qui signale à l'utilisateur qui n'a pas selectionné d'appareil.
+     *
+     * @see fr.modibo.boxdomotique.View.ChoiceDialog
+     */
+    @Override
+    public void errorChoiceDevice() {
+        listerner.errorChoiceDeviceFromChoiceDialog();
     }
 
     /**
@@ -176,6 +221,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      */
     @Override
     public void successListScenario(ArrayList<Scenario> resultScenario) {
+        listScenario.clear();
         listScenario.addAll(resultScenario);
         adapter.notifyDataSetChanged();
     }
@@ -184,27 +230,36 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      * Méthode implémenté de la classe <b>ScenarioThread</b>
      * qui récupere, si il y a une erreur,
      * l'erreur lors de la récuperation de la
-     * liste des scénarios.
+     * liste des scénarios et qui l'envoie
+     * dans l'interface {@link scenarioFragmentListerner}
      *
      * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
      * @see fr.modibo.boxdomotique.Model.Thread.ScenarioThread
      */
     @Override
     public void errorListScenario(String error) {
-        listerner.errorFromScenario(error);
+        listerner.errorFromDeviceOrScenario(error);
     }
 
     public interface scenarioFragmentListerner {
         /**
          * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
          * et qui permet de recupérer, si il y a une erreur,
-         * l'erreur de la méthode <b>errorListDevice</b> et <b>errorListScenario</b>
+         * l'erreur de la méthode <b>errorListDevice</b> et/ou <b>errorListScenario</b>
          *
          * @param error L'erreur passe en paramètre ce qui permet de le récuperer.
          * @see fr.modibo.boxdomotique.Controller.MainActivity
          * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#errorListDevice(String)
          * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#errorListScenario(String)
          */
-        void errorFromScenario(String error);
+        void errorFromDeviceOrScenario(String error);
+
+        /**
+         * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
+         * qui va signaler à l'utilisateur qui n'a pas selectionné d'appareil.
+         *
+         * @see fr.modibo.boxdomotique.Controller.MainActivity
+         */
+        void errorChoiceDeviceFromChoiceDialog();
     }
 }

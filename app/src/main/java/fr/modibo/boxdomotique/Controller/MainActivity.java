@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //FAB
         fab = findViewById(R.id.fab);
+        fab.hide();
 
         View view = nav_view.getHeaderView(0);
         TextView nav_view_tvUser = view.findViewById(R.id.nav_view_tvUser);
@@ -209,22 +210,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public void loadFragment(String title) {
-        switch (title) {
-            case "Gestion des Capteurs":
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
-                nav_view.setCheckedItem(R.id.nav_sensor);
-                collapsing_img.setImageResource(0);
-                appbar.setExpanded(false, false);
-                collapsing.setTitle(getResources().getString(R.string.nav_sensor));
-                break;
-            case "Gestion des Scénarios":
-                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
-                nav_view.setCheckedItem(R.id.nav_scenario);
-                collapsing_img.setImageResource(R.drawable.collapsing_scenario);
-                appbar.setExpanded(true, true);
-                collapsing.setTitle(getResources().getString(R.string.nav_scenario));
-                break;
+        if (title.equalsIgnoreCase(getString(R.string.nav_sensor))) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
+            nav_view.setCheckedItem(R.id.nav_sensor);
+            collapsing_img.setImageResource(0);
+            appbar.setExpanded(false, false);
+            collapsing.setTitle(getResources().getString(R.string.nav_sensor));
+
+        } else if (title.equalsIgnoreCase(getString(R.string.nav_scenario))) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
+            nav_view.setCheckedItem(R.id.nav_scenario);
+            collapsing_img.setImageResource(R.drawable.collapsing_scenario);
+            appbar.setExpanded(true, true);
+            collapsing.setTitle(getResources().getString(R.string.nav_scenario));
+
         }
+
     }
 
     /**
@@ -236,8 +239,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
      */
     @Override
-    public void errorFromScenario(String error) {
+    public void errorFromDeviceOrScenario(String error) {
         Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorServer) + "\nCode : " + error, Snackbar.LENGTH_LONG).setDuration(5000);
+        View snackbarView = snackbar.getView();
+        TextView tv = snackbarView.findViewById(R.id.snackbar_text);
+        tv.setMaxLines(5);
+        snackbar.show();
+    }
+
+    /**
+     * Méthode implémenté de la classe <b>ScenarioFragment</b>
+     * qui affiche un message d'erreur comme quoi l'utilisateur
+     * n'a pas selectionné d'appareil.
+     *
+     * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
+     */
+    @Override
+    public void errorChoiceDeviceFromChoiceDialog() {
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorChoiceDevice), Snackbar.LENGTH_LONG).setDuration(5000);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
         tv.setMaxLines(5);

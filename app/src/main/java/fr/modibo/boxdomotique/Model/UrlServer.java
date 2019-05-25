@@ -11,8 +11,8 @@ public class UrlServer {
     public static final String URL_CONNECTION = "domotique/login.php";
     public static final String URL_JSON = "domotique/json/index.json";
     public static final String URL_SCENARIO = "domotique/json/scenario.json";
-    public static final String SEND_JSON_URL_DEVICE = "domotique/receive_jsonfile.php";
-    public static final String SEND_JSON_URL_SCENARIO = "domotique/receive_scenario.php";
+    public static final String SEND_JSON_URL_DEVICE = "domotique/receive_json_device.php";
+    public static final String SEND_JSON_URL_SCENARIO = "domotique/receive_json_scenario.php";
 
     //Serveur
 //    public static final String URL_CONNECTION = "auth";

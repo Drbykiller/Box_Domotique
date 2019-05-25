@@ -8,6 +8,7 @@ import android.text.format.DateFormat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
 
@@ -17,6 +18,7 @@ import java.util.Calendar;
 public class TimeDialog extends DialogFragment {
 
     private TimePickerDialog.OnTimeSetListener listener;
+
 
     /**
      * Constructeur de la classe <b>TimeDialog</b> surchargé.
@@ -36,5 +38,15 @@ public class TimeDialog extends DialogFragment {
         int minute = c.get(Calendar.MINUTE);
 
         return new TimePickerDialog(getActivity(), listener, hour, minute, DateFormat.is24HourFormat(getActivity()));
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+        try {
+            listener = (TimePickerDialog.OnTimeSetListener) childFragment;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(childFragment.toString() + " must implement (TimePickerDialog.OnTimeSetListener) ");
+        }
     }
 }

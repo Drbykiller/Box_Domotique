@@ -22,4 +22,9 @@
     <string name="btList">Listes des appareils</string>
     <string name="strChoice">Choisissez les appareils que vous voulez automatiser</string>
     <string name="strCancel">Annuler</string>
+    <string name="strState">Quel état voulez-vous définir à votre scénario ?</string>
+    <string name="errorChoiceDevice">Erreur, il faut sélectionner au moins un appareil dans la liste !</string>
+    <string name="strSensor">Gérer les différents appareil connecté.</string>
+    <string name="strScenario">Crée des Scénarios, automatiser en fonction de heure, du lever/coucher du soleil etc ...</string>
+    <string name="strAbout">A Propos de nous !</string>
 </resources>

@@ -30,6 +30,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     private InfoDeviceDialog infoDeviceDialog;
     private Context context;
 
+
     /**
      * Constructeur de la classe <b>ScenarioAdapter</b> qui prend en paramètre 4 arguments.
      *
@@ -106,6 +107,10 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
         return listScenario.size();
     }
 
+
+    /* ////////////////////////////
+        INTERFACE + IMPLEMENTATION
+    *////////////////////////// /
     @Override
     public void ok() {
         infoDeviceDialog.dismiss();

@@ -69,7 +69,6 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
     /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
     *////////////////////////// /
-
     public interface deviceThreadListerner {
         /**
          * La 1er méthode de l'interface envoie la liste des capteurs/actionneurs.

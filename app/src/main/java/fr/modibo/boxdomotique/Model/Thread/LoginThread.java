@@ -90,7 +90,6 @@ public class LoginThread extends AsyncTask<String, Void, Void> {
     /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
     *////////////////////////// /
-
     public interface loginThreadListerner {
         /**
          * La 1er méthode de l'interface permet de lancer l'activité principal.

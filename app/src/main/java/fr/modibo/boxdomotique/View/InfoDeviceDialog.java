@@ -26,6 +26,7 @@ public class InfoDeviceDialog extends DialogFragment {
     private ArrayList<String> nameDevice;
     private infoDeviceDialogListerner listerner;
 
+
     /**
      * Constructeur de la classe <b>InfoDeviceDialog</b> surchargé.
      *
@@ -42,7 +43,7 @@ public class InfoDeviceDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View v = inflater.inflate(R.layout.info_device, null, false);
+        View v = inflater.inflate(R.layout.info_device_dialog, null, false);
 
         ListView id_listView = v.findViewById(R.id.id_listView);
         MaterialButton id_button = v.findViewById(R.id.id_button);
@@ -67,7 +68,6 @@ public class InfoDeviceDialog extends DialogFragment {
     /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
     *////////////////////////// /
-
     public interface infoDeviceDialogListerner {
         /**
          * Méthode qui va etre implémenté dans la classe <b>ScenarioAdapter</b>

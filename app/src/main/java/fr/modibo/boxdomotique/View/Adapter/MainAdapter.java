@@ -21,6 +21,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     private ArrayList<Main> data;
     private fragmentListerner listerner;
 
+
     /**
      * Constructeur de la classe <b>MainAdapter</b> qui prend en paramètre 2 arguments.
      *
@@ -62,6 +63,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         return data.size();
     }
 
+
+    /* ////////////////////////////
+        INTERFACE + IMPLEMENTATION
+    *////////////////////////// /
     public interface fragmentListerner {
         /**
          * Méthode qui va etre implémenté dans la classe <b>MainFragment</b>

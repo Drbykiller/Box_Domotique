@@ -25,6 +25,7 @@ public class JsonThread extends AsyncTask<Void, Void, Void> {
     private Gson gson;
     private String URL;
 
+
     /**
      * Constructeur de la classe <b>JsonThread</b> surchargé.
      *
