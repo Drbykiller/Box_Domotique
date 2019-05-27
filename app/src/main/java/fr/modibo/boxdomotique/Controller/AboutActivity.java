@@ -14,7 +14,6 @@ import fr.modibo.boxdomotique.View.Adapter.ViewPagerAdapter;
 
 public class AboutActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +31,7 @@ public class AboutActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),context);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), context);
 
         viewPager.setAdapter(adapter);
 

@@ -89,7 +89,6 @@
                         android:textColor="@color/colorText" />
                 </RadioGroup>
 
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView

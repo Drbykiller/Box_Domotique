@@ -18,7 +18,7 @@ import fr.modibo.boxdomotique.Model.UrlServer;
 import fr.modibo.boxdomotique.R;
 
 /**
- * Classe <b>LoginActivity</b> qui gère l'affichage de l'ecran de connexion
+ * Classe <b>LoginActivity</b> qui gère l'affichage de l'écran de connexion
  * et la connexion au serveur.
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginThread.loginThreadListerner {
@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Défini l'adresse IP du serveur
         UrlServer.setUrlServer(server);
 
+        // Mode Débug
         if (user.equalsIgnoreCase("debug") && password.equalsIgnoreCase("debug")) {
-
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(MainActivity.MAIN_KEY, user);
             startActivity(intent);

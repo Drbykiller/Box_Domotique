@@ -29,8 +29,8 @@ import fr.modibo.boxdomotique.View.Adapter.DeviceAdapter;
  */
 public class SensorFragment extends Fragment implements DeviceThread.deviceThreadListerner {
 
-    private ArrayList<Device> data;
     private DeviceAdapter adapter;
+    private ArrayList<Device> data;
     private errorFromDeviceThreadListerner listerner;
 
 
@@ -108,7 +108,7 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
     /**
      * Methode implementé de la classe <b>DeviceThread</b>
      * qui récupere la liste des capteurs/actionneurs depuis le serveur
-     * via la classe <b>DeviceThread</b> et qui met a jour le RecycleView.
+     * et qui met a jour le RecycleView.
      *
      * @param devices Récupère la liste des capteurs/actionneurs.
      * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread
@@ -125,10 +125,9 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
      * qui récupère, si il y a une erreur,
      * l'erreur lors de la récuperation de la
      * liste des capteurs/actionneurs et qui
-     * l'envoi dans l'interface <b>errorFromDeviceThreadListerner</b>
+     * l'envoi dans l'interface {@link errorFromDeviceThreadListerner}
      *
      * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
-     * @see errorFromDeviceThreadListerner
      * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread
      */
     @Override

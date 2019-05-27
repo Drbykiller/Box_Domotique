@@ -28,4 +28,5 @@
     <string name="strScenario">Crée des Scénarios, automatiser en fonction de heure, du lever/coucher du soleil etc ...</string>
     <string name="strAbout">A Propos de nous !</string>
     <string name="strLibraries">Bibliothèques</string>
+    <string name="errorFloatingButton">Erreur, essayer d\'actualiser la page avant d\'ajouter un scenario !</string>
 </resources>

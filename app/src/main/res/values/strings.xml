@@ -45,4 +45,5 @@
     <string name="emoji" translatable="false">emoji</string>
 
     <string name="btList">Device lists</string>
+    <string name="errorFloatingButton">Error, try to update the page before adding a scenario !</string>
 </resources>

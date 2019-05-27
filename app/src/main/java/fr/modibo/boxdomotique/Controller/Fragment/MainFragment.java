@@ -33,7 +33,8 @@ public class MainFragment extends Fragment implements MainAdapter.fragmentLister
     /**
      * Constructeur de la classe <b>MainFragment</b> surchargé.
      *
-     * @param listerner La classe qui implémente l'interface {@link fragmentFromMainAdapterListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param listerner La classe qui implémente l'interface {@link fragmentFromMainAdapterListerner} passe en paramètre
+     *                  pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      */
     public MainFragment(fragmentFromMainAdapterListerner listerner) {
         this.listerner = listerner;

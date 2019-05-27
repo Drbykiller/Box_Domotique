@@ -7,7 +7,6 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mcm_root"
-        style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginStart="@dimen/mtrl_card_spacing"

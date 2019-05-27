@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AppBarLayout appbar;
     private ImageView collapsing_img;
     public static FloatingActionButton fab;
+
     public static final String MAIN_KEY = "MAIN_PARAMS";
     private static final String[] KEY = {"home", "sensor", "scenario", "setting", "about"};
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_view_tvUser.setText(intent.getStringExtra(MAIN_KEY));
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new MainFragment(this)).commit();
             nav_view.setCheckedItem(R.id.nav_home);
         } else {
 
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (result != null && !result.isEmpty()) {
                     collapsing.setTitle(result);
+
                     Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_frame);
                     if (fragment instanceof ScenarioFragment)
                         collapsing_img.setImageResource(R.drawable.collapsing_scenario);
@@ -133,9 +135,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return fab;
     }
 
-    /* ************************
-          NAVIGATION VIEW
-    *************************/
+    /* ////////////////////////////
+        NAVIGATION VIEW
+    *////////////////////////// /
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
@@ -211,7 +213,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void loadFragment(String title) {
         if (title.equalsIgnoreCase(getString(R.string.nav_sensor))) {
-
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment(this)).commit();
             nav_view.setCheckedItem(R.id.nav_sensor);
             collapsing_img.setImageResource(0);
@@ -219,14 +220,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             collapsing.setTitle(getResources().getString(R.string.nav_sensor));
 
         } else if (title.equalsIgnoreCase(getString(R.string.nav_scenario))) {
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new ScenarioFragment(this)).commit();
             nav_view.setCheckedItem(R.id.nav_scenario);
             collapsing_img.setImageResource(R.drawable.collapsing_scenario);
             appbar.setExpanded(true, true);
             collapsing.setTitle(getResources().getString(R.string.nav_scenario));
 
-        }else if(title.equalsIgnoreCase(getString(R.string.nav_about))){
+        } else if (title.equalsIgnoreCase(getString(R.string.nav_about))) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Méthode implémenté de la classe <b>ScenarioFragment</b> qui permet d'obtenir,
      * si il y a une erreur, une erreur lors de la récuperation de la
-     * liste des scénarios et de l'afficher a l'utilisateur.
+     * liste des scénarios et/ou des capteurs/actionneurs et de l'afficher a l'utilisateur.
      *
      * @param error L'erreur passe en paramètre ce qui permet de le récuperer.
      * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
@@ -260,6 +260,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void errorChoiceDeviceFromChoiceDialog() {
         Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorChoiceDevice), Snackbar.LENGTH_LONG).setDuration(5000);
+        View snackbarView = snackbar.getView();
+        TextView tv = snackbarView.findViewById(R.id.snackbar_text);
+        tv.setMaxLines(5);
+        snackbar.show();
+    }
+
+    /**
+     * Méthode implémenté de la classe <b>ScenarioFragment</b> qui
+     * permet d'afficher une erreur si l'utilisateur essaye de
+     * cliquer sur le button alors que la récuperation de la
+     * liste des capteurs/actionneurs a échoué.
+     *
+     * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
+     */
+    @Override
+    public void errorFloatingButton() {
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorFloatingButton), Snackbar.LENGTH_LONG).setDuration(5000);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
         tv.setMaxLines(5);

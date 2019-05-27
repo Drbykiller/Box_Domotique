@@ -37,13 +37,15 @@ import fr.modibo.boxdomotique.View.ChoiceDialog;
  */
 public class ScenarioFragment extends Fragment implements DeviceThread.deviceThreadListerner, ChoiceDialog.choiceDialogListerner, ScenarioThread.scenarioThreadListerner {
 
-    private String[] list;
     private FloatingActionButton fab;
+    private ScenarioAdapter adapter;
+    private byte removeDuplicateScenario = 0;
+
+    private String[] list;
     private ArrayList<Device> listDevice;
     private ArrayList<Scenario> listScenario;
-    private ScenarioAdapter adapter;
+
     private scenarioFragmentListerner listerner;
-    private byte removeDuplicateScenario = 0;
 
 
     public ScenarioFragment() {
@@ -77,8 +79,12 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         rv_scenario.setAdapter(adapter);
 
         fab.setOnClickListener(v -> {
-            ChoiceDialog dialog = new ChoiceDialog(list, this, getContext());
-            dialog.show(getFragmentManager(), "Choice Dialog");
+            if (list == null) {
+                listerner.errorFloatingButton();
+            } else {
+                ChoiceDialog dialog = new ChoiceDialog(list, this, getContext());
+                dialog.show(getFragmentManager(), "Choice Dialog");
+            }
         });
 
         setHasOptionsMenu(true);
@@ -119,9 +125,10 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.tb_refresh)
+        if (item.getItemId() == R.id.tb_refresh) {
+            new DeviceThread(this, getFragmentManager()).execute();
             new ScenarioThread(this, getFragmentManager()).execute();
-
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,6 +149,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     public void successListDevice(ArrayList<Device> devices) {
         listDevice.addAll(devices);
         adapter.notifyDataSetChanged();
+
         list = new String[devices.size()];
 
         for (int i = 0; i < devices.size(); i++) {
@@ -177,8 +185,12 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      */
     @Override
     public void choiceUser(boolean[] check, int state, int hour, int minute) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            /* Résout le bug de duplication de scénario quand on rajoute un
+                scénario sur les version d'Android inferieur à Android 5.0
+            */
             removeDuplicateScenario++;
+        }
 
         if (removeDuplicateScenario < 2) {
             ArrayList<Integer> nameDevice = new ArrayList<>();
@@ -202,7 +214,9 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
 
     /**
      * Méthode implémenté de la classe <b>ChoiceDialog</b>
-     * qui signale à l'utilisateur qui n'a pas selectionné d'appareil.
+     * qui signale à l'utilisateur qui n'a pas selectionné
+     * de capteurs/actionneurs et qui l'envoie dans
+     * l'interface {@link scenarioFragmentListerner}
      *
      * @see fr.modibo.boxdomotique.View.ChoiceDialog
      */
@@ -256,10 +270,21 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
 
         /**
          * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
-         * qui va signaler à l'utilisateur qui n'a pas selectionné d'appareil.
+         * et qui va signaler à l'utilisateur qui n'a pas selectionné
+         * de capteurs/actionneurs.
          *
          * @see fr.modibo.boxdomotique.Controller.MainActivity
          */
         void errorChoiceDeviceFromChoiceDialog();
+
+        /**
+         * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
+         * et qui affiche une erreur si l'utilisateur essaye de rajouter
+         * un scénario alors que la récuperation des capteurs/actionneurs
+         * a échoué.
+         *
+         * @see fr.modibo.boxdomotique.Controller.MainActivity
+         */
+        void errorFloatingButton();
     }
 }
