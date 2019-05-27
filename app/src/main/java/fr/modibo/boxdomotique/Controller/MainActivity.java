@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /* ************************
-        NAVIGATION VIEW
+          NAVIGATION VIEW
     *************************/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -162,8 +162,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //tb.setTitle(R.string.nav_setting);
                 break;
             case R.id.nav_about:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
-                //tb.setTitle(R.string.nav_about);
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
                 break;
         }
 
@@ -226,6 +226,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             appbar.setExpanded(true, true);
             collapsing.setTitle(getResources().getString(R.string.nav_scenario));
 
+        }else if(title.equalsIgnoreCase(getString(R.string.nav_about))){
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
         }
 
     }

@@ -27,4 +27,5 @@
     <string name="strSensor">Gérer les différents appareil connecté.</string>
     <string name="strScenario">Crée des Scénarios, automatiser en fonction de heure, du lever/coucher du soleil etc ...</string>
     <string name="strAbout">A Propos de nous !</string>
+    <string name="strLibraries">Bibliothèques</string>
 </resources>

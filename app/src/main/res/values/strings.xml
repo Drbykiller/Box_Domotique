@@ -20,6 +20,7 @@
     <string name="strSensor">Manage the different connected devices.</string>
     <string name="strScenario">Create Scenarios, automate according to time, sunrise/sunset etc....</string>
     <string name="strAbout">About us !</string>
+    <string name="strLibraries">Libraries</string>
 
 
     <string name="errorEnterServer">You have not entered an IP address !</string>
