@@ -67,6 +67,12 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new DeviceThread(this, getFragmentManager()).execute();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
@@ -74,12 +80,6 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement (SensorFragment.errorFromDeviceThreadListerner) ");
         }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        new DeviceThread(this, getFragmentManager()).execute();
     }
 
 

@@ -3,32 +3,35 @@ package fr.modibo.boxdomotique.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class Scenario {
 
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("id_devices")
+
+    @SerializedName("id_appareil")
     @Expose
-    private List<Integer> id_devices = null;
-    @SerializedName("etat")
+    private Integer id_appareil;
+    //private List<Integer> id_devices = null;
+
+    @SerializedName("etat_appareil")
     @Expose
-    private Integer etat;
+    private Integer etat_appareil;
+
     @SerializedName("heure")
     @Expose
     private Integer heure;
-    @SerializedName("minute")
-    @Expose
-    private Integer minute;
 
-    public Scenario(Integer id, List<Integer> id_devices, Integer etat, Integer heure, Integer minute) {
+    @SerializedName("minutes")
+    @Expose
+    private Integer minutes;
+
+    public Scenario(Integer id, Integer id_appareil, Integer etat_appareil, Integer heure, Integer minutes) {
         this.id = id;
-        this.id_devices = id_devices;
-        this.etat = etat;
+        this.id_appareil = id_appareil;
+        this.etat_appareil = etat_appareil;
         this.heure = heure;
-        this.minute = minute;
+        this.minutes = minutes;
     }
 
     public Integer getId() {
@@ -39,20 +42,20 @@ public class Scenario {
         this.id = id;
     }
 
-    public List<Integer> getId_devices() {
-        return id_devices;
+    public Integer getId_devices() {
+        return id_appareil;
     }
 
-    public void setId_devices(List<Integer> id_devices) {
-        this.id_devices = id_devices;
+    public void setId_devices(Integer id_devices) {
+        this.id_appareil = id_devices;
     }
 
     public Integer getEtat() {
-        return etat;
+        return etat_appareil;
     }
 
     public void setEtat(Integer etat) {
-        this.etat = etat;
+        this.etat_appareil = etat;
     }
 
     public Integer getHeure() {
@@ -64,11 +67,11 @@ public class Scenario {
     }
 
     public Integer getMinute() {
-        return minute;
+        return minutes;
     }
 
     public void setMinute(Integer minute) {
-        this.minute = minute;
+        this.minutes = minute;
     }
 }
 

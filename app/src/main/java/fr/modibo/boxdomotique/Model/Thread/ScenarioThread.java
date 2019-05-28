@@ -16,11 +16,12 @@ import fr.modibo.boxdomotique.View.LoadingDialog;
  */
 public class ScenarioThread extends AsyncTask<Void, Void, Void> {
 
-    private ArrayList<Scenario> result;
     private Exception e;
     private LoadingDialog dialog;
     private FragmentManager fragmentManager;
     private scenarioThreadListerner listerner;
+
+    private ArrayList<Scenario> result;
 
 
     /**
@@ -70,7 +71,7 @@ public class ScenarioThread extends AsyncTask<Void, Void, Void> {
     *////////////////////////// /
     public interface scenarioThreadListerner {
         /**
-         * La 1er méthode de l'interface envoie la liste des capteurs/actionneurs.
+         * La 1er méthode de l'interface envoie la liste des scénarios.
          *
          * @param resultScenario Liste des scénarios passé en paramètre.
          * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#successListScenario(ArrayList)

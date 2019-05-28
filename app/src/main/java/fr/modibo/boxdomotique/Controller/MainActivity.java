@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public void errorChoiceDeviceFromChoiceDialog() {
-        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorChoiceDevice), Snackbar.LENGTH_LONG).setDuration(5000);
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorChoiceDevice), Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
         tv.setMaxLines(5);
@@ -276,7 +276,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public void errorFloatingButton() {
-        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorFloatingButton), Snackbar.LENGTH_LONG).setDuration(5000);
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorFloatingButton), Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        TextView tv = snackbarView.findViewById(R.id.snackbar_text);
+        tv.setMaxLines(5);
+        snackbar.show();
+    }
+
+    @Override
+    public void errorOneDevice() {
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), "Erreur, vous devez sélectionner un seul appareil !", Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
         tv.setMaxLines(5);

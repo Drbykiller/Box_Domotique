@@ -73,6 +73,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
          * qui permet d'obtenir le nom du Fragment.
          *
          * @param title Le nom du Fragment passe en paramètre.
+         * @see fr.modibo.boxdomotique.Controller.Fragment.MainFragment
          */
         void loadFragment(String title);
     }

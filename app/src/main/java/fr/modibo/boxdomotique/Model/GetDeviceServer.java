@@ -59,6 +59,7 @@ public class GetDeviceServer {
         else
             device = new ArrayList<>(resultListDevice);
 
+        // Permet de concaténer l'adresse IP avec le lien relatif de l'image
         for (int i = 0; i < device.size(); i++) {
             String link = device.get(i).getImage();
             device.get(i).setImage(UrlServer.URL_SERVER + link);

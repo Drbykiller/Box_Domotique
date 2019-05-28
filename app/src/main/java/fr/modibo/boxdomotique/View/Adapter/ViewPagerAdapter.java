@@ -12,6 +12,10 @@ import com.mikepenz.aboutlibraries.LibsBuilder;
 import fr.modibo.boxdomotique.Controller.Fragment.AboutInfoFragment;
 import fr.modibo.boxdomotique.R;
 
+/**
+ * Classe <b>ViewPagerAdapter</b> qui gère l'affichage des données
+ * dans le widget TabLayout.
+ */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private Context context;

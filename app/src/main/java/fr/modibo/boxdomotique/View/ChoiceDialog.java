@@ -18,11 +18,13 @@ import fr.modibo.boxdomotique.R;
  */
 public class ChoiceDialog extends DialogFragment implements StateDialog.stateDialogListerner {
 
-    private String[] list;
-    private boolean[] listcheck;
-    private choiceDialogListerner listerner;
     private Context context;
     private StateDialog stateDialog;
+
+    private String[] list;
+    private boolean[] listcheck;
+
+    private choiceDialogListerner listerner;
 
 
     /**
@@ -50,21 +52,35 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
         builder.setMultiChoiceItems(list, listcheck, (dialog, which, isChecked) -> listcheck[which] = isChecked);
 
         builder.setPositiveButton(context.getResources().getString(R.string.strOK), (dialog, which) -> {
-            byte error = 0;
+            byte errorNoDeviceDelected = 0;
 
             for (boolean b : listcheck) {
                 if (b) {
-                    error = 0;
+                    errorNoDeviceDelected = 0;
                     break;
                 } else
-                    error = 1;
+                    errorNoDeviceDelected = 1;
             }
 
-            if (error == 0) {
-                stateDialog = new StateDialog(this);
-                stateDialog.show(getFragmentManager(), "StateDialog");
-            } else
-                listerner.errorChoiceDevice();
+            byte oneDevice = 0;
+            for (int i = 0; i < listcheck.length; i++) {
+                if (listcheck[i]) {
+                    oneDevice++;
+                }
+            }
+            if (oneDevice >= 2) {
+                listerner.errorOneDevice();
+            } else {
+
+                if (errorNoDeviceDelected == 0) {
+                    stateDialog = new StateDialog(this);
+                    stateDialog.show(getFragmentManager(), "StateDialog");
+                } else
+                    listerner.errorChoiceDevice();
+
+            }
+
+
         });
 
         builder.setNeutralButton(context.getResources().getString(R.string.strCancel), (dialog, which) -> {
@@ -113,5 +129,7 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
          * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
          */
         void errorChoiceDevice();
+
+        void errorOneDevice();
     }
 }

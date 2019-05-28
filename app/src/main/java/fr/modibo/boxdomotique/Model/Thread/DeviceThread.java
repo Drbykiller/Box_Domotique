@@ -16,11 +16,12 @@ import fr.modibo.boxdomotique.View.LoadingDialog;
  */
 public class DeviceThread extends AsyncTask<Void, Void, Void> {
 
-    private ArrayList<Device> result;
     private Exception e;
     private LoadingDialog dialog;
     private FragmentManager fragmentManager;
     private deviceThreadListerner listerner;
+
+    private ArrayList<Device> result;
 
 
     /**

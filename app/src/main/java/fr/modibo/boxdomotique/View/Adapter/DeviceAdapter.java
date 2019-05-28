@@ -24,8 +24,8 @@ import fr.modibo.boxdomotique.View.ViewHolder.DeviceViewHolder;
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     private Context context;
-    private ArrayList<Device> listDevice;
     private RequestOptions requestOptions;
+    private ArrayList<Device> listDevice;
 
 
     /**

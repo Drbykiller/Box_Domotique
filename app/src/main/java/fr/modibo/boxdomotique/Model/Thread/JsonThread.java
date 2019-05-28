@@ -20,10 +20,11 @@ import okhttp3.RequestBody;
  */
 public class JsonThread extends AsyncTask<Void, Void, Void> {
 
-    private ArrayList<Device> listDevice;
-    private ArrayList<Scenario> listScenario;
     private Gson gson;
     private String URL;
+
+    private ArrayList<Device> listDevice;
+    private ArrayList<Scenario> listScenario;
 
 
     /**

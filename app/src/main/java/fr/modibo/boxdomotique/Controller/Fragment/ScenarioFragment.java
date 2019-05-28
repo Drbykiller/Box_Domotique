@@ -99,6 +99,12 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     }
 
     @Override
+    public void onDestroy() {
+        fab.hide();
+        super.onDestroy();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
@@ -108,11 +114,6 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         }
     }
 
-    @Override
-    public void onDestroy() {
-        fab.hide();
-        super.onDestroy();
-    }
 
     /* ////////////////////////////
         TOOLBAR
@@ -193,20 +194,30 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         }
 
         if (removeDuplicateScenario < 2) {
-            ArrayList<Integer> nameDevice = new ArrayList<>();
+            /*
+             * ArrayList<Integer> nameDevice = new ArrayList<>();
 
-            for (int i = 0; i < list.length; i++) {
-                if (check[i])
-                    nameDevice.add(listDevice.get(i).getId());
+             for (int i = 0; i < list.length; i++) {
+             if (check[i])
+             nameDevice.add(listDevice.get(i).getId());
+             }
+             */
+
+            int id_device = 0;
+            for (int i = 0; i < listDevice.size(); i++) {
+                if (check[i]) {
+                    id_device = listDevice.get(i).getId();
+                }
             }
 
             int size = listScenario.size() - 1;
             int id = listScenario.get(size).getId() + 1;
 
-            listScenario.add(new Scenario(id, nameDevice, state, hour, minute));
+            listScenario.add(new Scenario(id, id_device, state, hour, minute));
             adapter.notifyDataSetChanged();
 
             new JsonThread(listScenario, UrlServer.SEND_JSON_URL_SCENARIO).execute();
+
         } else
             removeDuplicateScenario = 0;
 
@@ -223,6 +234,11 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     @Override
     public void errorChoiceDevice() {
         listerner.errorChoiceDeviceFromChoiceDialog();
+    }
+
+    @Override
+    public void errorOneDevice() {
+        listerner.errorOneDevice();
     }
 
     /**
@@ -286,5 +302,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
          * @see fr.modibo.boxdomotique.Controller.MainActivity
          */
         void errorFloatingButton();
+
+        void errorOneDevice();
     }
 }

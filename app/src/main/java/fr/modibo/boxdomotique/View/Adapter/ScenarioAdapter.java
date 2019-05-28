@@ -24,11 +24,12 @@ import fr.modibo.boxdomotique.View.ViewHolder.ScenarioViewHolder;
  */
 public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> implements InfoDeviceDialog.infoDeviceDialogListerner {
 
-    private ArrayList<Device> listDevice;
-    private ArrayList<Scenario> listScenario;
+    private Context context;
     private FragmentManager fragmentManager;
     private InfoDeviceDialog infoDeviceDialog;
-    private Context context;
+
+    private ArrayList<Device> listDevice;
+    private ArrayList<Scenario> listScenario;
 
 
     /**
@@ -60,7 +61,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
 
         String heure = context.getResources().getString(R.string.strTime) + scenario.getHeure() + "h" + scenario.getMinute();
 
-        holder.getMcScenario_tvTitle().setText("Scenario");
+        holder.getMcScenario_tvTitle().setText("Scenario " + scenario.getId());
         holder.getMcScenario_tvHour().setText(heure);
         holder.getMcScenario_bt().setText(R.string.btList);
 
@@ -89,22 +90,31 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
 
     }
 
+    @Override
+    public int getItemCount() {
+        return listScenario.size();
+    }
+
     private void info(final Scenario scenario) {
         ArrayList<String> deviceName = new ArrayList<>();
+
+        /*
         for (Integer name : scenario.getId_devices()) {
             for (Device get : listDevice) {
                 if (get.getId().equals(name)) {
                     deviceName.add(get.getNom());
                 }
             }
-        }
-        infoDeviceDialog = new InfoDeviceDialog(deviceName, this);
-        infoDeviceDialog.show(fragmentManager, "Info Device Dialog");
-    }
+        }*/
 
-    @Override
-    public int getItemCount() {
-        return listScenario.size();
+        for (int i = 0; i < listDevice.size(); i++) {
+            if (scenario.getId_devices().equals(listDevice.get(i).getId())) {
+                deviceName.add(listDevice.get(i).getNom());
+            }
+        }
+
+        infoDeviceDialog = new InfoDeviceDialog(deviceName, this);
+        infoDeviceDialog.show(fragmentManager, "InfoDeviceDialog");
     }
 
 

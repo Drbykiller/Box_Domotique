@@ -12,6 +12,10 @@ import com.google.android.material.tabs.TabLayout;
 import fr.modibo.boxdomotique.R;
 import fr.modibo.boxdomotique.View.Adapter.ViewPagerAdapter;
 
+/**
+ * Classe <b>AboutActivity</b> qui gère l'affichage des
+ * informations concernant le projet.
+ */
 public class AboutActivity extends AppCompatActivity {
 
     @Override
