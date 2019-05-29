@@ -29,6 +29,8 @@
     <string name="errorServer">Error on the server side !</string>
     <string name="errorUserPassword">Username and/or password is incorrect !</string>
     <string name="errorChoiceDevice">Error, at least one device must be selected from the list !</string>
+    <string name="errorFloatingButton">Error, try to update the page before adding a scenario !</string>
+    <string name="errorSingleDevice">Error, you must select only one device !</string>
 
 
     <string name="nav_dw_open" translatable="false">Open navigation drawer</string>
@@ -45,5 +47,4 @@
     <string name="emoji" translatable="false">emoji</string>
 
     <string name="btList">Device lists</string>
-    <string name="errorFloatingButton">Error, try to update the page before adding a scenario !</string>
 </resources>

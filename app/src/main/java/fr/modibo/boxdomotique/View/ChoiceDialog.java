@@ -30,14 +30,14 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
     /**
      * Constructeur de la classe <b>ChoiceDialog</b> qui prend en paramètre 3 arguments.
      *
-     * @param list      Liste des noms des capteurs/actionneurs.
      * @param listerner La classe qui implémente l'interface {@link choiceDialogListerner} passe en paramètre
      *                  pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param list      Liste des noms des capteurs/actionneurs.
      * @param context   Contexte de l'application
      */
-    public ChoiceDialog(String[] list, choiceDialogListerner listerner, Context context) {
-        this.list = list;
+    public ChoiceDialog(choiceDialogListerner listerner, String[] list, Context context) {
         this.listerner = listerner;
+        this.list = list;
         this.context = context;
         this.listcheck = new boolean[list.length];
     }

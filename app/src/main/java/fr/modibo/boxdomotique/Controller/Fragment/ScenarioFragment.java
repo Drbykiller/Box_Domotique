@@ -1,6 +1,7 @@
 package fr.modibo.boxdomotique.Controller.Fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +37,7 @@ import fr.modibo.boxdomotique.View.ChoiceDialog;
  * Classe <b>ScenarioFragment</b> qui fait le lien entre la récuperation des differents scénarios
  * et l'affichage de ces derniers avec un RecycleView.
  */
-public class ScenarioFragment extends Fragment implements DeviceThread.deviceThreadListerner, ChoiceDialog.choiceDialogListerner, ScenarioThread.scenarioThreadListerner {
+public class ScenarioFragment extends Fragment implements DeviceThread.deviceThreadListerner, ChoiceDialog.choiceDialogListerner, ScenarioThread.scenarioThreadListerner, ScenarioAdapter.scenarioAdapterListerner {
 
     private FloatingActionButton fab;
     private ScenarioAdapter adapter;
@@ -66,7 +68,13 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         View view = inflater.inflate(R.layout.fragment_scenario, container, false);
 
         RecyclerView rv_scenario = view.findViewById(R.id.rv_scenario);
-        rv_scenario.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && getResources().getBoolean(R.bool.tablet))
+            rv_scenario.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+        else
+            rv_scenario.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         fab = MainActivity.getFab();
         fab.show();
@@ -74,7 +82,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         listDevice = new ArrayList<>();
         listScenario = new ArrayList<>();
 
-        adapter = new ScenarioAdapter(listDevice, listScenario, getFragmentManager(), getContext());
+        adapter = new ScenarioAdapter(this, listDevice, listScenario, getFragmentManager(), getContext());
 
         rv_scenario.setAdapter(adapter);
 
@@ -82,7 +90,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
             if (list == null) {
                 listerner.errorFloatingButton();
             } else {
-                ChoiceDialog dialog = new ChoiceDialog(list, this, getContext());
+                ChoiceDialog dialog = new ChoiceDialog(this, list, getContext());
                 dialog.show(getFragmentManager(), "Choice Dialog");
             }
         });
@@ -195,28 +203,44 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
 
         if (removeDuplicateScenario < 2) {
             /*
-             * ArrayList<Integer> nameDevice = new ArrayList<>();
+            ArrayList<Integer> nameDevice = new ArrayList<>();
 
-             for (int i = 0; i < list.length; i++) {
-             if (check[i])
-             nameDevice.add(listDevice.get(i).getId());
-             }
-             */
-
-            int id_device = 0;
-            for (int i = 0; i < listDevice.size(); i++) {
-                if (check[i]) {
-                    id_device = listDevice.get(i).getId();
-                }
+            for (int i = 0; i < list.length; i++) {
+                if (check[i])
+                    nameDevice.add(listDevice.get(i).getId());
             }
+            */
+            if (!listScenario.isEmpty()) {
 
-            int size = listScenario.size() - 1;
-            int id = listScenario.get(size).getId() + 1;
+                int id_device = 0;
+                for (int i = 0; i < listDevice.size(); i++) {
+                    if (check[i]) {
+                        id_device = listDevice.get(i).getId();
+                    }
+                }
 
-            listScenario.add(new Scenario(id, id_device, state, hour, minute));
-            adapter.notifyDataSetChanged();
+                int size = listScenario.size() - 1;
+                int id = listScenario.get(size).getId() + 1;
 
-            new JsonThread(listScenario, UrlServer.SEND_JSON_URL_SCENARIO).execute();
+                listScenario.add(new Scenario(id, id_device, state, hour, minute));
+                adapter.notifyDataSetChanged();
+
+                new JsonThread(listScenario, UrlServer.SEND_JSON_URL_SCENARIO).execute();
+
+            } else {
+
+                int id_device = 0;
+                for (int i = 0; i < listDevice.size(); i++) {
+                    if (check[i]) {
+                        id_device = listDevice.get(i).getId();
+                    }
+                }
+
+                listScenario.add(new Scenario(0, id_device, state, hour, minute));
+                adapter.notifyDataSetChanged();
+
+                new JsonThread(listScenario, UrlServer.SEND_JSON_URL_SCENARIO).execute();
+            }
 
         } else
             removeDuplicateScenario = 0;
@@ -236,9 +260,17 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         listerner.errorChoiceDeviceFromChoiceDialog();
     }
 
+    /**
+     * Méthode implémenté de la classe <b>ChoiceDialog</b>
+     * qui signale à l'utilisateur qu'il ne peut pas
+     * ajouter plus de 1 capteurs/actionneurs et qui
+     * l'envoie dans l'interface {@link scenarioFragmentListerner}
+     *
+     * @see fr.modibo.boxdomotique.View.ChoiceDialog
+     */
     @Override
     public void errorOneDevice() {
-        listerner.errorOneDevice();
+        listerner.errorSingleDevice();
     }
 
     /**
@@ -270,6 +302,12 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     public void errorListScenario(String error) {
         listerner.errorFromDeviceOrScenario(error);
     }
+
+    @Override
+    public void updateScenario() {
+        new ScenarioThread(this, getFragmentManager()).execute();
+    }
+
 
     public interface scenarioFragmentListerner {
         /**
@@ -303,6 +341,13 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
          */
         void errorFloatingButton();
 
-        void errorOneDevice();
+        /**
+         * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
+         * et qui signale a l'utlisateur qu'il ne peut pas ajouter plus de
+         * 1 capteurs/actionneurs.
+         *
+         * @see fr.modibo.boxdomotique.Controller.MainActivity
+         */
+        void errorSingleDevice();
     }
 }

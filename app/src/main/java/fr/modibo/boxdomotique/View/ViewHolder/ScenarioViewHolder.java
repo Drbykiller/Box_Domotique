@@ -25,6 +25,7 @@ public class ScenarioViewHolder extends RecyclerView.ViewHolder {
     private RadioButton mcScenario_rbON;
     private TextView mcScenario_tvHour;
     private MaterialButton mcScenario_bt;
+    private MaterialButton mcScenario_btDelete;
 
     public ScenarioViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -35,6 +36,7 @@ public class ScenarioViewHolder extends RecyclerView.ViewHolder {
         mcScenario_rbON = itemView.findViewById(R.id.mcScenario_rbON);
         mcScenario_tvHour = itemView.findViewById(R.id.mcScenario_tvHour);
         mcScenario_bt = itemView.findViewById(R.id.mcScenario_bt);
+        mcScenario_btDelete = itemView.findViewById(R.id.mcScenario_btDelete);
     }
 
     public View getMcScenario_root() {
@@ -91,6 +93,14 @@ public class ScenarioViewHolder extends RecyclerView.ViewHolder {
 
     public void setMcScenario_bt(MaterialButton mcScenario_bt) {
         this.mcScenario_bt = mcScenario_bt;
+    }
+
+    public MaterialButton getMcScenario_btDelete() {
+        return mcScenario_btDelete;
+    }
+
+    public void setMcScenario_btDelete(MaterialButton mcScenario_btDelete) {
+        this.mcScenario_btDelete = mcScenario_btDelete;
     }
 }
 

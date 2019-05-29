@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Méthode implémenté de la classe <b>ScenarioFragment</b> qui
-     * permet d'afficher une erreur si l'utilisateur essaye de
+     * afficher une erreur si l'utilisateur essaye de
      * cliquer sur le button alors que la récuperation de la
      * liste des capteurs/actionneurs a échoué.
      *
@@ -283,9 +283,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         snackbar.show();
     }
 
+    /**
+     * Méthode implémenté de la classe <b>ScenarioFragment</b> qui
+     * afficher une erreur si l'utilisateur essaye d'ajouter
+     * plus de 1 capteur/actionneur.
+     *
+     * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
+     */
     @Override
-    public void errorOneDevice() {
-        Snackbar snackbar = Snackbar.make(dl.getRootView(), "Erreur, vous devez sélectionner un seul appareil !", Snackbar.LENGTH_LONG);
+    public void errorSingleDevice() {
+        Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorSingleDevice), Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
         tv.setMaxLines(5);

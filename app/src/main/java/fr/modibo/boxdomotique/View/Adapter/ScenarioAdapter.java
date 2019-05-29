@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.Model.Scenario;
+import fr.modibo.boxdomotique.Model.Thread.DeleteScenarioThread;
 import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.Model.UrlServer;
 import fr.modibo.boxdomotique.R;
@@ -22,7 +23,7 @@ import fr.modibo.boxdomotique.View.ViewHolder.ScenarioViewHolder;
 /**
  * La classe <b>ScenarioAdapter</b> permet de recycler les View.
  */
-public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> implements InfoDeviceDialog.infoDeviceDialogListerner {
+public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> implements InfoDeviceDialog.infoDeviceDialogListerner, DeleteScenarioThread.deleteScenarioListerner {
 
     private Context context;
     private FragmentManager fragmentManager;
@@ -30,6 +31,8 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
 
     private ArrayList<Device> listDevice;
     private ArrayList<Scenario> listScenario;
+
+    private scenarioAdapterListerner listerner;
 
 
     /**
@@ -41,7 +44,8 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
      *                        d'afficher correctement le pop-up de chargement.
      * @param context         Contexte de l'application.
      */
-    public ScenarioAdapter(ArrayList<Device> listDevice, ArrayList<Scenario> listScenario, FragmentManager fragmentManager, Context context) {
+    public ScenarioAdapter(scenarioAdapterListerner listerner, ArrayList<Device> listDevice, ArrayList<Scenario> listScenario, FragmentManager fragmentManager, Context context) {
+        this.listerner = listerner;
         this.listDevice = listDevice;
         this.listScenario = listScenario;
         this.fragmentManager = fragmentManager;
@@ -87,8 +91,15 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
             new JsonThread(listScenario, UrlServer.SEND_JSON_URL_SCENARIO).execute();
         });
 
+        holder.getMcScenario_btDelete().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteScenario(scenario);
+            }
+        });
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -117,6 +128,10 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
         infoDeviceDialog.show(fragmentManager, "InfoDeviceDialog");
     }
 
+    private void deleteScenario(final Scenario scenario) {
+        new DeleteScenarioThread(this, scenario.getId()).execute();
+    }
+
 
     /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
@@ -124,6 +139,15 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     @Override
     public void ok() {
         infoDeviceDialog.dismiss();
+    }
+
+    @Override
+    public void successDeleteScenario() {
+        listerner.updateScenario();
+    }
+
+    public interface scenarioAdapterListerner {
+        void updateScenario();
     }
 }
 

@@ -29,4 +29,5 @@
     <string name="strAbout">A Propos de nous !</string>
     <string name="strLibraries">Bibliothèques</string>
     <string name="errorFloatingButton">Erreur, essayer d\'actualiser la page avant d\'ajouter un scenario !</string>
+    <string name="errorSingleDevice">Erreur, vous devez sélectionner un seul appareil !</string>
 </resources>
