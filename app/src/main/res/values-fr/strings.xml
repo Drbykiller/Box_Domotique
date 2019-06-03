@@ -30,4 +30,6 @@
     <string name="strLibraries">Bibliothèques</string>
     <string name="errorFloatingButton">Erreur, essayer d\'actualiser la page avant d\'ajouter un scenario !</string>
     <string name="errorSingleDevice">Erreur, vous devez sélectionner un seul appareil !</string>
+    <string name="strDeleteScenario">Etes vous sur de vouloir supprimer ce scénario ?</string>
+    <string name="strTitreDeleteScenario">Supprimer ce scénario ?</string>
 </resources>

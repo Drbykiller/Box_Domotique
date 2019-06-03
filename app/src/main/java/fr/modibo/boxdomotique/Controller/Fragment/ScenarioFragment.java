@@ -156,6 +156,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      */
     @Override
     public void successListDevice(ArrayList<Device> devices) {
+        listDevice.clear();
         listDevice.addAll(devices);
         adapter.notifyDataSetChanged();
 
@@ -202,14 +203,6 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         }
 
         if (removeDuplicateScenario < 2) {
-            /*
-            ArrayList<Integer> nameDevice = new ArrayList<>();
-
-            for (int i = 0; i < list.length; i++) {
-                if (check[i])
-                    nameDevice.add(listDevice.get(i).getId());
-            }
-            */
             if (!listScenario.isEmpty()) {
 
                 int id_device = 0;

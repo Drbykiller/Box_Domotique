@@ -13,17 +13,17 @@ import java.util.ArrayList;
 
 import fr.modibo.boxdomotique.Model.Device;
 import fr.modibo.boxdomotique.Model.Scenario;
-import fr.modibo.boxdomotique.Model.Thread.DeleteScenarioThread;
 import fr.modibo.boxdomotique.Model.Thread.JsonThread;
 import fr.modibo.boxdomotique.Model.UrlServer;
 import fr.modibo.boxdomotique.R;
+import fr.modibo.boxdomotique.View.DeleteScenarioDialog;
 import fr.modibo.boxdomotique.View.InfoDeviceDialog;
 import fr.modibo.boxdomotique.View.ViewHolder.ScenarioViewHolder;
 
 /**
  * La classe <b>ScenarioAdapter</b> permet de recycler les View.
  */
-public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> implements InfoDeviceDialog.infoDeviceDialogListerner, DeleteScenarioThread.deleteScenarioListerner {
+public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> implements InfoDeviceDialog.infoDeviceDialogListerner, DeleteScenarioDialog.deleteScenarioDialogListerner {
 
     private Context context;
     private FragmentManager fragmentManager;
@@ -38,6 +38,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     /**
      * Constructeur de la classe <b>ScenarioAdapter</b> qui prend en paramètre 4 arguments.
      *
+     * @param listerner       La classe qui implémente l'interface {@link scenarioAdapterListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      * @param listDevice      Liste des capteurs/actionneurs.
      * @param listScenario    Liste des scénarios.
      * @param fragmentManager L'argument fragmentManager permet a l'objet 'infoDeviceDialog' de type : {@link fr.modibo.boxdomotique.View.InfoDeviceDialog}
@@ -124,12 +125,12 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
             }
         }
 
-        infoDeviceDialog = new InfoDeviceDialog(deviceName, this);
+        infoDeviceDialog = new InfoDeviceDialog(this, deviceName);
         infoDeviceDialog.show(fragmentManager, "InfoDeviceDialog");
     }
 
     private void deleteScenario(final Scenario scenario) {
-        new DeleteScenarioThread(this, scenario.getId()).execute();
+        new DeleteScenarioDialog(this, scenario.getId(), context).show(fragmentManager, "DeleteScenarioDialog");
     }
 
 
@@ -142,7 +143,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     }
 
     @Override
-    public void successDeleteScenario() {
+    public void updateScenario() {
         listerner.updateScenario();
     }
 

@@ -52,7 +52,12 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
         final Device device = listDevice.get(position);
 
         holder.setMcs_tvTitle(device.getNom());
-        holder.setMcs_tvInfo(device.getType());
+
+        if (device.getNom().equalsIgnoreCase("Temperature 1")) {
+            holder.setMcs_tvInfo("Temperature : " + device.getValeur() + "°C");
+        } else {
+            holder.setMcs_tvInfo(device.getType());
+        }
 
         if (device.getEtat() == 1)
             holder.getMcs_rbON().toggle();

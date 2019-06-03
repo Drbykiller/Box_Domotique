@@ -30,11 +30,12 @@ public class InfoDeviceDialog extends DialogFragment {
     /**
      * Constructeur de la classe <b>InfoDeviceDialog</b> surchargé.
      *
+     * @param listerner  La classe qui implémente l'interface {@link infoDeviceDialogListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      * @param nameDevice Les noms des capteurs/actionneurs passe en paramètre.
      */
-    public InfoDeviceDialog(ArrayList<String> nameDevice, infoDeviceDialogListerner listerner) {
-        this.nameDevice = nameDevice;
+    public InfoDeviceDialog(infoDeviceDialogListerner listerner, ArrayList<String> nameDevice) {
         this.listerner = listerner;
+        this.nameDevice = nameDevice;
     }
 
     @NonNull

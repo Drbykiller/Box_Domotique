@@ -27,8 +27,7 @@ public class ScenarioThread extends AsyncTask<Void, Void, Void> {
     /**
      * Constructeur de la classe <b>DeviceThread</b> qui prend en paramètre 2 arguments.
      *
-     * @param listerner       La classe qui implémente l'interface {@link scenarioThreadListerner} passe en paramètre
-     *                        pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param listerner       La classe qui implémente l'interface {@link scenarioThreadListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      * @param fragmentManager L'argument fragmentManager permet a l'objet 'dialog' de type : {@link LoadingDialog}, d'afficher correctement le pop-up de chargement.
      */
     public ScenarioThread(scenarioThreadListerner listerner, FragmentManager fragmentManager) {
