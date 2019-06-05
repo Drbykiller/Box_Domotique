@@ -21,6 +21,8 @@
     <string name="strScenario">Create Scenarios, automate according to time, sunrise/sunset etc....</string>
     <string name="strAbout">About us !</string>
     <string name="strLibraries">Libraries</string>
+    <string name="strDeleteScenario">Are you sure you want to delete this scenario ?</string>
+    <string name="strTitreDeleteScenario">Delete this scenario ?</string>
 
 
     <string name="errorEnterServer">You have not entered an IP address !</string>
@@ -47,6 +49,4 @@
     <string name="emoji" translatable="false">emoji</string>
 
     <string name="btList">Device lists</string>
-    <string name="strDeleteScenario">Are you sure you want to delete this scenario ?</string>
-    <string name="strTitreDeleteScenario">Delete this scenario ?</string>
 </resources>

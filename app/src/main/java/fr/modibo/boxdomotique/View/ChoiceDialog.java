@@ -80,7 +80,6 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
 
             }
 
-
         });
 
         builder.setNeutralButton(context.getResources().getString(R.string.strCancel), (dialog, which) -> {
@@ -130,6 +129,13 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
          */
         void errorChoiceDevice();
 
+        /**
+         * Méthode qui va etre implementé dans la classe <b>ScenarioFragment</b>
+         * qui va signaler a l'utilisateur qu'il doit selectionné qu'un seul
+         * utilisateur.
+         *
+         * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
+         */
         void errorOneDevice();
     }
 }

@@ -110,15 +110,6 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     private void info(final Scenario scenario) {
         ArrayList<String> deviceName = new ArrayList<>();
 
-        /*
-        for (Integer name : scenario.getId_devices()) {
-            for (Device get : listDevice) {
-                if (get.getId().equals(name)) {
-                    deviceName.add(get.getNom());
-                }
-            }
-        }*/
-
         for (int i = 0; i < listDevice.size(); i++) {
             if (scenario.getId_devices().equals(listDevice.get(i).getId())) {
                 deviceName.add(listDevice.get(i).getNom());
@@ -130,7 +121,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     }
 
     private void deleteScenario(final Scenario scenario) {
-        new DeleteScenarioDialog(this, scenario.getId(), context).show(fragmentManager, "DeleteScenarioDialog");
+        new DeleteScenarioDialog(this, context, scenario.getId()).show(fragmentManager, "DeleteScenarioDialog");
     }
 
 
@@ -148,6 +139,12 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     }
 
     public interface scenarioAdapterListerner {
+        /**
+         * Méthode qui va etre implementé dans la classe <b>ScenarioFragment</b>
+         * et qui va mettre a jour la liste des scenarios.
+         *
+         * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
+         */
         void updateScenario();
     }
 }

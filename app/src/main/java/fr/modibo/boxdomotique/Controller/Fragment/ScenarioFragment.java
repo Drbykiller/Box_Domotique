@@ -296,6 +296,12 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         listerner.errorFromDeviceOrScenario(error);
     }
 
+    /**
+     * Méthode implementé de la classe <b>ScenarioAdapter</b>
+     * qui met a jour la liste des scénarios.
+     *
+     * @see fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter
+     */
     @Override
     public void updateScenario() {
         new ScenarioThread(this, getFragmentManager()).execute();

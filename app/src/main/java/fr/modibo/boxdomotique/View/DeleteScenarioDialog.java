@@ -15,8 +15,8 @@ import fr.modibo.boxdomotique.Model.Thread.DeleteScenarioThread;
 import fr.modibo.boxdomotique.R;
 
 /**
- * Classe <b>DeleteScenarioDialog</b> qui affiche un message de confirmation que l'utilisateur
- * s'il veut bien supprimer le scénario.
+ * Classe <b>DeleteScenarioDialog</b> qui affiche un message de confirmation de
+ * suppression de scénario.
  */
 public class DeleteScenarioDialog extends DialogFragment implements DeleteScenarioThread.deleteScenarioListerner {
 
@@ -24,10 +24,16 @@ public class DeleteScenarioDialog extends DialogFragment implements DeleteScenar
     private Context context;
     private deleteScenarioDialogListerner listerner;
 
-    public DeleteScenarioDialog(deleteScenarioDialogListerner listerner, int id_scenario, Context context) {
+
+    /**
+     * @param listerner   La classe qui implémente l'interface {@link deleteScenarioDialogListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param context     Contexte de l'application
+     * @param id_scenario L'identifiant du scénario.
+     */
+    public DeleteScenarioDialog(deleteScenarioDialogListerner listerner, Context context, int id_scenario) {
         this.listerner = listerner;
-        this.id_scenario = id_scenario;
         this.context = context;
+        this.id_scenario = id_scenario;
     }
 
     @NonNull
@@ -64,6 +70,10 @@ public class DeleteScenarioDialog extends DialogFragment implements DeleteScenar
         }
     }
 
+
+    /* ////////////////////////////
+        INTERFACE + IMPLEMENTATION
+    *////////////////////////// /
     @Override
     public void successDeleteScenario() {
         listerner.updateScenario();
