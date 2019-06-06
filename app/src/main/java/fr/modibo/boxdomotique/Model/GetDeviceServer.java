@@ -17,7 +17,7 @@ import okhttp3.Response;
  */
 public class GetDeviceServer {
 
-    private static final String URL = UrlServer.URL_SERVER + UrlServer.URL_DEVICE;
+    private static final String URL = UrlServer.URL_SERVER + UrlServer.URL_JSON_DEVICE;
 
     /**
      * Méthode qui récuperer la liste des capteurs/actionneurs.

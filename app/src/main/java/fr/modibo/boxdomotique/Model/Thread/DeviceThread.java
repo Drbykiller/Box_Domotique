@@ -41,7 +41,7 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         dialog = new LoadingDialog();
-        dialog.show(fragmentManager, "Loading Dialog");
+        dialog.show(fragmentManager, "LoadingDialog");
     }
 
     @Override
@@ -81,11 +81,21 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
         void successListDevice(ArrayList<Device> devices);
 
         /**
-         * La 2ème méthode de l'interface envoie, si il y a une erreur, une erreur.
+         * La 2ème méthode de l'interface envoie, si il y a une erreur, une erreur lors de la récuperation de la
+         * liste des capteurs/actionneurs.
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link DeviceThread} -> {@link fr.modibo.boxdomotique.Controller.Fragment.SensorFragment}
+         * -> {@link fr.modibo.boxdomotique.Controller.MainActivity}
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link DeviceThread} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
+         * -> {@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @param error L'Erreur passe en parametre ce qui permet de le récuperer.
-         * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment#errorListDevice(String)
-         * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#errorListDevice(String)
+         * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment
          */
         void errorListDevice(String error);
     }

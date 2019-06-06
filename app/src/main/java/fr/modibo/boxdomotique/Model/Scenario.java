@@ -12,7 +12,6 @@ public class Scenario {
     @SerializedName("id_appareil")
     @Expose
     private Integer id_appareil;
-    //private List<Integer> id_devices = null;
 
     @SerializedName("etat_appareil")
     @Expose

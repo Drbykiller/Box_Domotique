@@ -28,7 +28,7 @@ public class InfoDeviceDialog extends DialogFragment {
 
 
     /**
-     * Constructeur de la classe <b>InfoDeviceDialog</b> surchargé.
+     * Constructeur de la classe <b>InfoDeviceDialog</b> qui prend en paramètre 2 arguments.
      *
      * @param listerner  La classe qui implémente l'interface {@link infoDeviceDialogListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      * @param nameDevice Les noms des capteurs/actionneurs passe en paramètre.
@@ -55,12 +55,7 @@ public class InfoDeviceDialog extends DialogFragment {
 
         builder.setView(v);
 
-        id_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listerner.ok();
-            }
-        });
+        id_button.setOnClickListener(v1 -> listerner.disappearDialog());
 
         return builder.create();
     }
@@ -74,8 +69,8 @@ public class InfoDeviceDialog extends DialogFragment {
          * Méthode qui va etre implémenté dans la classe <b>ScenarioAdapter</b>
          * qui permet de faire disparaitre le pop-up.
          *
-         * @see fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter#ok()
+         * @see fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter#disappearDialog()
          */
-        void ok();
+        void disappearDialog();
     }
 }

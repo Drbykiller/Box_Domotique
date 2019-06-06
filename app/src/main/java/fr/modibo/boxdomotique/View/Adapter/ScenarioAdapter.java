@@ -36,7 +36,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
 
 
     /**
-     * Constructeur de la classe <b>ScenarioAdapter</b> qui prend en paramètre 4 arguments.
+     * Constructeur de la classe <b>ScenarioAdapter</b> qui prend en paramètre 5 arguments.
      *
      * @param listerner       La classe qui implémente l'interface {@link scenarioAdapterListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      * @param listDevice      Liste des capteurs/actionneurs.
@@ -64,10 +64,10 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     public void onBindViewHolder(@NonNull final ScenarioViewHolder holder, int position) {
         final Scenario scenario = listScenario.get(position);
 
-        String heure = context.getResources().getString(R.string.strTime) + scenario.getHeure() + "h" + scenario.getMinute();
+        String hour = context.getResources().getString(R.string.strTime) + scenario.getHeure() + "h" + scenario.getMinute();
 
         holder.getMcScenario_tvTitle().setText("Scenario " + scenario.getId());
-        holder.getMcScenario_tvHour().setText(heure);
+        holder.getMcScenario_tvHour().setText(hour);
         holder.getMcScenario_bt().setText(R.string.btList);
 
         if (scenario.getEtat() == 1)
@@ -92,12 +92,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
             new JsonThread(listScenario, UrlServer.SEND_JSON_URL_SCENARIO).execute();
         });
 
-        holder.getMcScenario_btDelete().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteScenario(scenario);
-            }
-        });
+        holder.getMcScenario_btDelete().setOnClickListener(v -> deleteScenario(scenario));
 
     }
 
@@ -129,7 +124,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
         INTERFACE + IMPLEMENTATION
     *////////////////////////// /
     @Override
-    public void ok() {
+    public void disappearDialog() {
         infoDeviceDialog.dismiss();
     }
 
@@ -138,14 +133,26 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
         listerner.updateScenario();
     }
 
+    @Override
+    public void errorDeleteScenario(String error) {
+        listerner.errorDeleteScenario(error);
+    }
+
     public interface scenarioAdapterListerner {
         /**
          * Méthode qui va etre implementé dans la classe <b>ScenarioFragment</b>
-         * et qui va mettre a jour la liste des scenarios.
+         * et qui met a jour la liste des scenarios.
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.Model.Thread.DeleteScenarioThread} -> {@link fr.modibo.boxdomotique.View.DeleteScenarioDialog} ->
+         * {@link fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
          *
          * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
          */
         void updateScenario();
+
+        void errorDeleteScenario(String error);
     }
 }
 

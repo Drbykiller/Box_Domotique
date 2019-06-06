@@ -171,15 +171,14 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      * Methode implementé de la classe <b>DeviceThread</b>
      * qui récupère, si il y a une erreur,
      * l'erreur lors de la récuperation de la
-     * liste des capteurs/actionneurs et qui l'envoie
-     * dans l'interface {@link scenarioFragmentListerner}
+     * liste des capteurs/actionneurs.
      *
      * @param error L'Erreur passe en parametre ce qui permet de le récuperer.
      * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread
      */
     @Override
     public void errorListDevice(String error) {
-        listerner.errorFromDeviceOrScenario(error);
+        listerner.errorDeviceOrScenario(error);
     }
 
     /**
@@ -250,7 +249,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      */
     @Override
     public void errorChoiceDevice() {
-        listerner.errorChoiceDeviceFromChoiceDialog();
+        listerner.errorChoiceDevice();
     }
 
     /**
@@ -262,8 +261,8 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      * @see fr.modibo.boxdomotique.View.ChoiceDialog
      */
     @Override
-    public void errorOneDevice() {
-        listerner.errorSingleDevice();
+    public void errorMultipleDeviceSelected() {
+        listerner.errorMultipleDeviceSelected();
     }
 
     /**
@@ -293,12 +292,17 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      */
     @Override
     public void errorListScenario(String error) {
-        listerner.errorFromDeviceOrScenario(error);
+        listerner.errorDeviceOrScenario(error);
     }
 
     /**
      * Méthode implementé de la classe <b>ScenarioAdapter</b>
      * qui met a jour la liste des scénarios.
+     * <p>
+     * !!! ATTENTION !!!
+     * <p>
+     * {@link fr.modibo.boxdomotique.Model.Thread.DeleteScenarioThread} -> {@link fr.modibo.boxdomotique.View.DeleteScenarioDialog} ->
+     * {@link fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
      *
      * @see fr.modibo.boxdomotique.View.Adapter.ScenarioAdapter
      */
@@ -307,28 +311,46 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         new ScenarioThread(this, getFragmentManager()).execute();
     }
 
+    @Override
+    public void errorDeleteScenario(String error) {
+
+    }
+
 
     public interface scenarioFragmentListerner {
         /**
          * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
          * et qui permet de recupérer, si il y a une erreur,
          * l'erreur de la méthode <b>errorListDevice</b> et/ou <b>errorListScenario</b>
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link DeviceThread} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
+         * -> {@link fr.modibo.boxdomotique.Controller.MainActivity}
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link ScenarioThread} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
+         * -> {@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @param error L'erreur passe en paramètre ce qui permet de le récuperer.
          * @see fr.modibo.boxdomotique.Controller.MainActivity
-         * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#errorListDevice(String)
-         * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment#errorListScenario(String)
          */
-        void errorFromDeviceOrScenario(String error);
+        void errorDeviceOrScenario(String error);
 
         /**
          * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
          * et qui va signaler à l'utilisateur qui n'a pas selectionné
          * de capteurs/actionneurs.
+         * <p>
+         * !!! ATTTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.View.ChoiceDialog} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
+         * ->{@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @see fr.modibo.boxdomotique.Controller.MainActivity
          */
-        void errorChoiceDeviceFromChoiceDialog();
+        void errorChoiceDevice();
 
         /**
          * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
@@ -344,9 +366,14 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
          * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
          * et qui signale a l'utlisateur qu'il ne peut pas ajouter plus de
          * 1 capteurs/actionneurs.
+         * <p>
+         * !!! ATTTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.View.ChoiceDialog} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
+         * ->{@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @see fr.modibo.boxdomotique.Controller.MainActivity
          */
-        void errorSingleDevice();
+        void errorMultipleDeviceSelected();
     }
 }

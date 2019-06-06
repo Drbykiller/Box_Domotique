@@ -27,18 +27,18 @@ public class LoginThread extends AsyncTask<String, Void, Void> {
     /**
      * Constructeur de la classe LoginThread qui prend en paramètre 2 arguments.
      *
-     * @param fragmentManager L'argument fragmentManager permet a l'objet 'dialog' de type : {@link fr.modibo.boxdomotique.View.LoadingDialog}, d'afficher correctement le pop-up de chargement.
      * @param listerner       La classe qui implémente l'interface {@link loginThreadListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
+     * @param fragmentManager L'argument fragmentManager permet a l'objet 'dialog' de type : {@link fr.modibo.boxdomotique.View.LoadingDialog}, d'afficher correctement le pop-up de chargement.
      */
-    public LoginThread(FragmentManager fragmentManager, loginThreadListerner listerner) {
-        this.fragmentManager = fragmentManager;
+    public LoginThread(loginThreadListerner listerner, FragmentManager fragmentManager) {
         this.listerner = listerner;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
     protected void onPreExecute() {
         dialog = new LoadingDialog();
-        dialog.show(fragmentManager, "Loading Dialog");
+        dialog.show(fragmentManager, "LoadingDialog");
     }
 
     @Override

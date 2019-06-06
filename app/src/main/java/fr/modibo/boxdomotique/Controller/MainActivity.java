@@ -29,7 +29,7 @@ import fr.modibo.boxdomotique.R;
 /**
  * Classe <b>MainActivity</b> qui gère l'affichage des differents fragments.
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.errorFromDeviceThreadListerner, MainFragment.fragmentFromMainAdapterListerner, ScenarioFragment.scenarioFragmentListerner {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SensorFragment.sensorFragmentListerner, MainFragment.mainFragmentListerner, ScenarioFragment.scenarioFragmentListerner {
 
     private DrawerLayout dl;
     private NavigationView nav_view;
@@ -190,12 +190,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Méthode implémenté de la classe <b>SensorFragment</b> qui permet d'obtenir,
      * si il y a une erreur, une erreur lors de la récuperation de la
      * liste des capteurs/actionneurs et de l'afficher a l'utilisateur.
+     * <p>
+     * !!! ATTENTION !!!
+     * <p>
+     * {@link fr.modibo.boxdomotique.Model.Thread.DeviceThread} -> {@link fr.modibo.boxdomotique.Controller.Fragment.SensorFragment}
+     * -> {@link fr.modibo.boxdomotique.Controller.MainActivity}
      *
      * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
      * @see fr.modibo.boxdomotique.Controller.Fragment.SensorFragment
      */
     @Override
-    public void error(String error) {
+    public void errorListDevice(String error) {
         Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorServer) + "\nCode : " + error, Snackbar.LENGTH_LONG).setDuration(5000);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
@@ -242,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
      */
     @Override
-    public void errorFromDeviceOrScenario(String error) {
+    public void errorDeviceOrScenario(String error) {
         Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorServer) + "\nCode : " + error, Snackbar.LENGTH_LONG).setDuration(5000);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
@@ -258,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
      */
     @Override
-    public void errorChoiceDeviceFromChoiceDialog() {
+    public void errorChoiceDevice() {
         Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorChoiceDevice), Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);
@@ -291,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
      */
     @Override
-    public void errorSingleDevice() {
+    public void errorMultipleDeviceSelected() {
         Snackbar snackbar = Snackbar.make(dl.getRootView(), getString(R.string.errorSingleDevice), Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         TextView tv = snackbarView.findViewById(R.id.snackbar_text);

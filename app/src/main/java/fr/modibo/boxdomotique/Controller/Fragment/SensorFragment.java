@@ -31,7 +31,7 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
 
     private DeviceAdapter adapter;
     private ArrayList<Device> data;
-    private errorFromDeviceThreadListerner listerner;
+    private sensorFragmentListerner listerner;
 
 
     public SensorFragment() {
@@ -40,10 +40,10 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
     /**
      * Constructeur de la classe <b>SensorFragment</b> surchargé.
      *
-     * @param listerner La classe qui implémente l'interface {@link errorFromDeviceThreadListerner} passe en paramètre pour s'assurer que
+     * @param listerner La classe qui implémente l'interface {@link sensorFragmentListerner} passe en paramètre pour s'assurer que
      *                  cette classe implémente bien les méthodes de l'interface.
      */
-    public SensorFragment(errorFromDeviceThreadListerner listerner) {
+    public SensorFragment(sensorFragmentListerner listerner) {
         this.listerner = listerner;
     }
 
@@ -76,7 +76,7 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            listerner = (SensorFragment.errorFromDeviceThreadListerner) context;
+            listerner = (SensorFragment.sensorFragmentListerner) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement (SensorFragment.errorFromDeviceThreadListerner) ");
         }
@@ -124,28 +124,31 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
      * Methode implementé de la classe <b>DeviceThread</b>
      * qui récupère, si il y a une erreur,
      * l'erreur lors de la récuperation de la
-     * liste des capteurs/actionneurs et qui
-     * l'envoi dans l'interface {@link errorFromDeviceThreadListerner}
+     * liste des capteurs/actionneurs.
      *
      * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
      * @see fr.modibo.boxdomotique.Model.Thread.DeviceThread
      */
     @Override
     public void errorListDevice(String error) {
-        listerner.error(error);
+        listerner.errorListDevice(error);
     }
 
-    public interface errorFromDeviceThreadListerner {
+    public interface sensorFragmentListerner {
         /**
          * Méthode qui va etre implementé dans la classe <b>MainActivity</b>
-         * et qui permet de récupérer, si il y a une erreur,
-         * l'erreur de la méthode <b>errorListDevice</b>.
+         * et qui permet de récupérer, si il y a une erreur, une erreur lors de la récuperation de la
+         * liste des capteurs/actionneurs.
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link DeviceThread} -> {@link fr.modibo.boxdomotique.Controller.Fragment.SensorFragment}
+         * -> {@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
          * @see fr.modibo.boxdomotique.Controller.MainActivity
-         * @see SensorFragment#errorListDevice(String)
          */
-        void error(String error);
+        void errorListDevice(String error);
     }
 
 }

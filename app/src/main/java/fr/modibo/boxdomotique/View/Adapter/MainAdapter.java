@@ -19,19 +19,18 @@ import fr.modibo.boxdomotique.View.ViewHolder.MainViewHolder;
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     private ArrayList<Main> data;
-    private fragmentListerner listerner;
+    private mainAdapterListerner listerner;
 
 
     /**
      * Constructeur de la classe <b>MainAdapter</b> qui prend en paramètre 2 arguments.
      *
+     * @param listerner La classe qui implémente l'interface {@link mainAdapterListerner} passe en paramètre pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      * @param data      Liste des onglets.
-     * @param listerner La classe qui implémente l'interface {@link fragmentListerner} passe en paramètre pour s'assurer que
-     *                  cette classe implémente bien les méthodes de l'interface.
      */
-    public MainAdapter(ArrayList<Main> data, fragmentListerner listerner) {
-        this.data = data;
+    public MainAdapter(mainAdapterListerner listerner, ArrayList<Main> data) {
         this.listerner = listerner;
+        this.data = data;
     }
 
     @NonNull
@@ -49,12 +48,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         holder.setMcm_info(main.getInfo());
         holder.getMcm_image().setImageResource(main.getImage());
 
-        holder.getMcm_root().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listerner.loadFragment(main.getTitle());
-            }
-        });
+        holder.getMcm_root().setOnClickListener(v -> listerner.loadFragment(main.getTitle()));
 
     }
 
@@ -67,10 +61,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
     *////////////////////////// /
-    public interface fragmentListerner {
+    public interface mainAdapterListerner {
         /**
          * Méthode qui va etre implémenté dans la classe <b>MainFragment</b>
          * qui permet d'obtenir le nom du Fragment.
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.View.Adapter.MainAdapter} -> {@link fr.modibo.boxdomotique.Controller.Fragment.MainFragment}
+         * -> {@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @param title Le nom du Fragment passe en paramètre.
          * @see fr.modibo.boxdomotique.Controller.Fragment.MainFragment

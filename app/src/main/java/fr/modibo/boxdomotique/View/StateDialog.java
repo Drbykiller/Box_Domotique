@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -49,8 +48,6 @@ public class StateDialog extends DialogFragment implements TimePickerDialog.OnTi
 
         TextView sd_tv = view.findViewById(R.id.sd_tv);
         RadioGroup sd_rg = view.findViewById(R.id.sd_rg);
-        RadioButton sd_rbON = view.findViewById(R.id.sd_rbON);
-        RadioButton sd_rbOFF = view.findViewById(R.id.sd_rbOFF);
         Button sd_bt = view.findViewById(R.id.sd_bt);
 
         sd_tv.setText(getResources().getText(R.string.strState));
@@ -110,7 +107,13 @@ public class StateDialog extends DialogFragment implements TimePickerDialog.OnTi
 
     public interface stateDialogListerner {
         /**
-         * Méthode qui va etre implémenté dans la classe <b>ChoiceDialog</b>
+         * Méthode qui va etre implémenté dans la classe <b>ChoiceDialog</b>.
+         *
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.View.StateDialog} -> {@link fr.modibo.boxdomotique.View.ChoiceDialog} ->
+         * {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
          *
          * @param state     Si le scénario doit etre activé par default ou non.
          * @param hourOfDay L'heure passe en paramètre ce qui permet de le récuperer.

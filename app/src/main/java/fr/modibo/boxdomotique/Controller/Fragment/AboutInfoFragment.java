@@ -31,13 +31,10 @@ public class AboutInfoFragment extends Fragment {
 
         MaterialRippleLayout fai_source = v.findViewById(R.id.fai_source);
 
-        fai_source.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse("https://github.com/Drbykiller/Box_Domotique");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
+        fai_source.setOnClickListener(v1 -> {
+            Uri uri = Uri.parse("https://github.com/Drbykiller/Box_Domotique");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
 
         return v;

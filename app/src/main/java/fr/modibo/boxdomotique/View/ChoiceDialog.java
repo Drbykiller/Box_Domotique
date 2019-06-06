@@ -33,7 +33,7 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
      * @param listerner La classe qui implémente l'interface {@link choiceDialogListerner} passe en paramètre
      *                  pour s'assurer que cette classe implémente bien les méthodes de l'interface.
      * @param list      Liste des noms des capteurs/actionneurs.
-     * @param context   Contexte de l'application
+     * @param context   Contexte de l'application.
      */
     public ChoiceDialog(choiceDialogListerner listerner, String[] list, Context context) {
         this.listerner = listerner;
@@ -52,32 +52,39 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
         builder.setMultiChoiceItems(list, listcheck, (dialog, which, isChecked) -> listcheck[which] = isChecked);
 
         builder.setPositiveButton(context.getResources().getString(R.string.strOK), (dialog, which) -> {
-            byte errorNoDeviceDelected = 0;
+            byte errorNoDeviceSelected = 0;
+
+            // Vérification
 
             for (boolean b : listcheck) {
                 if (b) {
-                    errorNoDeviceDelected = 0;
+                    errorNoDeviceSelected = 0;
                     break;
                 } else
-                    errorNoDeviceDelected = 1;
+                    errorNoDeviceSelected = 1;
             }
 
-            byte oneDevice = 0;
-            for (int i = 0; i < listcheck.length; i++) {
-                if (listcheck[i]) {
-                    oneDevice++;
+            byte errorOneDeviceMustBeSelected = 0;
+
+            for (boolean b : listcheck) {
+                if (b) {
+                    errorOneDeviceMustBeSelected++;
                 }
             }
-            if (oneDevice >= 2) {
-                listerner.errorOneDevice();
-            } else {
 
-                if (errorNoDeviceDelected == 0) {
+            // FIN Vérification
+
+            if (errorNoDeviceSelected == 0) {
+
+                if (errorOneDeviceMustBeSelected >= 2) {
+                    listerner.errorMultipleDeviceSelected();
+                } else {
                     stateDialog = new StateDialog(this);
                     stateDialog.show(getFragmentManager(), "StateDialog");
-                } else
-                    listerner.errorChoiceDevice();
+                }
 
+            } else {
+                listerner.errorChoiceDevice();
             }
 
         });
@@ -124,6 +131,11 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
         /**
          * Méthode qui va etre implementé dans la classe <b>ScenarioFragment</b>
          * qui va signaler à l'utilisateur qui n'a pas selectionné d'appareil.
+         * <p>
+         * !!! ATTTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.View.ChoiceDialog} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
+         * ->{@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
          */
@@ -132,10 +144,15 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
         /**
          * Méthode qui va etre implementé dans la classe <b>ScenarioFragment</b>
          * qui va signaler a l'utilisateur qu'il doit selectionné qu'un seul
-         * utilisateur.
+         * appareil.
+         * <p>
+         * !!! ATTTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.View.ChoiceDialog} -> {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
+         * ->{@link fr.modibo.boxdomotique.Controller.MainActivity}
          *
          * @see fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment
          */
-        void errorOneDevice();
+        void errorMultipleDeviceSelected();
     }
 }

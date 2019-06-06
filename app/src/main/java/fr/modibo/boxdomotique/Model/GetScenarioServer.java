@@ -17,7 +17,7 @@ import okhttp3.Response;
  */
 public class GetScenarioServer {
 
-    private static final String URL = UrlServer.URL_SERVER + UrlServer.URL_SCENARIO;
+    private static final String URL = UrlServer.URL_SERVER + UrlServer.URL_JSON_SCENARIO;
 
     /**
      * Méthode qui récuperer la liste des scenarios
