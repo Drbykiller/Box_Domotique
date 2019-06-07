@@ -102,7 +102,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new DeviceThread(this, getFragmentManager()).execute();
+        new DeviceThread(this, getFragmentManager(), true).execute();
         new ScenarioThread(this, getFragmentManager()).execute();
     }
 
@@ -135,7 +135,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.tb_refresh) {
-            new DeviceThread(this, getFragmentManager()).execute();
+            new DeviceThread(this, getFragmentManager(), true).execute();
             new ScenarioThread(this, getFragmentManager()).execute();
         }
         return super.onOptionsItemSelected(item);
@@ -183,7 +183,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
 
     /**
      * Méthode implémenté de la classe <b>ChoiceDialog</b> qui permet
-     * de récuperer le choix, heure et les minutes définie par l'utilisateur.
+     * de récuperer le choix, l'heure et les minutes définie par l'utilisateur.
      *
      * @param check  Récupère un tableau de type boolean auquel on va correspondre
      *               a la liste des capteurs/actionneurs.
@@ -242,8 +242,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     /**
      * Méthode implémenté de la classe <b>ChoiceDialog</b>
      * qui signale à l'utilisateur qui n'a pas selectionné
-     * de capteurs/actionneurs et qui l'envoie dans
-     * l'interface {@link scenarioFragmentListerner}
+     * de capteurs/actionneurs.
      *
      * @see fr.modibo.boxdomotique.View.ChoiceDialog
      */
@@ -255,8 +254,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
     /**
      * Méthode implémenté de la classe <b>ChoiceDialog</b>
      * qui signale à l'utilisateur qu'il ne peut pas
-     * ajouter plus de 1 capteurs/actionneurs et qui
-     * l'envoie dans l'interface {@link scenarioFragmentListerner}
+     * ajouter plus de 1 capteurs/actionneurs.
      *
      * @see fr.modibo.boxdomotique.View.ChoiceDialog
      */
@@ -284,8 +282,7 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
      * Méthode implémenté de la classe <b>ScenarioThread</b>
      * qui récupere, si il y a une erreur,
      * l'erreur lors de la récuperation de la
-     * liste des scénarios et qui l'envoie
-     * dans l'interface {@link scenarioFragmentListerner}
+     * liste des scénarios.
      *
      * @param error L'Erreur passe en paramètre ce qui permet de le récuperer.
      * @see fr.modibo.boxdomotique.Model.Thread.ScenarioThread
@@ -311,6 +308,11 @@ public class ScenarioFragment extends Fragment implements DeviceThread.deviceThr
         new ScenarioThread(this, getFragmentManager()).execute();
     }
 
+    /**
+     * Méthode implementé de la classe <b>ScenarioAdapter</b>
+     *
+     * @param error L'erreur passe en paramètre.
+     */
     @Override
     public void errorDeleteScenario(String error) {
 

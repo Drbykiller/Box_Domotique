@@ -16,7 +16,7 @@ import com.balysv.materialripple.MaterialRippleLayout;
 import fr.modibo.boxdomotique.R;
 
 /**
- * Classe <b>AboutInfoFragment</b> qui affiche les différents informations
+ * Classe <b>AboutInfoFragment</b> qui affiche les différentes informations
  * concernant le projet.
  */
 public class AboutInfoFragment extends Fragment {

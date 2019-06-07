@@ -20,6 +20,7 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
     private LoadingDialog dialog;
     private FragmentManager fragmentManager;
     private deviceThreadListerner listerner;
+    private boolean showDialog;
 
     private ArrayList<Device> result;
 
@@ -32,16 +33,19 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
      * @param fragmentManager L'argument fragmentManager permet a l'objet 'dialog' de type : {@link fr.modibo.boxdomotique.View.LoadingDialog}
      *                        d'afficher correctement le pop-up de chargement.
      */
-    public DeviceThread(deviceThreadListerner listerner, FragmentManager fragmentManager) {
+    public DeviceThread(deviceThreadListerner listerner, FragmentManager fragmentManager, boolean showDialog) {
         this.listerner = listerner;
         this.fragmentManager = fragmentManager;
+        this.showDialog = showDialog;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog = new LoadingDialog();
-        dialog.show(fragmentManager, "LoadingDialog");
+        if (showDialog) {
+            dialog = new LoadingDialog();
+            dialog.show(fragmentManager, "LoadingDialog");
+        }
     }
 
     @Override
@@ -57,7 +61,8 @@ public class DeviceThread extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        dialog.dismiss();
+        if (showDialog)
+            dialog.dismiss();
 
         if (e != null) {
             e.printStackTrace();

@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         } else
-            new LoginThread(getSupportFragmentManager(), this).execute(user, password);
+            new LoginThread(this, getSupportFragmentManager()).execute(user, password);
     }
 
     private String check_if_the_fields_are_correct(String server, String user, String password) {

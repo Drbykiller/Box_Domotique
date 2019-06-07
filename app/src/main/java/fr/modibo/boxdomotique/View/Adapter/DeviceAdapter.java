@@ -53,10 +53,14 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
         holder.setMcs_tvTitle(device.getNom());
 
-        if (device.getNom().equalsIgnoreCase("Temperature 1")) {
+        if (device.getType().equalsIgnoreCase("temp")) {
             holder.setMcs_tvInfo("Temperature : " + device.getValeur() + "°C");
+            holder.getMcs_rg().setVisibility(View.INVISIBLE);
+        } else if (device.getType().equalsIgnoreCase("lum")) {
+            holder.setMcs_tvInfo("Eclairage : " + device.getValeur() + " lux");
+            holder.getMcs_rg().setVisibility(View.INVISIBLE);
         } else {
-            holder.setMcs_tvInfo(device.getType());
+            holder.setMcs_tvInfo(null);
         }
 
         if (device.getEtat() == 1)

@@ -1,7 +1,9 @@
 package fr.modibo.boxdomotique.Controller.Fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +34,7 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
     private DeviceAdapter adapter;
     private ArrayList<Device> data;
     private sensorFragmentListerner listerner;
-
+    private boolean stopThread;
 
     public SensorFragment() {
     }
@@ -56,20 +58,32 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
         adapter = new DeviceAdapter(getContext(), data);
         rv_sensor.setAdapter(adapter);
 
-        boolean tablet = getResources().getBoolean(R.bool.tablet);
-        if (tablet) {
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && getResources().getBoolean(R.bool.tablet))
             rv_sensor.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
-        } else
+        else
             rv_sensor.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         setHasOptionsMenu(true);
+
+        stopThread = true;
+        Update update = new Update();
+        update.start();
+
         return view;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new DeviceThread(this, getFragmentManager()).execute();
+        new DeviceThread(this, getFragmentManager(), true).execute();
+    }
+
+    @Override
+    public void onDestroy() {
+        stopThread = false;
+        super.onDestroy();
     }
 
     @Override
@@ -95,7 +109,7 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.tb_refresh)
-            new DeviceThread(this, getFragmentManager()).execute();
+            new DeviceThread(this, getFragmentManager(), true).execute();
 
         return super.onOptionsItemSelected(item);
     }
@@ -151,5 +165,22 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
         void errorListDevice(String error);
     }
 
+    private class Update extends Thread {
+
+        @Override
+        public void run() {
+            while (stopThread) {
+                try {
+                    Thread.sleep(5000);
+                    Log.w("UPDATE EVERY 3 SECOND", "UPDATE");
+                    new DeviceThread(SensorFragment.this, getFragmentManager(), false).execute();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+    }
 }
 
