@@ -22,7 +22,11 @@
     <string name="strAbout">About us !</string>
     <string name="strLibraries">Libraries</string>
     <string name="strDeleteScenario">Are you sure you want to delete this scenario ?</string>
-    <string name="strTitreDeleteScenario">Delete this scenario ?</string>
+    <string name="strTitleDeleteScenario">Delete this scenario ?</string>
+    <string name="strYES">YES</string>
+    <string name="strNO">NO</string>
+    <string name="strTitleLogOut">Log Out</string>
+    <string name="strLogOut">Would you like to log out ?</string>
 
 
     <string name="errorEnterServer">You have not entered an IP address !</string>
@@ -42,11 +46,13 @@
     <string name="nav_scenario">Scenario management</string>
     <string name="nav_setting">Setting</string>
     <string name="nav_about">About</string>
-
+    <string name="nav_exit">Log out</string>
 
     <string name="tb_refresh">Refresh</string>
 
     <string name="emoji" translatable="false">emoji</string>
 
     <string name="btList">Device lists</string>
+    <string name="strTitleExit">Exit ?</string>
+    <string name="strExit">Do you want to leave the application ?</string>
 </resources>

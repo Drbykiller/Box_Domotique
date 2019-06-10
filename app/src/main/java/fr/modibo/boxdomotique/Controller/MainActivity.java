@@ -1,5 +1,6 @@
 package fr.modibo.boxdomotique.Controller;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -121,9 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_scenario:
                 outState.putString(KEY[2], getString(R.string.nav_scenario));
                 break;
-            case R.id.nav_setting:
+            /*case R.id.nav_setting:
                 outState.putString(KEY[3], getString(R.string.nav_setting));
-                break;
+                break;*/
             case R.id.nav_about:
                 outState.putString(KEY[4], getString(R.string.nav_about));
                 break;
@@ -159,13 +160,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 collapsing_img.setImageResource(R.drawable.collapsing_scenario);
                 appbar.setExpanded(true, true);
                 break;
-            case R.id.nav_setting:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
-                //tb.setTitle(R.string.nav_setting);
-                break;
+            /*case R.id.nav_setting:
+                getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, new SensorFragment()).commit();
+                tb.setTitle(R.string.nav_setting);
+                break;*/
             case R.id.nav_about:
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.nav_exit:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.strTitleLogOut));
+                builder.setMessage(getString(R.string.strLogOut));
+                builder.setPositiveButton(getString(R.string.strYES), (dialog, which) -> {
+                    finish();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                });
+
+                builder.setNeutralButton(getString(R.string.strNO), (dialog, which) -> dialog.cancel());
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 break;
         }
 
@@ -177,8 +191,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (dl.isDrawerOpen(GravityCompat.START))
             dl.closeDrawer(GravityCompat.START);
-        else
-            super.onBackPressed();
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.strTitleExit));
+            builder.setMessage(getString(R.string.strExit));
+            builder.setPositiveButton(getResources().getString(R.string.strYES), (dialog, which) -> {
+                finish();
+                System.exit(0);
+            });
+
+            builder.setNeutralButton(getResources().getString(R.string.strNO), (dialog, which) -> dialog.cancel());
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
     }
 
 

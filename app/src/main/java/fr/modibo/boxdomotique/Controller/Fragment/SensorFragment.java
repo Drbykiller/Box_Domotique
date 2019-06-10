@@ -172,7 +172,7 @@ public class SensorFragment extends Fragment implements DeviceThread.deviceThrea
             while (stopThread) {
                 try {
                     Thread.sleep(5000);
-                    Log.w("UPDATE EVERY 3 SECOND", "UPDATE");
+                    Log.w("UPDATE EVERY 5 SECOND", "UPDATE");
                     new DeviceThread(SensorFragment.this, getFragmentManager(), false).execute();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

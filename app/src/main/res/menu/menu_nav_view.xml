@@ -17,15 +17,20 @@
             android:icon="@drawable/ic_scenario"
             android:title="@string/nav_scenario" />
 
-        <item
+        <!--<item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings"
-            android:title="@string/nav_setting" />
+            android:title="@string/nav_setting" />-->
 
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_about"
             android:title="@string/nav_about" />
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/nav_exit" />
 
     </group>
 

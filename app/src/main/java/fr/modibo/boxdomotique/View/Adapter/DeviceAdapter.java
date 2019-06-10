@@ -61,6 +61,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
             holder.getMcs_rg().setVisibility(View.INVISIBLE);
         } else {
             holder.setMcs_tvInfo(null);
+            holder.getMcs_rg().setVisibility(View.VISIBLE);
         }
 
         if (device.getEtat() == 1)

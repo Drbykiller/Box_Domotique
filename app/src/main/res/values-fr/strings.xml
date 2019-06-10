@@ -31,5 +31,12 @@
     <string name="errorFloatingButton">Erreur, essayer d\'actualiser la page avant d\'ajouter un scenario !</string>
     <string name="errorSingleDevice">Erreur, vous devez sélectionner un seul appareil !</string>
     <string name="strDeleteScenario">Etes vous sur de vouloir supprimer ce scénario ?</string>
-    <string name="strTitreDeleteScenario">Supprimer ce scénario ?</string>
+    <string name="strTitleDeleteScenario">Supprimer ce scénario ?</string>
+    <string name="nav_exit">Se déconnecter</string>
+    <string name="strYES">OUI</string>
+    <string name="strNO">NON</string>
+    <string name="strTitleLogOut">Déconnexion</string>
+    <string name="strLogOut">Voulez-vous vous déconnecter ?</string>
+    <string name="strExit">Voulez-vous quitter l\'application ?</string>
+    <string name="strTitleExit">Quitter l\'application ?</string>
 </resources>

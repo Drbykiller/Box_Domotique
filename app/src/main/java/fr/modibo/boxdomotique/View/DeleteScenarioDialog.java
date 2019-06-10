@@ -41,13 +41,13 @@ public class DeleteScenarioDialog extends DialogFragment implements DeleteScenar
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(context.getResources().getString(R.string.strTitreDeleteScenario));
+        builder.setTitle(context.getResources().getString(R.string.strTitleDeleteScenario));
         builder.setMessage(context.getResources().getString(R.string.strDeleteScenario));
 
-        builder.setPositiveButton("OUI", (dialog, which) -> new DeleteScenarioThread(DeleteScenarioDialog.this, id_scenario).execute());
+        builder.setPositiveButton(getString(R.string.strYES), (dialog, which) -> new DeleteScenarioThread(DeleteScenarioDialog.this, id_scenario).execute());
 
-        builder.setNeutralButton("NON", (dialog, which) -> {
-
+        builder.setNeutralButton(getString(R.string.strNO), (dialog, which) -> {
+            dialog.cancel();
         });
 
         return builder.create();

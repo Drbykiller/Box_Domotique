@@ -90,6 +90,7 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
         });
 
         builder.setNeutralButton(context.getResources().getString(R.string.strCancel), (dialog, which) -> {
+            dialog.cancel();
         });
 
         return builder.create();
