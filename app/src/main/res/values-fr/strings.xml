@@ -20,7 +20,7 @@
     <string name="tb_refresh">Rafraîchir</string>
     <string name="strTime">"Heure d’exécution : "</string>
     <string name="btList">Listes des appareils</string>
-    <string name="strChoice">Choisissez les appareils que vous voulez automatiser</string>
+    <string name="strChoice">Choisissez l\'appareil que vous voulez automatiser</string>
     <string name="strCancel">Annuler</string>
     <string name="strState">Quel état voulez-vous définir à votre scénario ?</string>
     <string name="errorChoiceDevice">Erreur, il faut sélectionner au moins un appareil dans la liste !</string>

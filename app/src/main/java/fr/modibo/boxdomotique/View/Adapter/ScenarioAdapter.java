@@ -75,9 +75,9 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
         else
             holder.getMcScenario_rbOFF().toggle();
 
-        holder.getMcScenario_bt().setOnClickListener(v -> info(scenario));
+        holder.getMcScenario_bt().setOnClickListener(v -> infoDevice(scenario));
 
-        holder.getMcScenario_root().setOnClickListener(v -> info(scenario));
+        holder.getMcScenario_root().setOnClickListener(v -> infoDevice(scenario));
 
         holder.getMcScenario_rg().setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
@@ -102,7 +102,7 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
         return listScenario.size();
     }
 
-    private void info(final Scenario scenario) {
+    private void infoDevice(final Scenario scenario) {
         ArrayList<String> deviceName = new ArrayList<>();
 
         for (int i = 0; i < listDevice.size(); i++) {
@@ -123,11 +123,24 @@ public class ScenarioAdapter extends RecyclerView.Adapter<ScenarioViewHolder> im
     /* ////////////////////////////
         INTERFACE + IMPLEMENTATION
     *////////////////////////// /
+
+    /**
+     * Méthode implémenté de la classe <b>InfoDeviceDialog</b>
+     * qui permet de faire disparaitre le pop-up qui affiche
+     * l'appareil en fonction du scénario.
+     *
+     * @see fr.modibo.boxdomotique.View.InfoDeviceDialog
+     */
     @Override
     public void disappearDialog() {
         infoDeviceDialog.dismiss();
     }
 
+    /**
+     * Méthode implementé de la classe <b>DeleteScenarioDialog</b>
+     *
+     * @see fr.modibo.boxdomotique.View.DeleteScenarioDialog
+     */
     @Override
     public void updateScenario() {
         listerner.updateScenario();

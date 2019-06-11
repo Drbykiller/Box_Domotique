@@ -52,17 +52,14 @@ public class StateDialog extends DialogFragment implements TimePickerDialog.OnTi
 
         sd_tv.setText(getResources().getText(R.string.strState));
 
-        sd_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.sd_rbON:
-                        state = 1;
-                        break;
-                    case R.id.sd_rbOFF:
-                        state = 0;
-                        break;
-                }
+        sd_rg.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.sd_rbON:
+                    state = 1;
+                    break;
+                case R.id.sd_rbOFF:
+                    state = 0;
+                    break;
             }
         });
 

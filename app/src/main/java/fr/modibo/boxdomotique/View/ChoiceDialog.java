@@ -106,6 +106,14 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
         }
     }
 
+    /**
+     * Méthode implementé de la classe <b>StateDialog</b>
+     *
+     * @param state     Si le scénario doit etre activé par default ou non.
+     * @param hourOfDay L'heure passe en paramètre ce qui permet de le récuperer.
+     * @param minute    Les minutes passe en paramètre ce qui permet de le récuperer.
+     * @see fr.modibo.boxdomotique.View.StateDialog
+     */
     @Override
     public void choiceState(int state, int hourOfDay, int minute) {
         stateDialog.dismiss();
@@ -120,6 +128,11 @@ public class ChoiceDialog extends DialogFragment implements StateDialog.stateDia
     public interface choiceDialogListerner {
         /**
          * Méthode qui va etre implementé dans la classe <b>ScenarioFragment</b>
+         * <p>
+         * !!! ATTENTION !!!
+         * <p>
+         * {@link fr.modibo.boxdomotique.View.StateDialog} -> {@link fr.modibo.boxdomotique.View.ChoiceDialog} ->
+         * {@link fr.modibo.boxdomotique.Controller.Fragment.ScenarioFragment}
          *
          * @param check     Liste des capteurs/actionneurs choisi par l'utilisateur.
          * @param state     Si le scénario doit etre activé par default ou non.
